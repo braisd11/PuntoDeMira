@@ -4,66 +4,115 @@
  */
 package Model;
 
+import View.VentanaPrincipal;
 import java.awt.Color;
-import javax.swing.BorderFactory;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
+
 
 /**
  *
  * @author a22braisdr
  */
-public class Obxetivo {
-    //atributos
-    public int x;
-    public int y;
+public class Obxetivo extends Cadrado implements MouseListener {
+    private int LADOCADRADO=30;
     public Color corRecheo=Color.RED;
-    public JLabel lblCadrado;
-    
-    //constructor
+    private Xogo xogo1;
+    private VentanaPrincipal ventanaPrincipal;
 
-    public Obxetivo(int RADIO) {
-        lblCadrado = new javax.swing.JLabel();
-        lblCadrado.setSize(RADIO, RADIO);
+    public Obxetivo(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
+        super();
+        this.xogo1=xogo1;
+        this.ventanaPrincipal=ventanaPrincipal;
+        lblCadrado.setSize(LADOCADRADO, LADOCADRADO);
+        
+        lblCadrado.addMouseListener(this);
+    }
+
+    
+    
+    public Color getCorRecheo() {
+        return corRecheo;
+    }
+
+    public int getLADOCADRADO() {
+        return LADOCADRADO;
+    }
+
+    public void setLADOCADRADO(int LADOCADRADO) {
+        this.LADOCADRADO = LADOCADRADO;
+    }
+
+    public void setCorRecheo(Color corRecheo) {
+        this.corRecheo = corRecheo;
     }
     
-    //getter y setter
-    public int getX() {    
+    
+
+    /**
+     * Dalle unha cor e opacidade ao obxetivo
+     */
+    public void setCorRecheo() {
+        this.corRecheo = corRecheo;
+        lblCadrado.setBackground(corRecheo);
+        lblCadrado.setOpaque(true);
+    }
+
+    public int getX() {
         return x;
     }
+
     public void setX(int x) {
         this.x = x;
         lblCadrado.setLocation(x, y);
     }
+
     public int getY() {
         return y;
     }
+
     public void setY(int y) {
         this.y = y;
         lblCadrado.setLocation(x, y);
     }
-    public Color getCorRecheo() {
-        return corRecheo;
-    }
-    
-    /*Establece a cor de recheo que lle pasan, asignalla a label,
-    ponlle un cor de borde e establece a label como opaca*/
-    public void setCorRecheo() {
-        this.corRecheo = corRecheo;
-        lblCadrado.setBackground(corRecheo);
-        lblCadrado.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        lblCadrado.setOpaque(true);
-    }
-    
+
     public JLabel getLblCadrado() {
         return lblCadrado;
     }
-    
-    public void setLblCadrado(JLabel lblCadrado) {    
+
+    public void setLblCadrado(JLabel lblCadrado) {
         this.lblCadrado = lblCadrado;
     }
 
-    //métodos
-    public String getCoordenadas() {
-        return (x + y + "");
+    
+    /**
+     * Cada vez que se clicka no obxetivo, cambiao de posición, suma un acerto e resta unha bala
+     * @param e 
+     */
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        this.xogo1.xerarPosicionObxetivo();
+        ventanaPrincipal.pintarCadrado(lblCadrado);
+        System.out.println(getCoordenadas());
+        ventanaPrincipal.sumarAcerto();
+        ventanaPrincipal.restarBala();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }
