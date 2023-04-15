@@ -356,15 +356,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void panelJuegoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelJuegoKeyPressed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_panelJuegoKeyPressed
-
-    private void juegoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_juegoKeyPressed
-        // TODO add your handling code here:
         if (evt.getKeyCode()==KeyEvent.VK_ENTER){
             labelCargador.setText("10");
             labelRecarga.setVisible(false);
         }
+    }//GEN-LAST:event_panelJuegoKeyPressed
+
+    private void juegoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_juegoKeyPressed
+        // TODO add your handling code here:
+        
     }//GEN-LAST:event_juegoKeyPressed
 
     /**
@@ -410,7 +410,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         xogo1=new Xogo(this);
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
-        panelJuego.requestFocus();
+        juego.requestFocus();
     }
     
     
@@ -421,6 +421,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void pintarCadrado(JLabel lblCadrado){
         panelJuego.add(lblCadrado);
         panelJuego.updateUI();
+        panelJuego.requestFocus();
     }
     
     /**
