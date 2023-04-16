@@ -6,8 +6,12 @@
 package View;
 
 import Model.Xogo;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 /**
  *
@@ -15,12 +19,15 @@ import javax.swing.JLabel;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
     private Xogo xogo1;
+    private Timer tiempo;
+    
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
+        juego.setFocusable(true);
+        crearTimerTempo();
         
     }
 
@@ -51,6 +58,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelErrores = new javax.swing.JLabel();
         labelCargador = new javax.swing.JLabel();
         labelRecarga = new javax.swing.JLabel();
+        labelTituloTiempo = new javax.swing.JLabel();
+        labelTiempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(350, 150));
@@ -196,6 +205,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        panelJuego.setBackground(new java.awt.Color(0, 0, 0));
         panelJuego.setPreferredSize(new java.awt.Dimension(700, 700));
         panelJuego.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -252,6 +262,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelRecarga.setForeground(new java.awt.Color(0, 0, 0));
         labelRecarga.setText("PULSA \"SPACE\" PARA RECARGAR");
 
+        labelTituloTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        labelTituloTiempo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTituloTiempo.setText("TIEMPO");
+
+        labelTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        labelTiempo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTiempo.setText("0");
+
         javax.swing.GroupLayout panelLateralLayout = new javax.swing.GroupLayout(panelLateral);
         panelLateral.setLayout(panelLateralLayout);
         panelLateralLayout.setHorizontalGroup(
@@ -267,7 +285,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                             .addComponent(labelTituloAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createSequentialGroup()
                                 .addGap(51, 51, 51)
-                                .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelTituloTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelLateralLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(labelTituloCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,17 +307,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(labelTituloAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(141, 141, 141)
+                .addGap(40, 40, 40)
                 .addComponent(labelTituloErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(202, 202, 202)
+                .addGap(105, 105, 105)
+                .addComponent(labelTituloTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
                 .addComponent(labelTituloCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRecarga)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         panelLateralLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {labelTituloAciertos, labelTituloCargador, labelTituloErrores});
@@ -410,7 +434,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         xogo1=new Xogo(this);
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
-        juego.requestFocus();
+        tiempo.start();
     }
     
     
@@ -421,7 +445,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void pintarCadrado(JLabel lblCadrado){
         panelJuego.add(lblCadrado);
         panelJuego.updateUI();
-        panelJuego.requestFocus();
     }
     
     /**
@@ -454,6 +477,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             labelCargador.setText("0");
             labelRecarga.setVisible(true);
         }
+        else if (balas<=3){
+            labelCargador.setForeground(Color.red);
+        }
     }
     
     
@@ -466,6 +492,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         etiqueta.setText(""+num);
     }
     
+    
+    
+    private void crearTimerTempo(){
+        tiempo=new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelJuego.requestFocus();
+                String a=labelTiempo.getText();
+                int b=(int) Double.parseDouble(a);
+                b++;
+                labelTiempo.setText(b+"");
+            }
+        });
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonInstrucciones;
     private javax.swing.JButton botonJugar;
@@ -477,10 +519,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelCargador;
     private javax.swing.JLabel labelErrores;
     private javax.swing.JLabel labelRecarga;
+    private javax.swing.JLabel labelTiempo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTituloAciertos;
     private javax.swing.JLabel labelTituloCargador;
     private javax.swing.JLabel labelTituloErrores;
+    private javax.swing.JLabel labelTituloTiempo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelJuego;
     private javax.swing.JPanel panelLateral;

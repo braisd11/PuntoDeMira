@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package Model.obxetivos;
 
+import Model.Cadrado;
+import Model.Xogo;
 import View.VentanaPrincipal;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
@@ -17,8 +18,8 @@ import javax.swing.JLabel;
  * @author a22braisdr
  */
 public class Obxetivo extends Cadrado implements MouseListener {
-    private int LADOCADRADO=30;
-    public Color corRecheo=Color.RED;
+    protected int ladoCadrado;
+    private Color corRecheo=Color.RED;
     private Xogo xogo1;
     private VentanaPrincipal ventanaPrincipal;
 
@@ -26,8 +27,6 @@ public class Obxetivo extends Cadrado implements MouseListener {
         super();
         this.xogo1=xogo1;
         this.ventanaPrincipal=ventanaPrincipal;
-        lblCadrado.setSize(LADOCADRADO, LADOCADRADO);
-        
         lblCadrado.addMouseListener(this);
     }
 
@@ -37,12 +36,12 @@ public class Obxetivo extends Cadrado implements MouseListener {
         return corRecheo;
     }
 
-    public int getLADOCADRADO() {
-        return LADOCADRADO;
+    public int getLadoCadrado() {
+        return ladoCadrado;
     }
 
-    public void setLADOCADRADO(int LADOCADRADO) {
-        this.LADOCADRADO = LADOCADRADO;
+    public void setLadoCadrado(int ladoCadrado) {
+        this.ladoCadrado = ladoCadrado;
     }
 
     public void setCorRecheo(Color corRecheo) {
@@ -93,7 +92,7 @@ public class Obxetivo extends Cadrado implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.xogo1.xerarPosicionObxetivo();
+        this.xogo1.xerarPosicionObxetivo(this);
         ventanaPrincipal.pintarCadrado(lblCadrado);
         System.out.println(getCoordenadas());
         ventanaPrincipal.sumarAcerto();
