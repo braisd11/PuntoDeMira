@@ -9,7 +9,6 @@ import Model.Coloreable;
 import Model.Xogo;
 import View.VentanaPrincipal;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 
 /**
@@ -18,16 +17,15 @@ import javax.swing.JLabel;
  */
 public abstract class Obxetivo extends Cadrado implements Coloreable {
     protected int ladoCadrado;
-    private Xogo xogo1;
-    private VentanaPrincipal ventanaPrincipal;
 
+    
     public Obxetivo(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super();
+        super(xogo1, ventanaPrincipal);
         this.xogo1=xogo1;
         this.ventanaPrincipal=ventanaPrincipal;
         ventanaPrincipal.engadirObxetivos(this);
     }
-
+    
     public int getX() {
         return x;
     }
@@ -57,13 +55,7 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
     
     
     
-    /*@Override
-    public void mousePressed(MouseEvent e) {
-        xerarPosicionObxetivo();
-        ventanaPrincipal.pintarCadrado(botonCadrado);
-        ventanaPrincipal.sumarAcerto();
-        ventanaPrincipal.restarBala();
-    }*/
+    
     
     /**
      * Xéranse dous números aleatorios para darlle a unhas coordenadas x e y

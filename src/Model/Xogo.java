@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Model.obstaculos.Obstaculo;
+import Model.obstaculos.ObstaculoVerticalGrande;
 import Model.obxetivos.Obxetivo;
 import Model.obxetivos.ObxetivoGrande;
 import Model.obxetivos.ObxetivoMediano;
@@ -22,10 +24,12 @@ public class Xogo {
     private VentanaPrincipal ventanaPrincipal;
     private ArrayList <Obxetivo> obxetivos=new ArrayList<>();
     private Iterator<Obxetivo> iterObxetivos;
+    private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
     private boolean pausa=false;
     private Obxetivo obxetivoPequeno;
     private Obxetivo obxetivoMediano;
     private Obxetivo obxetivoGrande;
+    private Obstaculo obstaculoVerticalGrande;
     private int balas=10;
     private int acerto=5;
     private int erro=3;
@@ -35,11 +39,17 @@ public class Xogo {
         xerarObxetivoPequeno();
         xerarObxetivoMediano();
         xerarObxetivoGrande();
+        xerarObastaculoVerticalGrande();
         empezarPartida();
         
     }
 
-    
+    private Obstaculo xerarObastaculoVerticalGrande(){
+        obstaculoVerticalGrande=new ObstaculoVerticalGrande(this, ventanaPrincipal);
+        obstaculos.add(obstaculoVerticalGrande);
+        return obstaculoVerticalGrande;
+        
+    }
     
     public int getMAXX() {
         return MAXX;
@@ -121,9 +131,14 @@ public class Xogo {
         obxetivoPequeno.xerarPosicionObxetivo();
         obxetivoMediano.xerarPosicionObxetivo();
         obxetivoGrande.xerarPosicionObxetivo();
+        obstaculoVerticalGrande.xerarPosicionObstaculo();
+        
         ventanaPrincipal.pintarCadrado(obxetivoPequeno.getBotonCadrado());
         ventanaPrincipal.pintarCadrado(obxetivoMediano.getBotonCadrado());
         ventanaPrincipal.pintarCadrado(obxetivoGrande.getBotonCadrado());
+        ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getBotonCadrado());
+        System.out.println(obstaculoVerticalGrande.getCoordenadas());
+        System.out.println(obstaculoVerticalGrande.getC1().getCoordenadas());
     }
     
     
@@ -172,6 +187,15 @@ public class Xogo {
         if (obxetivo.getX()>(MAXX-obxetivo.getLadoCadrado()) || obxetivo.getY()>(MAXY-obxetivo.getLadoCadrado())){
             posicionCorrecta=false;
             obxetivo.xerarPosicionObxetivo();
+        }
+        return posicionCorrecta;
+    }
+    
+    public boolean comprobarPosicion(Obstaculo obstaculo){
+        boolean posicionCorrecta=true;
+        if (obstaculo.getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getY()>(MAXY-obstaculo.getLadoCadrado())){
+            posicionCorrecta=false;
+            obstaculo.xerarPosicionObstaculo();
         }
         return posicionCorrecta;
     }

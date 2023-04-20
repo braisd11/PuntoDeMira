@@ -6,6 +6,7 @@
 package View;
 
 import Model.Xogo;
+import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Xogo xogo1;
     private Timer tiempo;
     private ArrayList <Obxetivo> obxetivosActuais=new ArrayList<>();
+    private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
+    private ActionListener clickObxetivo;
     
     
     
@@ -741,12 +744,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     /**
-     * Engade os Obxetivos a un array de Obxetivo
+     * Engade os Obxetivos a un array de Obxetivo e engade o ActionListener
      * @param obxetivo Obxetivo creado en Obxetivo
      */
     public void engadirObxetivos (Obxetivo obxetivo){
         obxetivosActuais.add(obxetivo);
-        
+        clickObxetivo= new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obxetivo.xerarPosicionObxetivo();
+                sumarAcerto();
+                restarBala();
+            }
+        };
+        obxetivo.getBotonCadrado().addActionListener(clickObxetivo);
+    }
+    
+    public void engadirObstaculos (Obstaculo obstaculo){
+        obstaculos.add(obstaculo);
     }
     
     private void mostrarFinDeXogo(){

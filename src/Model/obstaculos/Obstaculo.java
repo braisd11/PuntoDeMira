@@ -6,6 +6,7 @@ package Model.obstaculos;
 
 import Model.Cadrado;
 import Model.Xogo;
+import View.VentanaPrincipal;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,20 +15,26 @@ import java.util.Iterator;
  * @author a22braisdr
  */
 public abstract class Obstaculo extends Cadrado {
-    private Xogo xogo1;
     private ArrayList<Cadrado> cadrados = new ArrayList<>();
     private Iterator<Cadrado> iterCadrados;
     protected Cadrado c0;
     protected Cadrado c1;
     protected Cadrado c2;
     protected Cadrado c3;
-    
-    public Obstaculo(Xogo xogo1) {
+
+    public Obstaculo(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
+        super(xogo1, ventanaPrincipal);
         this.xogo1 = xogo1;
+        this.ventanaPrincipal=ventanaPrincipal;
         this.ladoCadrado=40;
         crearCadrados();
+        ventanaPrincipal.engadirObstaculos(this);
     }
 
+    
+    
+    
+    
     public Xogo getXogo1() {
         return xogo1;
     }
@@ -84,11 +91,11 @@ public abstract class Obstaculo extends Cadrado {
         this.c3 = c3;
     }
     
-    private void crearCadrados(){
-        c0 = new Cadrado();
-        c1 = new Cadrado();
-        c2 = new Cadrado();
-        c3 = new Cadrado();
+    public void crearCadrados(){
+        c0 = new Cadrado(xogo1, ventanaPrincipal);
+        c1 = new Cadrado(xogo1, ventanaPrincipal);
+        c2 = new Cadrado(xogo1, ventanaPrincipal);
+        c3 = new Cadrado(xogo1, ventanaPrincipal);
         montarFicha(c0, c1, c2, c3);
     }
     
@@ -97,5 +104,13 @@ public abstract class Obstaculo extends Cadrado {
         getCadrados().add(c1);
         getCadrados().add(c2);
         getCadrados().add(c3);
+    }
+    
+    public void xerarPosicionObstaculo(){
+        int numX = (int) Math.floor(Math.random() * (xogo1.getMAXX() - 0 + 1) + 0);
+        int numY = (int) Math.floor(Math.random() * (xogo1.getMAXY() - 0 + 1) + 0);
+        this.setX(numX);
+        this.setY(numY);
+        xogo1.comprobarPosicion(this);
     }
 }
