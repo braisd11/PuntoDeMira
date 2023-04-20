@@ -20,9 +20,6 @@ public class ObstaculoVerticalGrande extends Obstaculo implements Coloreable{
         super(xogo1, ventanaPrincipal);
         this.xogo1 = xogo1;
         this.ventanaPrincipal=ventanaPrincipal;
-        this.ladoCadrado=40;
-        crearCadrados();
-        ventanaPrincipal.engadirObstaculos(this);
         cor();
         establecerFicha();
     }
