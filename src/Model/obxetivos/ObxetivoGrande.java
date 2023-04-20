@@ -14,11 +14,12 @@ import java.awt.Color;
  */
 public class ObxetivoGrande extends Obxetivo {
     
+    
     public ObxetivoGrande(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
         super(xogo1, ventanaPrincipal);
         this.ladoCadrado=70;
-        setCorRecheo(Color.pink);
-        lblCadrado.setSize(ladoCadrado, ladoCadrado);
+        cor();
+        botonCadrado.setSize(ladoCadrado, ladoCadrado);
     }
 
     public int getLadoCadrado() {
@@ -28,7 +29,10 @@ public class ObxetivoGrande extends Obxetivo {
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
-    
-    
-    
+
+    @Override
+    public void cor() {
+        botonCadrado.setBackground(Color.CYAN);
+        botonCadrado.setOpaque(true);
+    }
 }

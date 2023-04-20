@@ -1,6 +1,7 @@
 drop database if exists punto_de_mira;
 create database if not exists punto_de_mira;
 
+use punto_de_mira;
 
 drop table if exists jugadores;
 create table if not exists jugadores 

@@ -9,6 +9,8 @@ import Model.obxetivos.ObxetivoGrande;
 import Model.obxetivos.ObxetivoMediano;
 import Model.obxetivos.ObxetivoPequeno;
 import View.VentanaPrincipal;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -18,10 +20,15 @@ public class Xogo {
     private final int MAXX=700;
     private final int MAXY=700;
     private VentanaPrincipal ventanaPrincipal;
+    private ArrayList <Obxetivo> obxetivos=new ArrayList<>();
+    private Iterator<Obxetivo> iterObxetivos;
     private boolean pausa=false;
     private Obxetivo obxetivoPequeno;
     private Obxetivo obxetivoMediano;
     private Obxetivo obxetivoGrande;
+    private int balas=10;
+    private int acerto=5;
+    private int erro=3;
     
     public Xogo(VentanaPrincipal ventanaPrincipal){
         this.ventanaPrincipal=ventanaPrincipal;
@@ -32,6 +39,16 @@ public class Xogo {
         
     }
 
+    
+    
+    public int getMAXX() {
+        return MAXX;
+    }
+
+    public int getMAXY() {
+        return MAXY;
+    }
+    
     public VentanaPrincipal getVentanaPrincipal() {
         return ventanaPrincipal;
     }
@@ -71,18 +88,42 @@ public class Xogo {
     public void setObxetivoGrande(Obxetivo obxetivoGrande) {
         this.obxetivoGrande = obxetivoGrande;
     }
+
+    public int getBalas() {
+        return balas;
+    }
+
+    public void setBalas(int balas) {
+        this.balas = balas;
+    }
+
+    public int getAcerto() {
+        return acerto;
+    }
+
+    public void setAcerto(int acerto) {
+        this.acerto = acerto;
+    }
+
+    public int getErro() {
+        return erro;
+    }
+
+    public void setErro(int erro) {
+        this.erro = erro;
+    }
     
     
     /**
      * Dalle una posición na Ventana Principal aos tres Obxetivos
      */
     public void empezarPartida(){
-        xerarPosicionObxetivo(obxetivoPequeno);
-        xerarPosicionObxetivo(obxetivoMediano);
-        xerarPosicionObxetivo(obxetivoGrande);
-        ventanaPrincipal.pintarCadrado(obxetivoPequeno.getLblCadrado());
-        ventanaPrincipal.pintarCadrado(obxetivoMediano.getLblCadrado());
-        ventanaPrincipal.pintarCadrado(obxetivoGrande.getLblCadrado());
+        obxetivoPequeno.xerarPosicionObxetivo();
+        obxetivoMediano.xerarPosicionObxetivo();
+        obxetivoGrande.xerarPosicionObxetivo();
+        ventanaPrincipal.pintarCadrado(obxetivoPequeno.getBotonCadrado());
+        ventanaPrincipal.pintarCadrado(obxetivoMediano.getBotonCadrado());
+        ventanaPrincipal.pintarCadrado(obxetivoGrande.getBotonCadrado());
     }
     
     
@@ -92,7 +133,7 @@ public class Xogo {
      */
     public Obxetivo xerarObxetivoPequeno (){
         obxetivoPequeno= new ObxetivoPequeno(this, ventanaPrincipal);
-        obxetivoPequeno.setCorRecheo();
+        obxetivos.add(obxetivoPequeno);
         return obxetivoPequeno;
     }
     
@@ -103,7 +144,7 @@ public class Xogo {
      */
     public Obxetivo xerarObxetivoMediano (){
         obxetivoMediano= new ObxetivoMediano(this, ventanaPrincipal);
-        obxetivoMediano.setCorRecheo();
+        obxetivos.add(obxetivoMediano);
         return obxetivoMediano;
     }
     
@@ -113,34 +154,39 @@ public class Xogo {
      */
     public Obxetivo xerarObxetivoGrande (){
         obxetivoGrande= new ObxetivoGrande(this, ventanaPrincipal);
-        obxetivoGrande.setCorRecheo();
+        obxetivos.add(obxetivoGrande);
         return obxetivoGrande;
     }
     
     
-    /**
-     * Xéranse dous números aleatorios para darlle a unhas coordenadas x e y
-     * @param obxetivo  Obxetivo ao que lle queremos cambiar a posición
-     */
-    public void xerarPosicionObxetivo(Obxetivo obxetivo){
-        int numX = (int) Math.floor(Math.random() * (MAXX - 0 + 1) + 0);
-        int numY = (int) Math.floor(Math.random() * (MAXY - 0 + 1) + 0);
-        obxetivo.setX(numX);
-        obxetivo.setY(numY);
-        comprobarPosicion(obxetivo);
-    }
+    
+    
     
     /**
      * Comproba que o Obxetivo non se saia dos límites do JPanel
      * @param obxetivo Obxetivo do que queremos comprobar que as coordenadas sexan correctas
      * @return boolean de se a posición é correcta
      */
-    private boolean comprobarPosicion(Obxetivo obxetivo){
+    public boolean comprobarPosicion(Obxetivo obxetivo){
         boolean posicionCorrecta=true;
         if (obxetivo.getX()>(MAXX-obxetivo.getLadoCadrado()) || obxetivo.getY()>(MAXY-obxetivo.getLadoCadrado())){
             posicionCorrecta=false;
-            xerarPosicionObxetivo(obxetivo);
+            obxetivo.xerarPosicionObxetivo();
         }
         return posicionCorrecta;
+    }
+    
+    
+    public void eliminarTodo(){
+        eliminarObxetivos();
+    }
+    
+    private void eliminarObxetivos(){
+        iterObxetivos=obxetivos.iterator();
+        while (iterObxetivos.hasNext()){
+            Obxetivo obxetivo = iterObxetivos.next();
+            ventanaPrincipal.borrarCadrados(obxetivo.getBotonCadrado());
+        }
+        obxetivos.clear();
     }
 }

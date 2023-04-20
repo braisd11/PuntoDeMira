@@ -5,7 +5,7 @@
 package Model;
 
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
 
 /**
  *
@@ -14,37 +14,47 @@ import javax.swing.JLabel;
 public class Cadrado {
     public int x;
     public int y;
-    public JLabel lblCadrado;
+    public JButton botonCadrado;
+    public int ladoCadrado;
 
     public Cadrado() {
-        lblCadrado = new javax.swing.JLabel();
-        
+        botonCadrado = new javax.swing.JButton();
+        botonCadrado.setFocusable(false);
     }
     
     
+    
+
     //getter y setter
-    public int getX() {    
+    public int getLadoCadrado() {    
+        return ladoCadrado;
+    }
+    public void setLadoCadrado(int ladoCadrado) {
+        this.ladoCadrado = ladoCadrado;
+    }    
+
+    public int getX() {
         return x;
     }
     public void setX(int x) {
         this.x = x;
-        lblCadrado.setLocation(x, y);
+        botonCadrado.setLocation(x, y);
     }
     public int getY() {
         return y;
     }
     public void setY(int y) {
         this.y = y;
-        lblCadrado.setLocation(x, y);
+        botonCadrado.setLocation(x, y);
     }
     
     
-    public JLabel getLblCadrado() {
-        return lblCadrado;
+    public JButton getBotonCadrado() {
+        return botonCadrado;
     }
     
-    public void setLblCadrado(JLabel lblCadrado) {    
-        this.lblCadrado = lblCadrado;
+    public void setBotonCadrado(JButton botonCadrado) {    
+        this.botonCadrado = botonCadrado;
     }
 
     /**
@@ -54,7 +64,4 @@ public class Cadrado {
     public String getCoordenadas() {
         return (x + ", " + y);
     }
-    
-    
-    
 }

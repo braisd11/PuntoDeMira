@@ -17,8 +17,8 @@ public class ObxetivoPequeno extends Obxetivo {
     public ObxetivoPequeno(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
         super(xogo1, ventanaPrincipal);
         this.ladoCadrado=30;
-        setCorRecheo(Color.green);
-        lblCadrado.setSize(ladoCadrado, ladoCadrado);
+        cor();
+        botonCadrado.setSize(ladoCadrado, ladoCadrado);
     }
 
     public int getLadoCadrado() {
@@ -28,6 +28,10 @@ public class ObxetivoPequeno extends Obxetivo {
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
-    
-    
+
+    @Override
+    public void cor() {
+        botonCadrado.setBackground(Color.green);
+        botonCadrado.setOpaque(true);
+    }
 }

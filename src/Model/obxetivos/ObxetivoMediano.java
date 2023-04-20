@@ -17,8 +17,8 @@ public class ObxetivoMediano extends Obxetivo{
     public ObxetivoMediano(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
         super(xogo1, ventanaPrincipal);
         this.ladoCadrado=50;
-        setCorRecheo(Color.orange);
-        lblCadrado.setSize(ladoCadrado, ladoCadrado);
+        cor();
+        botonCadrado.setSize(ladoCadrado, ladoCadrado);
     }
 
     public int getLadoCadrado() {
@@ -28,6 +28,10 @@ public class ObxetivoMediano extends Obxetivo{
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
-    
-    
+
+    @Override
+    public void cor() {
+        botonCadrado.setBackground(Color.pink);
+        botonCadrado.setOpaque(true);
+    }
 }

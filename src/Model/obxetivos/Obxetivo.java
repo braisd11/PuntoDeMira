@@ -5,11 +5,10 @@
 package Model.obxetivos;
 
 import Model.Cadrado;
+import Model.Coloreable;
 import Model.Xogo;
 import View.VentanaPrincipal;
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 
@@ -17,9 +16,8 @@ import javax.swing.JLabel;
  *
  * @author a22braisdr
  */
-public class Obxetivo extends Cadrado implements MouseListener {
+public abstract class Obxetivo extends Cadrado implements Coloreable {
     protected int ladoCadrado;
-    private Color corRecheo=Color.RED;
     private Xogo xogo1;
     private VentanaPrincipal ventanaPrincipal;
 
@@ -27,36 +25,7 @@ public class Obxetivo extends Cadrado implements MouseListener {
         super();
         this.xogo1=xogo1;
         this.ventanaPrincipal=ventanaPrincipal;
-        lblCadrado.addMouseListener(this);
-    }
-
-    
-    
-    public Color getCorRecheo() {
-        return corRecheo;
-    }
-
-    public int getLadoCadrado() {
-        return ladoCadrado;
-    }
-
-    public void setLadoCadrado(int ladoCadrado) {
-        this.ladoCadrado = ladoCadrado;
-    }
-
-    public void setCorRecheo(Color corRecheo) {
-        this.corRecheo = corRecheo;
-    }
-    
-    
-
-    /**
-     * Dalle unha cor e opacidade ao obxetivo
-     */
-    public void setCorRecheo() {
-        this.corRecheo = corRecheo;
-        lblCadrado.setBackground(corRecheo);
-        lblCadrado.setOpaque(true);
+        ventanaPrincipal.engadirObxetivos(this);
     }
 
     public int getX() {
@@ -65,7 +34,7 @@ public class Obxetivo extends Cadrado implements MouseListener {
 
     public void setX(int x) {
         this.x = x;
-        lblCadrado.setLocation(x, y);
+        botonCadrado.setLocation(x, y);
     }
 
     public int getY() {
@@ -74,44 +43,44 @@ public class Obxetivo extends Cadrado implements MouseListener {
 
     public void setY(int y) {
         this.y = y;
-        lblCadrado.setLocation(x, y);
+        botonCadrado.setLocation(x, y);
     }
 
-    public JLabel getLblCadrado() {
-        return lblCadrado;
+    public JButton getLblCadrado() {
+        return botonCadrado;
     }
 
-    public void setLblCadrado(JLabel lblCadrado) {
-        this.lblCadrado = lblCadrado;
+    public void setLblCadrado(JButton botonCadrado) {
+        this.botonCadrado = botonCadrado;
     }
 
     
-    /**
-     * Cada vez que se clicka no obxetivo, cambiao de posición, suma un acerto e resta unha bala
-     * @param e 
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        this.xogo1.xerarPosicionObxetivo(this);
-        ventanaPrincipal.pintarCadrado(lblCadrado);
-        System.out.println(getCoordenadas());
+    
+    
+    /*@Override
+    public void mousePressed(MouseEvent e) {
+        xerarPosicionObxetivo();
+        ventanaPrincipal.pintarCadrado(botonCadrado);
         ventanaPrincipal.sumarAcerto();
         ventanaPrincipal.restarBala();
+    }*/
+    
+    /**
+     * Xéranse dous números aleatorios para darlle a unhas coordenadas x e y
+     */
+    public void xerarPosicionObxetivo(){
+        if (xogo1.getBalas()>0){
+            int numX = (int) Math.floor(Math.random() * (xogo1.getMAXX() - 0 + 1) + 0);
+            int numY = (int) Math.floor(Math.random() * (xogo1.getMAXY() - 0 + 1) + 0);
+            this.setX(numX);
+            this.setY(numY);
+            xogo1.comprobarPosicion(this);
+        }
     }
 
+    /**
+     * Dalle unha cor aos obxetivos
+     */
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+    public abstract void cor();
 }
