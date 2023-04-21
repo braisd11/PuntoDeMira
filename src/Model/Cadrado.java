@@ -18,11 +18,9 @@ public class Cadrado {
     public JButton botonCadrado;
     public int ladoCadrado;
     protected Xogo xogo1;
-    protected VentanaPrincipal ventanaPrincipal;
 
-    public Cadrado(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
+    public Cadrado(Xogo xogo1) {
         this.xogo1=xogo1;
-        this.ventanaPrincipal=ventanaPrincipal;
         ladoCadrado=40;
         botonCadrado = new javax.swing.JButton();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);

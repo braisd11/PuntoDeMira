@@ -25,8 +25,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Xogo xogo1;
     private Timer tiempo;
     private ArrayList <Obxetivo> obxetivosActuais=new ArrayList<>();
-    private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
-    private ActionListener clickObxetivo;
+    private ArrayList <Obstaculo> obstaculosActuais=new ArrayList<>();
     
     
     
@@ -35,6 +34,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        xogo1=new Xogo(this);
         juego.setFocusable(true);
         crearTimerTempo();
         
@@ -59,11 +59,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogDificultad = new javax.swing.JDialog();
+        panelDialog = new javax.swing.JPanel();
+        botonFacil = new javax.swing.JButton();
+        botonMedia = new javax.swing.JButton();
+        botonDificil = new javax.swing.JButton();
+        labelBackgroundDialog = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
         fondoPantalla = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
         botonJugar = new javax.swing.JButton();
-        botonOpciones = new javax.swing.JButton();
+        botonDificultad = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
         botonInstrucciones = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
@@ -86,6 +92,77 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelTituloTiempo = new javax.swing.JLabel();
         labelTiempo = new javax.swing.JLabel();
         toggleBotonPausa = new javax.swing.JToggleButton();
+
+        dialogDificultad.setVisible(false);
+        dialogDificultad.setLocation(new java.awt.Point(420, 230));
+        dialogDificultad.setPreferredSize(new java.awt.Dimension(500, 500));
+        dialogDificultad.setSize(new java.awt.Dimension(500, 500));
+        dialogDificultad.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelDialog.setBackground(new java.awt.Color(102, 51, 0));
+        panelDialog.setOpaque(false);
+
+        botonFacil.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonFacil.setForeground(new java.awt.Color(0, 0, 0));
+        botonFacil.setText("FÁCIL");
+        botonFacil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFacilActionPerformed(evt);
+            }
+        });
+
+        botonMedia.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonMedia.setForeground(new java.awt.Color(0, 0, 0));
+        botonMedia.setText("MEDIA");
+        botonMedia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMediaActionPerformed(evt);
+            }
+        });
+
+        botonDificil.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonDificil.setForeground(new java.awt.Color(0, 0, 0));
+        botonDificil.setText("DIFÍCIL");
+        botonDificil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDificilActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelDialogLayout = new javax.swing.GroupLayout(panelDialog);
+        panelDialog.setLayout(panelDialogLayout);
+        panelDialogLayout.setHorizontalGroup(
+            panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addGroup(panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(botonFacil, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonMedia)
+                    .addComponent(botonDificil))
+                .addContainerGap(180, Short.MAX_VALUE))
+        );
+
+        panelDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDificil, botonFacil, botonMedia});
+
+        panelDialogLayout.setVerticalGroup(
+            panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(botonFacil, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(botonMedia)
+                .addGap(51, 51, 51)
+                .addComponent(botonDificil)
+                .addContainerGap(123, Short.MAX_VALUE))
+        );
+
+        panelDialogLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificil, botonFacil, botonMedia});
+
+        dialogDificultad.getContentPane().add(panelDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        labelBackgroundDialog.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelBackgroundDialog.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
+        dialogDificultad.getContentPane().add(labelBackgroundDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 510, 500));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(150, 150));
@@ -113,13 +190,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        botonOpciones.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        botonOpciones.setForeground(new java.awt.Color(0, 0, 0));
-        botonOpciones.setText("OPCIONES");
-        botonOpciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonOpciones.addActionListener(new java.awt.event.ActionListener() {
+        botonDificultad.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonDificultad.setForeground(new java.awt.Color(0, 0, 0));
+        botonDificultad.setText("DIFICULTAD");
+        botonDificultad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonDificultad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonOpcionesActionPerformed(evt);
+                botonDificultadActionPerformed(evt);
             }
         });
 
@@ -151,13 +228,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(77, Short.MAX_VALUE)
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonOpciones)
+                    .addComponent(botonDificultad)
                     .addComponent(botonSalir)
                     .addComponent(botonInstrucciones))
                 .addGap(76, 76, 76))
         );
 
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonInstrucciones, botonJugar, botonOpciones, botonSalir});
+        panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDificultad, botonInstrucciones, botonJugar, botonSalir});
 
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +242,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonDificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -175,7 +252,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonJugar, botonSalir});
 
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonInstrucciones, botonOpciones});
+        panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones});
 
         labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(0, 0, 0));
@@ -480,7 +557,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(juegoLayout.createSequentialGroup()
                 .addComponent(panelJuego, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 294, Short.MAX_VALUE))
+                .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
         );
         juegoLayout.setVerticalGroup(
             juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,9 +578,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         iniciarPartida();
     }//GEN-LAST:event_botonJugarActionPerformed
 
-    private void botonOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOpcionesActionPerformed
+    private void botonDificultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDificultadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonOpcionesActionPerformed
+        dialogDificultad.setVisible(true);
+    }//GEN-LAST:event_botonDificultadActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         // TODO add your handling code here:
@@ -599,6 +677,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         toggleBotonPausa.setSelected(false);
     }//GEN-LAST:event_toggleBotonPausaActionPerformed
 
+    private void botonFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacilActionPerformed
+        // TODO add your handling code here:
+        xogo1.setDificultad(1);
+        dialogDificultad.setVisible(false);
+    }//GEN-LAST:event_botonFacilActionPerformed
+
+    private void botonMediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMediaActionPerformed
+        // TODO add your handling code here:
+        xogo1.setDificultad(2);
+        dialogDificultad.setVisible(false);
+    }//GEN-LAST:event_botonMediaActionPerformed
+
+    private void botonDificilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDificilActionPerformed
+        // TODO add your handling code here:
+        xogo1.setDificultad(3);
+        dialogDificultad.setVisible(false);
+    }//GEN-LAST:event_botonDificilActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -639,10 +735,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Crea un Obxeto da clase Xogo 
      */
     private void iniciarPartida(){
-        xogo1=new Xogo(this);
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
         tiempo.start();
+        xogo1.empezarPartida();
     }
     
     
@@ -655,6 +751,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelJuego.updateUI();
     }
     
+    public void pintarObxetivos(){
+        for (int cont=0; cont<obxetivosActuais.size(); cont++) {
+            pintarCadrado(obxetivosActuais.get(cont).getBotonCadrado());
+        }
+    }
+    
+    public void pintarObstaculos(){
+        for (int cont=0; cont<obstaculosActuais.size(); cont++) {
+            for (int cont2=0; cont2<obstaculosActuais.get(cont).getCadrados().size(); cont2++) {
+                pintarCadrado(obstaculosActuais.get(cont).getCadrados().get(cont2).getBotonCadrado());
+            }
+        }
+    }
     /**
      * Borra o Cadrado no Panel
      * @param botonCadrado Label do Cadrado a colorear
@@ -749,10 +858,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public void engadirObxetivos (Obxetivo obxetivo){
         obxetivosActuais.add(obxetivo);
-        clickObxetivo= new ActionListener() {
+        ActionListener clickObxetivo= new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 obxetivo.xerarPosicionObxetivo();
+                System.out.println(obxetivo.getCoordenadas());
                 sumarAcerto();
                 restarBala();
             }
@@ -761,7 +871,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     public void engadirObstaculos (Obstaculo obstaculo){
-        obstaculos.add(obstaculo);
+        obstaculosActuais.add(obstaculo);
     }
     
     private void mostrarFinDeXogo(){
@@ -807,16 +917,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelRecarga.setVisible(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonDificil;
+    private javax.swing.JButton botonDificultad;
+    private javax.swing.JButton botonFacil;
     private javax.swing.JButton botonGuardarPuntuacion;
     private javax.swing.JButton botonInstrucciones;
     private javax.swing.JButton botonJugar;
-    private javax.swing.JButton botonOpciones;
+    private javax.swing.JButton botonMedia;
     private javax.swing.JButton botonReiniciar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirJuego;
+    private javax.swing.JDialog dialogDificultad;
     private javax.swing.JLabel fondoPantalla;
     private javax.swing.JPanel juego;
     private javax.swing.JLabel labelAciertos;
+    private javax.swing.JLabel labelBackgroundDialog;
     private javax.swing.JLabel labelBackgroundGameOver;
     private javax.swing.JLabel labelCargador;
     private javax.swing.JLabel labelErrores;
@@ -829,6 +944,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelTituloTiempo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelBotonesGameOver;
+    private javax.swing.JPanel panelDialog;
     private javax.swing.JPanel panelGameOver;
     private javax.swing.JPanel panelJuego;
     private javax.swing.JPanel panelLateral;

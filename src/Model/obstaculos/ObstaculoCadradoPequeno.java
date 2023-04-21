@@ -6,20 +6,27 @@ package Model.obstaculos;
 
 import Model.Coloreable;
 import Model.Xogo;
-import View.VentanaPrincipal;
 
 /**
  *
  * @author a22braisdr
  */
 public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
-    
-    public ObstaculoCadradoPequeno(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
+
+    public ObstaculoCadradoPequeno(Xogo xogo1) {
+        super(xogo1);
+        cor();
     }
+    
+    
 
     @Override
     public void cor() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void establecerFicha() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

@@ -5,7 +5,6 @@
 package Model.obxetivos;
 
 import Model.Xogo;
-import View.VentanaPrincipal;
 import java.awt.Color;
 
 /**
@@ -14,10 +13,11 @@ import java.awt.Color;
  */
 public class ObxetivoMediano extends Obxetivo{
     
-    public ObxetivoMediano(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
+    public ObxetivoMediano(Xogo xogo1) {
+        super(xogo1);
         this.ladoCadrado=50;
         cor();
+        xerarPosicionObxetivo();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
     }
 

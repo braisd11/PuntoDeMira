@@ -7,7 +7,6 @@ package Model.obstaculos;
 import Model.Cadrado;
 import Model.Coloreable;
 import Model.Xogo;
-import View.VentanaPrincipal;
 import java.awt.Color;
 
 /**
@@ -16,13 +15,12 @@ import java.awt.Color;
  */
 public class ObstaculoVerticalGrande extends Obstaculo implements Coloreable{
     
-    public ObstaculoVerticalGrande(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
-        this.xogo1 = xogo1;
-        this.ventanaPrincipal=ventanaPrincipal;
+    public ObstaculoVerticalGrande(Xogo xogo1) {
+        super(xogo1);
         cor();
-        establecerFicha();
     }
+    
+    
 
     @Override
     public void cor() {
@@ -34,7 +32,7 @@ public class ObstaculoVerticalGrande extends Obstaculo implements Coloreable{
         }
     }
     
-    private void establecerFicha(){
+    public void establecerFicha(){
         c1.setX(c0.getX());
         c1.setY(c0.getY()+this.ladoCadrado);
         c2.setX(c0.getX());

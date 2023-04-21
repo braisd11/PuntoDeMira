@@ -7,7 +7,6 @@ package Model.obxetivos;
 import Model.Cadrado;
 import Model.Coloreable;
 import Model.Xogo;
-import View.VentanaPrincipal;
 import javax.swing.JButton;
 
 
@@ -19,11 +18,10 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
     protected int ladoCadrado;
 
     
-    public Obxetivo(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
+    public Obxetivo(Xogo xogo1) {
+        super(xogo1);
         this.xogo1=xogo1;
-        this.ventanaPrincipal=ventanaPrincipal;
-        ventanaPrincipal.engadirObxetivos(this);
+        xogo1.getVentanaPrincipal().engadirObxetivos(this);
     }
     
     public int getX() {

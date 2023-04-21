@@ -6,7 +6,6 @@ package Model.obstaculos;
 
 import Model.Cadrado;
 import Model.Xogo;
-import View.VentanaPrincipal;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,33 +13,21 @@ import java.util.Iterator;
  *
  * @author a22braisdr
  */
-public abstract class Obstaculo extends Cadrado {
+public abstract class Obstaculo {
     private ArrayList<Cadrado> cadrados = new ArrayList<>();
     private Iterator<Cadrado> iterCadrados;
+    protected int ladoCadrado;
+    private Xogo xogo1;
+    protected Cadrado cadrado;
     protected Cadrado c0;
     protected Cadrado c1;
     protected Cadrado c2;
     protected Cadrado c3;
 
-    public Obstaculo(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
-        this.xogo1 = xogo1;
-        this.ventanaPrincipal=ventanaPrincipal;
-        this.ladoCadrado=40;
+    public Obstaculo(Xogo xogo1) {
+        this.xogo1=xogo1;
+        ladoCadrado=40;
         crearCadrados();
-        ventanaPrincipal.engadirObstaculos(this);
-    }
-
-    
-    
-    
-    
-    public Xogo getXogo1() {
-        return xogo1;
-    }
-
-    public void setXogo1(Xogo xogo1) {
-        this.xogo1 = xogo1;
     }
 
     public ArrayList<Cadrado> getCadrados() {
@@ -50,6 +37,16 @@ public abstract class Obstaculo extends Cadrado {
     public void setCadrados(ArrayList<Cadrado> cadrados) {
         this.cadrados = cadrados;
     }
+
+    public int getLadoCadrado() {
+        return ladoCadrado;
+    }
+
+    public void setLadoCadrado(int ladoCadrado) {
+        this.ladoCadrado = ladoCadrado;
+    }
+    
+    
 
     public Iterator<Cadrado> getIterCadrados() {
         return iterCadrados;
@@ -92,10 +89,10 @@ public abstract class Obstaculo extends Cadrado {
     }
     
     public void crearCadrados(){
-        c0 = new Cadrado(xogo1, ventanaPrincipal);
-        c1 = new Cadrado(xogo1, ventanaPrincipal);
-        c2 = new Cadrado(xogo1, ventanaPrincipal);
-        c3 = new Cadrado(xogo1, ventanaPrincipal);
+        c0 = new Cadrado(xogo1);
+        c1 = new Cadrado(xogo1);
+        c2 = new Cadrado(xogo1);
+        c3 = new Cadrado(xogo1);
         montarFicha(c0, c1, c2, c3);
     }
     
@@ -109,8 +106,11 @@ public abstract class Obstaculo extends Cadrado {
     public void xerarPosicionObstaculo(){
         int numX = (int) Math.floor(Math.random() * (xogo1.getMAXX() - 0 + 1) + 0);
         int numY = (int) Math.floor(Math.random() * (xogo1.getMAXY() - 0 + 1) + 0);
-        this.setX(numX);
-        this.setY(numY);
+        c0.setX(numX);
+        c0.setY(numY);
         xogo1.comprobarPosicion(this);
+        establecerFicha();
     }
+    
+    public abstract void establecerFicha();
 }

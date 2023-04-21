@@ -6,7 +6,6 @@ package Model.obstaculos;
 
 import Model.Coloreable;
 import Model.Xogo;
-import View.VentanaPrincipal;
 
 /**
  *
@@ -14,12 +13,22 @@ import View.VentanaPrincipal;
  */
 public class ObstaculoCadradoGrande extends Obstaculo implements Coloreable{
     
-    public ObstaculoCadradoGrande(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
+    
+
+    public ObstaculoCadradoGrande(Xogo xogo1) {
+        super(xogo1);
+        cor();
+    }
+
+    
+    
+    @Override
+    public void cor() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void cor() {
+    public void establecerFicha() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

@@ -5,13 +5,18 @@
 package Model;
 
 import Model.obstaculos.Obstaculo;
+import Model.obstaculos.ObstaculoCadradoGrande;
+import Model.obstaculos.ObstaculoCadradoPequeno;
+import Model.obstaculos.ObstaculoL;
 import Model.obstaculos.ObstaculoVerticalGrande;
+import Model.obstaculos.ObstaculoVerticalPequeno;
 import Model.obxetivos.Obxetivo;
 import Model.obxetivos.ObxetivoGrande;
 import Model.obxetivos.ObxetivoMediano;
 import Model.obxetivos.ObxetivoPequeno;
 import View.VentanaPrincipal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -24,31 +29,27 @@ public class Xogo {
     private VentanaPrincipal ventanaPrincipal;
     private ArrayList <Obxetivo> obxetivos=new ArrayList<>();
     private Iterator<Obxetivo> iterObxetivos;
-    private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
+    private HashMap<Integer,Obstaculo> obstaculos=new HashMap<>();
     private boolean pausa=false;
     private Obxetivo obxetivoPequeno;
     private Obxetivo obxetivoMediano;
     private Obxetivo obxetivoGrande;
     private Obstaculo obstaculoVerticalGrande;
+    private int dificultad=2;
     private int balas=10;
     private int acerto=5;
     private int erro=3;
     
     public Xogo(VentanaPrincipal ventanaPrincipal){
         this.ventanaPrincipal=ventanaPrincipal;
-        xerarObxetivoPequeno();
-        xerarObxetivoMediano();
-        xerarObxetivoGrande();
-        xerarObastaculoVerticalGrande();
-        empezarPartida();
-        
     }
 
-    private Obstaculo xerarObastaculoVerticalGrande(){
-        obstaculoVerticalGrande=new ObstaculoVerticalGrande(this, ventanaPrincipal);
-        obstaculos.add(obstaculoVerticalGrande);
-        return obstaculoVerticalGrande;
-        
+    public int getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
     }
     
     public int getMAXX() {
@@ -128,26 +129,47 @@ public class Xogo {
      * Dalle una posición na Ventana Principal aos tres Obxetivos
      */
     public void empezarPartida(){
-        obxetivoPequeno.xerarPosicionObxetivo();
-        obxetivoMediano.xerarPosicionObxetivo();
-        obxetivoGrande.xerarPosicionObxetivo();
-        obstaculoVerticalGrande.xerarPosicionObstaculo();
+        xerarObxetivos();
+        ventanaPrincipal.pintarObxetivos();
+        if (dificultad==1){
+            for (int cont=0; cont<=dificultad; cont++) {
+                xerarObstaculos();
+            }
+            
+        }
+        else{
+            for (int cont=0; cont<=2; cont++) {
+                xerarObstaculos();
+            }
+        }
         
-        ventanaPrincipal.pintarCadrado(obxetivoPequeno.getBotonCadrado());
-        ventanaPrincipal.pintarCadrado(obxetivoMediano.getBotonCadrado());
-        ventanaPrincipal.pintarCadrado(obxetivoGrande.getBotonCadrado());
-        ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getBotonCadrado());
-        System.out.println(obstaculoVerticalGrande.getCoordenadas());
-        System.out.println(obstaculoVerticalGrande.getC1().getCoordenadas());
+        //ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getC0().getBotonCadrado());
+        //ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getC1().getBotonCadrado());
+        //System.out.println(obstaculoVerticalGrande.getC0().getCoordenadas());
+        //System.out.println(obstaculoVerticalGrande.getC1().getCoordenadas());
     }
     
+    
+    
+    private void xerarObxetivos(){
+        if (dificultad==3){
+            xerarObxetivoPequeno();
+            xerarObxetivoMediano();
+            
+        }
+        else {
+            xerarObxetivoPequeno();
+            xerarObxetivoMediano();
+            xerarObxetivoGrande();
+        }
+    }
     
     /**
      * Crea un obxeto da clase ObxetivoPequeno e coloreao
      * @return Obxetivo obxetivoPequeno 
      */
-    public Obxetivo xerarObxetivoPequeno (){
-        obxetivoPequeno= new ObxetivoPequeno(this, ventanaPrincipal);
+    private Obxetivo xerarObxetivoPequeno (){
+        obxetivoPequeno= new ObxetivoPequeno(this);
         obxetivos.add(obxetivoPequeno);
         return obxetivoPequeno;
     }
@@ -157,8 +179,8 @@ public class Xogo {
      * Crea un obxeto da clase ObxetivoMediano e coloreao
      * @return Obxetivo obxetivoMediano 
      */
-    public Obxetivo xerarObxetivoMediano (){
-        obxetivoMediano= new ObxetivoMediano(this, ventanaPrincipal);
+    private Obxetivo xerarObxetivoMediano (){
+        obxetivoMediano= new ObxetivoMediano(this);
         obxetivos.add(obxetivoMediano);
         return obxetivoMediano;
     }
@@ -167,14 +189,24 @@ public class Xogo {
      * Crea un obxeto da clase ObxetivoGrande e coloreao
      * @return Obxetivo obxetivoGrande 
      */
-    public Obxetivo xerarObxetivoGrande (){
-        obxetivoGrande= new ObxetivoGrande(this, ventanaPrincipal);
+    private Obxetivo xerarObxetivoGrande (){
+        obxetivoGrande= new ObxetivoGrande(this);
         obxetivos.add(obxetivoGrande);
         return obxetivoGrande;
     }
     
     
-    
+    private Obstaculo xerarObstaculos (){
+        Obstaculo obstaculoAXerar=null;
+        HashMap<Integer,Obstaculo> map=new HashMap<>();
+        map.put(1, obstaculoAXerar=new ObstaculoCadradoPequeno(this));
+        map.put(2, obstaculoAXerar=new ObstaculoVerticalPequeno(this));
+        map.put(3, obstaculoAXerar=new ObstaculoCadradoGrande(this));
+        map.put(4, obstaculoAXerar=new ObstaculoVerticalGrande(this));
+        map.put(5, obstaculoAXerar=new ObstaculoL(this));
+        int figura=(int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+        return map.get(figura);
+    }
     
     
     /**
@@ -193,7 +225,7 @@ public class Xogo {
     
     public boolean comprobarPosicion(Obstaculo obstaculo){
         boolean posicionCorrecta=true;
-        if (obstaculo.getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getY()>(MAXY-obstaculo.getLadoCadrado())){
+        if (obstaculo.getC0().getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getC0().getY()>(MAXY-obstaculo.getLadoCadrado())){
             posicionCorrecta=false;
             obstaculo.xerarPosicionObstaculo();
         }

@@ -5,7 +5,6 @@
 package Model.obxetivos;
 
 import Model.Xogo;
-import View.VentanaPrincipal;
 import java.awt.Color;
 
 /**
@@ -14,10 +13,11 @@ import java.awt.Color;
  */
 public class ObxetivoPequeno extends Obxetivo {
     
-    public ObxetivoPequeno(Xogo xogo1, VentanaPrincipal ventanaPrincipal) {
-        super(xogo1, ventanaPrincipal);
+    public ObxetivoPequeno(Xogo xogo1) {
+        super(xogo1);
         this.ladoCadrado=30;
         cor();
+        xerarPosicionObxetivo();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
     }
 
