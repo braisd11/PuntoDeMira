@@ -17,7 +17,9 @@ public class ObstaculoVerticalGrande extends Obstaculo implements Coloreable{
     
     public ObstaculoVerticalGrande(Xogo xogo1) {
         super(xogo1);
+        this.ladoCadrado=60;
         cor();
+        xerarPosicionObstaculo();
     }
     
     
@@ -28,6 +30,7 @@ public class ObstaculoVerticalGrande extends Obstaculo implements Coloreable{
         while (getIterCadrados().hasNext()) {
             Cadrado cadrado = getIterCadrados().next();
             cadrado.getBotonCadrado().setBackground(Color.YELLOW);
+            cadrado.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
             cadrado.getBotonCadrado().setOpaque(true);
         }
     }

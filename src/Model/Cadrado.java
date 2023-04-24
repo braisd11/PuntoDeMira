@@ -5,7 +5,6 @@
 package Model;
 
 
-import View.VentanaPrincipal;
 import javax.swing.JButton;
 
 /**
@@ -16,12 +15,12 @@ public class Cadrado {
     public int x;
     public int y;
     public JButton botonCadrado;
-    public int ladoCadrado;
+    public int ladoCadrado=40;
     protected Xogo xogo1;
 
     public Cadrado(Xogo xogo1) {
         this.xogo1=xogo1;
-        ladoCadrado=40;
+        this.ladoCadrado=ladoCadrado;
         botonCadrado = new javax.swing.JButton();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
         botonCadrado.setFocusable(false);

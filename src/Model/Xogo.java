@@ -29,12 +29,11 @@ public class Xogo {
     private VentanaPrincipal ventanaPrincipal;
     private ArrayList <Obxetivo> obxetivos=new ArrayList<>();
     private Iterator<Obxetivo> iterObxetivos;
-    private HashMap<Integer,Obstaculo> obstaculos=new HashMap<>();
+    private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
+    private Iterator<Obstaculo> iterObstaculos;
     private boolean pausa=false;
-    private Obxetivo obxetivoPequeno;
-    private Obxetivo obxetivoMediano;
-    private Obxetivo obxetivoGrande;
-    private Obstaculo obstaculoVerticalGrande;
+    private Obxetivo obxetivo1;
+    private Obstaculo obstaculo1;
     private int dificultad=2;
     private int balas=10;
     private int acerto=5;
@@ -44,6 +43,22 @@ public class Xogo {
         this.ventanaPrincipal=ventanaPrincipal;
     }
 
+    public ArrayList<Obxetivo> getObxetivos() {
+        return obxetivos;
+    }
+
+    public void setObxetivos(ArrayList<Obxetivo> obxetivos) {
+        this.obxetivos = obxetivos;
+    }
+
+    public Iterator<Obxetivo> getIterObxetivos() {
+        return iterObxetivos;
+    }
+
+    public void setIterObxetivos(Iterator<Obxetivo> iterObxetivos) {
+        this.iterObxetivos = iterObxetivos;
+    }
+    
     public int getDificultad() {
         return dificultad;
     }
@@ -76,28 +91,12 @@ public class Xogo {
         this.pausa = pausa;
     }
 
-    public Obxetivo getObxetivoPequeno() {
-        return obxetivoPequeno;
+    public Obxetivo getObxetivo1() {
+        return obxetivo1;
     }
 
-    public void setObxetivoPequeno(Obxetivo obxetivoPequeno) {
-        this.obxetivoPequeno = obxetivoPequeno;
-    }
-
-    public Obxetivo getObxetivoMediano() {
-        return obxetivoMediano;
-    }
-
-    public void setObxetivoMediano(Obxetivo obxetivoMediano) {
-        this.obxetivoMediano = obxetivoMediano;
-    }
-
-    public Obxetivo getObxetivoGrande() {
-        return obxetivoGrande;
-    }
-
-    public void setObxetivoGrande(Obxetivo obxetivoGrande) {
-        this.obxetivoGrande = obxetivoGrande;
+    public void setObxetivo1(Obxetivo obxetivo1) {
+        this.obxetivo1 = obxetivo1;
     }
 
     public int getBalas() {
@@ -130,23 +129,20 @@ public class Xogo {
      */
     public void empezarPartida(){
         xerarObxetivos();
-        ventanaPrincipal.pintarObxetivos();
+        pintarObxetivos();
         if (dificultad==1){
             for (int cont=0; cont<=dificultad; cont++) {
-                xerarObstaculos();
+                obstaculo1=xerarObstaculos();
             }
             
         }
         else{
             for (int cont=0; cont<=2; cont++) {
-                xerarObstaculos();
+                obstaculo1=xerarObstaculos();
             }
         }
-        
-        //ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getC0().getBotonCadrado());
-        //ventanaPrincipal.pintarCadrado(obstaculoVerticalGrande.getC1().getBotonCadrado());
-        //System.out.println(obstaculoVerticalGrande.getC0().getCoordenadas());
-        //System.out.println(obstaculoVerticalGrande.getC1().getCoordenadas());
+        pintarObstaculos();
+        System.out.println(obstaculo1.getC3().getCoordenadas());
     }
     
     
@@ -164,48 +160,39 @@ public class Xogo {
         }
     }
     
-    /**
-     * Crea un obxeto da clase ObxetivoPequeno e coloreao
-     * @return Obxetivo obxetivoPequeno 
-     */
+    
     private Obxetivo xerarObxetivoPequeno (){
-        obxetivoPequeno= new ObxetivoPequeno(this);
-        obxetivos.add(obxetivoPequeno);
-        return obxetivoPequeno;
+        obxetivo1= new ObxetivoPequeno(this);
+        obxetivos.add(obxetivo1);
+        return obxetivo1;
     }
     
     
-    /**
-     * Crea un obxeto da clase ObxetivoMediano e coloreao
-     * @return Obxetivo obxetivoMediano 
-     */
+    
     private Obxetivo xerarObxetivoMediano (){
-        obxetivoMediano= new ObxetivoMediano(this);
-        obxetivos.add(obxetivoMediano);
-        return obxetivoMediano;
+        obxetivo1= new ObxetivoMediano(this);
+        obxetivos.add(obxetivo1);
+        return obxetivo1;
     }
     
-    /**
-     * Crea un obxeto da clase ObxetivoGrande e coloreao
-     * @return Obxetivo obxetivoGrande 
-     */
+    
     private Obxetivo xerarObxetivoGrande (){
-        obxetivoGrande= new ObxetivoGrande(this);
-        obxetivos.add(obxetivoGrande);
-        return obxetivoGrande;
+        obxetivo1= new ObxetivoGrande(this);
+        obxetivos.add(obxetivo1);
+        return obxetivo1;
     }
     
     
     private Obstaculo xerarObstaculos (){
-        Obstaculo obstaculoAXerar=null;
-        HashMap<Integer,Obstaculo> map=new HashMap<>();
-        map.put(1, obstaculoAXerar=new ObstaculoCadradoPequeno(this));
-        map.put(2, obstaculoAXerar=new ObstaculoVerticalPequeno(this));
-        map.put(3, obstaculoAXerar=new ObstaculoCadradoGrande(this));
-        map.put(4, obstaculoAXerar=new ObstaculoVerticalGrande(this));
-        map.put(5, obstaculoAXerar=new ObstaculoL(this));
+        HashMap<Integer,Obstaculo> obstaculosColeccion=new HashMap<>();
+        obstaculosColeccion.put(1, new ObstaculoCadradoPequeno(this));
+        obstaculosColeccion.put(2, new ObstaculoVerticalPequeno(this));
+        obstaculosColeccion.put(3, new ObstaculoCadradoGrande(this));
+        obstaculosColeccion.put(4, new ObstaculoVerticalGrande(this));
+        obstaculosColeccion.put(5, new ObstaculoL(this));
         int figura=(int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
-        return map.get(figura);
+        obstaculos.add(obstaculosColeccion.get(figura));
+        return obstaculosColeccion.get(figura);
     }
     
     
@@ -223,6 +210,12 @@ public class Xogo {
         return posicionCorrecta;
     }
     
+    
+    /**
+     * Comproba que o Obstaculo non se saia dos límites do JPanel
+     * @param obstaculo Obstaculo do que queremos comprobar que as coordenadas sexan correctas
+     * @return boolean de se a posición é correcta
+     */
     public boolean comprobarPosicion(Obstaculo obstaculo){
         boolean posicionCorrecta=true;
         if (obstaculo.getC0().getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getC0().getY()>(MAXY-obstaculo.getLadoCadrado())){
@@ -232,9 +225,12 @@ public class Xogo {
         return posicionCorrecta;
     }
     
-    
+    /**
+     * Elimina todos os obxetivos e obstáculos do jPanel
+     */
     public void eliminarTodo(){
         eliminarObxetivos();
+        eliminarObstaculos();
     }
     
     private void eliminarObxetivos(){
@@ -244,5 +240,44 @@ public class Xogo {
             ventanaPrincipal.borrarCadrados(obxetivo.getBotonCadrado());
         }
         obxetivos.clear();
+    }
+    
+    private void eliminarObstaculos(){
+        iterObstaculos=obstaculos.iterator();
+        while (iterObstaculos.hasNext()){
+            Obstaculo obstaculo = iterObstaculos.next();
+            obstaculo.setIterCadrados(obstaculo.getCadrados().iterator());
+            while (obstaculo.getIterCadrados().hasNext()){
+                Cadrado cadrado = obstaculo.getIterCadrados().next();
+                ventanaPrincipal.borrarCadrados(cadrado.getBotonCadrado());
+            }
+        }
+        obstaculos.clear();
+    }
+    
+    /**
+     * Colorea os obxetivos do Array de obxetivos
+     */
+    private void pintarObxetivos(){
+        iterObxetivos=obxetivos.iterator();
+        while (iterObxetivos.hasNext()){
+            Obxetivo obxetivo = iterObxetivos.next();
+            ventanaPrincipal.pintarCadrado(obxetivo.getBotonCadrado());
+        }
+    }
+    
+    /**
+     * Colorea os cadrados do Array de obstaculos
+     */
+    public void pintarObstaculos(){
+        iterObstaculos=obstaculos.iterator();
+        while (iterObstaculos.hasNext()){
+            Obstaculo obstaculo = iterObstaculos.next();
+            obstaculo.setIterCadrados(obstaculo.getCadrados().iterator());
+            while (obstaculo.getIterCadrados().hasNext()){
+                Cadrado cadrado = obstaculo.getIterCadrados().next();
+                ventanaPrincipal.pintarCadrado(cadrado.getBotonCadrado());
+            }
+        }
     }
 }

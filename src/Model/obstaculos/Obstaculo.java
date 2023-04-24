@@ -26,8 +26,8 @@ public abstract class Obstaculo {
 
     public Obstaculo(Xogo xogo1) {
         this.xogo1=xogo1;
-        ladoCadrado=40;
         crearCadrados();
+        xogo1.getVentanaPrincipal().engadirObstaculos(this);
     }
 
     public ArrayList<Cadrado> getCadrados() {

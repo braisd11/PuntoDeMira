@@ -4,8 +4,10 @@
  */
 package Model.obstaculos;
 
+import Model.Cadrado;
 import Model.Coloreable;
 import Model.Xogo;
+import java.awt.Color;
 
 /**
  *
@@ -15,19 +17,32 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
 
     public ObstaculoCadradoPequeno(Xogo xogo1) {
         super(xogo1);
+        this.ladoCadrado=40;
         cor();
+        xerarPosicionObstaculo();
     }
     
     
 
     @Override
     public void cor() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        setIterCadrados(getCadrados().iterator());
+        while (getIterCadrados().hasNext()) {
+            Cadrado cadrado = getIterCadrados().next();
+            cadrado.getBotonCadrado().setBackground(Color.BLUE);
+            cadrado.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
+            cadrado.getBotonCadrado().setOpaque(true);
+        }
     }
 
     @Override
     public void establecerFicha() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        c1.setX(c0.getX()+this.ladoCadrado);
+        c1.setY(c0.getY());
+        c2.setX(c0.getX());
+        c2.setY(c0.getY()+this.ladoCadrado);
+        c3.setX(c0.getX()+this.ladoCadrado);
+        c3.setY(c0.getY()+this.ladoCadrado);
     }
     
 }
