@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
@@ -850,7 +851,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 obxetivo.xerarPosicionObxetivo();
-                System.out.println("hola");
+                obxetivo.comprobarPezas(obxetivo);
                 sumarAcerto();
                 restarBala();
             }
@@ -874,7 +875,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("hola");
                 sumarErro();
             }
 
@@ -920,6 +920,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         toggleBotonPausa.setText("PAUSE");
         xogo1.setPausa(false);
         tiempo.restart();
+    }
+
+    public JPanel getPanelJuego() {
+        return panelJuego;
+    }
+
+    public void setPanelJuego(JPanel panelJuego) {
+        this.panelJuego = panelJuego;
     }
     
     

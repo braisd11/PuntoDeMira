@@ -19,7 +19,7 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
         super(xogo1);
         this.ladoCadrado=40;
         cor();
-        xerarPosicionObstaculo();
+        xerarPosicionObstaculo(this);
     }
     
     
@@ -28,10 +28,10 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
     public void cor() {
         setIterCadrados(getCadrados().iterator());
         while (getIterCadrados().hasNext()) {
-            Cadrado cadrado = getIterCadrados().next();
-            cadrado.getBotonCadrado().setBackground(Color.BLUE);
-            cadrado.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
-            cadrado.getBotonCadrado().setOpaque(true);
+            Cadrado cadrado2 = getIterCadrados().next();
+            cadrado2.getBotonCadrado().setBackground(Color.BLUE);
+            cadrado2.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
+            cadrado2.getBotonCadrado().setOpaque(true);
         }
     }
 

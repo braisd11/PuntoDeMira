@@ -68,6 +68,23 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
         }
     }
 
+    
+    
+    //PROBLEMAS AQUÍ
+    public boolean comprobarPezas(Obxetivo obxetivo){
+        boolean posicionLibre=true;
+        for (int exeX=obxetivo.getX(); exeX<(obxetivo.getX()+obxetivo.ladoCadrado); exeX++) {
+            for (int exeY=obxetivo.getY(); exeY<(obxetivo.getY()+obxetivo.ladoCadrado); exeY++) {
+                if (xogo1.getVentanaPrincipal().getPanelJuego().getComponentAt(exeX, exeY)!=null){
+                    posicionLibre=false;
+                    xerarPosicionObxetivo();
+                }
+            }
+        }
+        return posicionLibre;
+    }
+    
+    
     /**
      * Dalle unha cor aos obxetivos
      */

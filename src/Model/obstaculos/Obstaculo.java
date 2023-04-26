@@ -96,21 +96,24 @@ public abstract class Obstaculo {
         montarFicha(c0, c1, c2, c3);
     }
     
-    private void montarFicha(Cadrado c0,Cadrado c2,Cadrado c3,Cadrado c4){
-        getCadrados().add(c0);
-        getCadrados().add(c1);
-        getCadrados().add(c2);
-        getCadrados().add(c3);
+    private void montarFicha(Cadrado c0,Cadrado c1,Cadrado c2,Cadrado c3){
+        cadrados.add(c0);
+        cadrados.add(c1);
+        cadrados.add(c2);
+        cadrados.add(c3);
     }
     
-    public void xerarPosicionObstaculo(){
-        int numX = (int) Math.floor(Math.random() * (xogo1.getMAXX() - 0 + 1) + 0);
-        int numY = (int) Math.floor(Math.random() * (xogo1.getMAXY() - 0 + 1) + 0);
-        c0.setX(numX);
-        c0.setY(numY);
-        xogo1.comprobarPosicion(this);
+    public void xerarPosicionObstaculo(Obstaculo obstaculo){
+        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()-ladoCadrado*2) - 0 + 1) + 0);
+        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()-ladoCadrado*2) - 0 + 1) + 0);
+        obstaculo.getC0().setX(numX);
+        obstaculo.getC0().setY(numY);
         establecerFicha();
+        xogo1.comprobarPosicion(this);
     }
+    
+   
+    
     
     public abstract void establecerFicha();
 }

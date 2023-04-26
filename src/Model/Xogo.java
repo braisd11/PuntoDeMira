@@ -142,7 +142,6 @@ public class Xogo {
             }
         }
         pintarObstaculos();
-        System.out.println(obstaculo1.getC3().getCoordenadas());
     }
     
     
@@ -210,7 +209,6 @@ public class Xogo {
         return posicionCorrecta;
     }
     
-    
     /**
      * Comproba que o Obstaculo non se saia dos límites do JPanel
      * @param obstaculo Obstaculo do que queremos comprobar que as coordenadas sexan correctas
@@ -218,9 +216,9 @@ public class Xogo {
      */
     public boolean comprobarPosicion(Obstaculo obstaculo){
         boolean posicionCorrecta=true;
-        if (obstaculo.getC0().getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getC0().getY()>(MAXY-obstaculo.getLadoCadrado())){
+        if(obstaculo.getC3().getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getC3().getY()>(MAXY-obstaculo.getLadoCadrado())){
             posicionCorrecta=false;
-            obstaculo.xerarPosicionObstaculo();
+            obstaculo.xerarPosicionObstaculo(obstaculo);
         }
         return posicionCorrecta;
     }
@@ -280,4 +278,6 @@ public class Xogo {
             }
         }
     }
+    
+    
 }
