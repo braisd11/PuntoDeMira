@@ -32,7 +32,6 @@ public class Xogo {
     private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
     private Iterator<Obstaculo> iterObstaculos;
     private boolean pausa=false;
-    private Obxetivo obxetivo1;
     private Obstaculo obstaculo1;
     private int dificultad=2;
     private int balas=10;
@@ -91,14 +90,6 @@ public class Xogo {
         this.pausa = pausa;
     }
 
-    public Obxetivo getObxetivo1() {
-        return obxetivo1;
-    }
-
-    public void setObxetivo1(Obxetivo obxetivo1) {
-        this.obxetivo1 = obxetivo1;
-    }
-
     public int getBalas() {
         return balas;
     }
@@ -150,7 +141,6 @@ public class Xogo {
         if (dificultad==3){
             xerarObxetivoPequeno();
             xerarObxetivoMediano();
-            
         }
         else {
             xerarObxetivoPequeno();
@@ -161,24 +151,24 @@ public class Xogo {
     
     
     private Obxetivo xerarObxetivoPequeno (){
-        obxetivo1= new ObxetivoPequeno(this);
-        obxetivos.add(obxetivo1);
-        return obxetivo1;
+        Obxetivo obxetivoPequeno= new ObxetivoPequeno(this);
+        obxetivos.add(obxetivoPequeno);
+        return obxetivoPequeno;
     }
     
     
     
     private Obxetivo xerarObxetivoMediano (){
-        obxetivo1= new ObxetivoMediano(this);
-        obxetivos.add(obxetivo1);
-        return obxetivo1;
+        Obxetivo obxetivoMediano= new ObxetivoMediano(this);
+        obxetivos.add(obxetivoMediano);
+        return obxetivoMediano;
     }
     
     
     private Obxetivo xerarObxetivoGrande (){
-        obxetivo1= new ObxetivoGrande(this);
-        obxetivos.add(obxetivo1);
-        return obxetivo1;
+        Obxetivo obxetivoGrande= new ObxetivoGrande(this);
+        obxetivos.add(obxetivoGrande);
+        return obxetivoGrande;
     }
     
     
@@ -195,33 +185,7 @@ public class Xogo {
     }
     
     
-    /**
-     * Comproba que o Obxetivo non se saia dos límites do JPanel
-     * @param obxetivo Obxetivo do que queremos comprobar que as coordenadas sexan correctas
-     * @return boolean de se a posición é correcta
-     */
-    public boolean comprobarPosicion(Obxetivo obxetivo){
-        boolean posicionCorrecta=true;
-        if (obxetivo.getX()>(MAXX-obxetivo.getLadoCadrado()) || obxetivo.getY()>(MAXY-obxetivo.getLadoCadrado())){
-            posicionCorrecta=false;
-            obxetivo.xerarPosicionObxetivo();
-        }
-        return posicionCorrecta;
-    }
     
-    /**
-     * Comproba que o Obstaculo non se saia dos límites do JPanel
-     * @param obstaculo Obstaculo do que queremos comprobar que as coordenadas sexan correctas
-     * @return boolean de se a posición é correcta
-     */
-    public boolean comprobarPosicion(Obstaculo obstaculo){
-        boolean posicionCorrecta=true;
-        if(obstaculo.getC3().getX()>(MAXX-obstaculo.getLadoCadrado()) || obstaculo.getC3().getY()>(MAXY-obstaculo.getLadoCadrado())){
-            posicionCorrecta=false;
-            obstaculo.xerarPosicionObstaculo(obstaculo);
-        }
-        return posicionCorrecta;
-    }
     
     /**
      * Elimina todos os obxetivos e obstáculos do jPanel

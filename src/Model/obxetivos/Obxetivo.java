@@ -15,7 +15,7 @@ import javax.swing.JButton;
  * @author a22braisdr
  */
 public abstract class Obxetivo extends Cadrado implements Coloreable {
-    protected int ladoCadrado;
+    protected int ladoCadrado=35;
 
     
     public Obxetivo(Xogo xogo1) {
@@ -60,28 +60,11 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
      */
     public void xerarPosicionObxetivo(){
         if (xogo1.getBalas()>0){
-            int numX = (int) Math.floor(Math.random() * (xogo1.getMAXX() - 0 + 1) + 0);
-            int numY = (int) Math.floor(Math.random() * (xogo1.getMAXY() - 0 + 1) + 0);
-            this.setX(numX);
-            this.setY(numY);
-            xogo1.comprobarPosicion(this);
+            int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
+            int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
+            botonCadrado.setLocation(numX*ladoCadrado, numY*ladoCadrado);    
         }
-    }
-
-    
-    
-    //PROBLEMAS AQUÍ
-    public boolean comprobarPezas(Obxetivo obxetivo){
-        boolean posicionLibre=true;
-        for (int exeX=obxetivo.getX(); exeX<(obxetivo.getX()+obxetivo.ladoCadrado); exeX++) {
-            for (int exeY=obxetivo.getY(); exeY<(obxetivo.getY()+obxetivo.ladoCadrado); exeY++) {
-                if (xogo1.getVentanaPrincipal().getPanelJuego().getComponentAt(exeX, exeY)!=null){
-                    posicionLibre=false;
-                    xerarPosicionObxetivo();
-                }
-            }
-        }
-        return posicionLibre;
+        xogo1.getVentanaPrincipal().comprobarObxetivos(this);
     }
     
     

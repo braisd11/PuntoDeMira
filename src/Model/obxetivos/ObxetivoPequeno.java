@@ -15,10 +15,9 @@ public class ObxetivoPequeno extends Obxetivo {
     
     public ObxetivoPequeno(Xogo xogo1) {
         super(xogo1);
-        this.ladoCadrado=30;
         cor();
-        xerarPosicionObxetivo();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
+        this.xerarPosicionObxetivo();
     }
 
     public int getLadoCadrado() {
@@ -31,7 +30,7 @@ public class ObxetivoPequeno extends Obxetivo {
 
     @Override
     public void cor() {
-        botonCadrado.setBackground(Color.green);
+        botonCadrado.setBackground(Color.GREEN);
         botonCadrado.setOpaque(true);
     }
 }

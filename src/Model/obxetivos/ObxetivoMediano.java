@@ -15,10 +15,10 @@ public class ObxetivoMediano extends Obxetivo{
     
     public ObxetivoMediano(Xogo xogo1) {
         super(xogo1);
-        this.ladoCadrado=50;
         cor();
-        xerarPosicionObxetivo();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
+        botonCadrado.setVisible(false);
+        this.xerarPosicionObxetivo();
     }
 
     public int getLadoCadrado() {
@@ -31,7 +31,7 @@ public class ObxetivoMediano extends Obxetivo{
 
     @Override
     public void cor() {
-        botonCadrado.setBackground(Color.pink);
+        botonCadrado.setBackground(Color.BLUE);
         botonCadrado.setOpaque(true);
     }
 }

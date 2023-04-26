@@ -16,7 +16,7 @@ import java.util.Iterator;
 public abstract class Obstaculo {
     private ArrayList<Cadrado> cadrados = new ArrayList<>();
     private Iterator<Cadrado> iterCadrados;
-    protected int ladoCadrado;
+    protected int ladoCadrado=35;
     private Xogo xogo1;
     protected Cadrado cadrado;
     protected Cadrado c0;
@@ -103,16 +103,13 @@ public abstract class Obstaculo {
         cadrados.add(c3);
     }
     
-    public void xerarPosicionObstaculo(Obstaculo obstaculo){
-        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()-ladoCadrado*2) - 0 + 1) + 0);
-        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()-ladoCadrado*2) - 0 + 1) + 0);
-        obstaculo.getC0().setX(numX);
-        obstaculo.getC0().setY(numY);
+    public void xerarPosicionObstaculo(){
+        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/getLadoCadrado()) - 0 + 1) + 0);
+        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/getLadoCadrado()) - 0 + 1) + 0);
+        getC0().getBotonCadrado().setLocation(numX*getLadoCadrado(), numY*getLadoCadrado());
         establecerFicha();
-        xogo1.comprobarPosicion(this);
+        xogo1.getVentanaPrincipal().comprobarObstaculos(this);
     }
-    
-   
     
     
     public abstract void establecerFicha();
