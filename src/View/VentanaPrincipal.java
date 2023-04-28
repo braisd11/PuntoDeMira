@@ -9,7 +9,6 @@ import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,7 +29,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Timer duracion;
     private ActionListener clickObxetivo;
     private MouseListener mouse;
-    public ArrayList<Component>components=new ArrayList<>();
+    public ArrayList<JButton>arrayBotones=new ArrayList<>();
     
     
     
@@ -847,7 +846,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     private void crearTimerPartida(){
-        
         duracion=new Timer(1000, new ActionListener() {
             int tempo=0;
             @Override
@@ -880,23 +878,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
     /**
-     * Engade os Obxetivos a un array de Obxetivo e engade o ActionListener
+     * Engade os Obxetivos a un array de Obxetivo
      * @param obxetivo Obxetivo creado en Obxetivo
      */
     public void engadirObxetivos (Obxetivo obxetivo){
-        components.add(obxetivo.getBotonCadrado());
+        obxetivosListener(obxetivo);
+    }
+    
+    private void obxetivosListener(Obxetivo obxetivo){
         clickObxetivo= new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(obxetivo==xogo1.getObxetivos().get(0)){
-                    obxetivo.xerarPosicionObxetivo();
+                if(!xogo1.isPausa()){
+                    if(obxetivo==xogo1.getObxetivos().get(0)){
+                        obxetivo.xerarPosicionObxetivo();
+                    }
+                    else if (obxetivo==xogo1.getObxetivos().get(1) || obxetivo==xogo1.getObxetivos().get(2)){
+                        obxetivo.getBotonCadrado().setVisible(false);
+                    }
+                    sumarAcerto();
+                    restarBala();
                 }
-                else if (obxetivo==xogo1.getObxetivos().get(1) || obxetivo==xogo1.getObxetivos().get(2)){
-                    obxetivo.getBotonCadrado().setVisible(false);
-                }
-                comprobarObxetivos(obxetivo);
-                sumarAcerto();
-                restarBala();
             }
         };
         obxetivo.getBotonCadrado().addActionListener(clickObxetivo);
@@ -904,9 +906,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public boolean comprobarObxetivos (Obxetivo obxetivo){
         boolean correcto=true;
-        for (int cont=0; cont<components.size(); cont++) {
-            if (components.get(cont).getLocation()==(obxetivo.getBotonCadrado().getLocation())) {
-                obxetivo.xerarPosicionObxetivo();
+        for (int cont=0; cont<arrayBotones.size(); cont++) {
+            if (arrayBotones.get(cont).getX()==obxetivo.getBotonCadrado().getX() && arrayBotones.get(cont).getY()==obxetivo.getBotonCadrado().getY()) {
                 correcto=false;
             }
         }
@@ -915,18 +916,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public boolean comprobarObstaculos (Obstaculo obstaculo){
         boolean correcto=true;
-        for (int cont2=0; cont2<components.size(); cont2++) {
-            for (int cont=0; cont<obstaculo.getCadrados().size(); cont++) 
-                if (components.get(cont2).getLocation()==(obstaculo.getCadrados().get(cont).getBotonCadrado().getLocation())) {
-                    obstaculo.xerarPosicionObstaculo();
+        for (int cont2=0; cont2<arrayBotones.size(); cont2++) {
+            for (int cont=0; cont<obstaculo.getCadrados().size(); cont++) { 
+                if (arrayBotones.get(cont2).getX()==obstaculo.getCadrados().get(cont).getBotonCadrado().getX() && arrayBotones.get(cont2).getY()==obstaculo.getCadrados().get(cont).getBotonCadrado().getY()){
+                    System.out.println("obstaculo encima");
+                    //Esto siempre está mal porque coincide el obstaculo con el de dentro del array
                     correcto=false;
                 }
-            
+            }
         }
         return correcto;
     }
     
     public void engadirObstaculos (Obstaculo obstaculo){
+        engadirBotons(obstaculo);
+        engadirListener(obstaculo);
+    }
+    
+    private void engadirListener(Obstaculo obstaculo){
         mouse = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -942,7 +949,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                sumarErro();
+                if (!xogo1.isPausa()){
+                    sumarErro();
+                }
             }
 
             @Override
@@ -951,17 +960,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         };
         for (int cont=0; cont<obstaculo.getCadrados().size(); cont++) {
             obstaculo.getCadrados().get(cont).getBotonCadrado().addMouseListener(mouse);
-            components.add(obstaculo.getCadrados().get(cont).getBotonCadrado());
-        }   
-        comprobarObstaculos(obstaculo);
+        }
     }
     
+    private void engadirBotons(Obstaculo obstaculo){
+        for (int cont=0; cont<obstaculo.getCadrados().size(); cont++) {
+            arrayBotones.add(obstaculo.getCadrados().get(cont).getBotonCadrado());
+        }
+    }
     
     private void mostrarFinDeXogo(){
         juego.setVisible(false);
         panelGameOver.setVisible(true);
         tiempo.stop();
         duracion.stop();
+        arrayBotones.clear();
     }
     
     

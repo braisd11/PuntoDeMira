@@ -42,11 +42,11 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
         botonCadrado.setLocation(x, y);
     }
 
-    public JButton getLblCadrado() {
+    public JButton getBotonCadrado() {
         return botonCadrado;
     }
 
-    public void setLblCadrado(JButton botonCadrado) {
+    public void setBotonCadrado(JButton botonCadrado) {
         this.botonCadrado = botonCadrado;
     }
 
@@ -62,11 +62,20 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
         if (xogo1.getBalas()>0){
             int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
             int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
-            botonCadrado.setLocation(numX*ladoCadrado, numY*ladoCadrado);    
+            setX(numX*ladoCadrado);
+            setY(numY*ladoCadrado);    
         }
-        xogo1.getVentanaPrincipal().comprobarObxetivos(this);
+        comprobarPosicion();
+        if (!xogo1.getVentanaPrincipal().comprobarObxetivos(this)){
+            xerarPosicionObxetivo();
+        }
     }
     
+    private void comprobarPosicion(){
+        if (getX()>=(xogo1.getMAXX()) || getY()>=(xogo1.getMAXY())){
+            xerarPosicionObxetivo();
+        }
+    }
     
     /**
      * Dalle unha cor aos obxetivos

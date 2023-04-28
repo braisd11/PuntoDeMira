@@ -31,8 +31,8 @@ public class Xogo {
     private Iterator<Obxetivo> iterObxetivos;
     private ArrayList <Obstaculo> obstaculos=new ArrayList<>();
     private Iterator<Obstaculo> iterObstaculos;
+    private HashMap<Integer,Obstaculo> obstaculosColeccion=new HashMap<>();
     private boolean pausa=false;
-    private Obstaculo obstaculo1;
     private int dificultad=2;
     private int balas=10;
     private int acerto=5;
@@ -40,6 +40,7 @@ public class Xogo {
     
     public Xogo(VentanaPrincipal ventanaPrincipal){
         this.ventanaPrincipal=ventanaPrincipal;
+        crearObstaculos();
     }
 
     public ArrayList<Obxetivo> getObxetivos() {
@@ -123,15 +124,15 @@ public class Xogo {
         pintarObxetivos();
         if (dificultad==1){
             for (int cont=0; cont<=dificultad; cont++) {
-                obstaculo1=xerarObstaculos();
+                Obstaculo obstaculo=xerarObstaculos();
             }
-            
         }
-        else{
+        else if (dificultad!=1){
             for (int cont=0; cont<=2; cont++) {
-                obstaculo1=xerarObstaculos();
+                Obstaculo obstaculo=xerarObstaculos();
             }
         }
+        establecerPosicionObstaculos();
         pintarObstaculos();
     }
     
@@ -173,18 +174,19 @@ public class Xogo {
     
     
     private Obstaculo xerarObstaculos (){
-        HashMap<Integer,Obstaculo> obstaculosColeccion=new HashMap<>();
+        int figura=(int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+        obstaculos.add(obstaculosColeccion.get(figura));
+        ventanaPrincipal.engadirObstaculos(obstaculosColeccion.get(figura));
+        return obstaculosColeccion.get(figura);
+    }
+    
+    private void crearObstaculos (){
         obstaculosColeccion.put(1, new ObstaculoCadradoPequeno(this));
         obstaculosColeccion.put(2, new ObstaculoVerticalPequeno(this));
         obstaculosColeccion.put(3, new ObstaculoCadradoGrande(this));
         obstaculosColeccion.put(4, new ObstaculoVerticalGrande(this));
         obstaculosColeccion.put(5, new ObstaculoL(this));
-        int figura=(int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
-        obstaculos.add(obstaculosColeccion.get(figura));
-        return obstaculosColeccion.get(figura);
     }
-    
-    
     
     
     /**
@@ -217,9 +219,7 @@ public class Xogo {
         obstaculos.clear();
     }
     
-    /**
-     * Colorea os obxetivos do Array de obxetivos
-     */
+    
     private void pintarObxetivos(){
         iterObxetivos=obxetivos.iterator();
         while (iterObxetivos.hasNext()){
@@ -243,5 +243,11 @@ public class Xogo {
         }
     }
     
-    
+    private void establecerPosicionObstaculos(){
+        iterObstaculos=obstaculos.iterator();
+        while (iterObstaculos.hasNext()){
+            Obstaculo obstaculo = iterObstaculos.next();
+            obstaculo.xerarPosicionObstaculo();
+        }
+    }
 }

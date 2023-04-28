@@ -17,9 +17,7 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
 
     public ObstaculoCadradoPequeno(Xogo xogo1) {
         super(xogo1);
-        this.ladoCadrado=35;
         cor();
-        this.xerarPosicionObstaculo();
     }
     
     
@@ -29,7 +27,7 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
         setIterCadrados(getCadrados().iterator());
         while (getIterCadrados().hasNext()) {
             Cadrado cadrado2 = getIterCadrados().next();
-            cadrado2.getBotonCadrado().setBackground(Color.BLUE);
+            cadrado2.getBotonCadrado().setBackground(Color.CYAN);
             cadrado2.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
             cadrado2.getBotonCadrado().setOpaque(true);
         }
@@ -37,14 +35,12 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
 
     @Override
     public void establecerFicha() {
-        c1.getBotonCadrado().setBounds(c0.getBotonCadrado().getX()+ladoCadrado, c0.getBotonCadrado().getY(), ladoCadrado, ladoCadrado);
-        c2.getBotonCadrado().setBounds(c0.getBotonCadrado().getX(), c0.getBotonCadrado().getY()+ladoCadrado, ladoCadrado, ladoCadrado);
-        c3.getBotonCadrado().setBounds(c0.getBotonCadrado().getX()+ladoCadrado, c0.getBotonCadrado().getY()+ladoCadrado, ladoCadrado, ladoCadrado);
-        //c1.setY(c0.getY());
-        //c2.setX(c0.getX());
-        //c2.setY(c0.getY()+this.ladoCadrado);
-        //c3.setX(c0.getX()+this.ladoCadrado);
-        //c3.setY(c0.getY()+this.ladoCadrado);
+        c1.setX(c0.getX()+ladoCadrado);
+        c1.setY(c0.getY());
+        c2.setX(c0.getX());
+        c2.setY(c0.getY()+ladoCadrado);
+        c3.setX(c0.getX()+ladoCadrado);
+        c3.setY(c0.getY()+ladoCadrado);
     }
     
 }

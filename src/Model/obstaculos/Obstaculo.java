@@ -16,9 +16,8 @@ import java.util.Iterator;
 public abstract class Obstaculo {
     private ArrayList<Cadrado> cadrados = new ArrayList<>();
     private Iterator<Cadrado> iterCadrados;
-    protected int ladoCadrado=35;
+    protected int ladoCadrado=70;
     private Xogo xogo1;
-    protected Cadrado cadrado;
     protected Cadrado c0;
     protected Cadrado c1;
     protected Cadrado c2;
@@ -104,13 +103,24 @@ public abstract class Obstaculo {
     }
     
     public void xerarPosicionObstaculo(){
-        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/getLadoCadrado()) - 0 + 1) + 0);
-        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/getLadoCadrado()) - 0 + 1) + 0);
-        getC0().getBotonCadrado().setLocation(numX*getLadoCadrado(), numY*getLadoCadrado());
+        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
+        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
+        c0.setX(numX*ladoCadrado);
+        c0.setY(numY*ladoCadrado);
         establecerFicha();
-        xogo1.getVentanaPrincipal().comprobarObstaculos(this);
+        comprobarPosicion();
+        if (!xogo1.getVentanaPrincipal().comprobarObstaculos(this)){
+            xerarPosicionObstaculo();
+            System.out.println("obstaculo mal colocado");
+        }
     }
     
+    private void comprobarPosicion(){
+        if (c3.getX()>=(xogo1.getMAXX()-ladoCadrado) || c3.getY()>=(xogo1.getMAXY()-ladoCadrado)){
+            xerarPosicionObstaculo();
+            System.out.println("obstaculo fora dos limites");
+        }
+    }
     
     public abstract void establecerFicha();
 }
