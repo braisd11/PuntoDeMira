@@ -776,9 +776,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             escribir(puntuacion, labelAciertos);
             
             String a=labelTiempo.getText();
-                int b=(int) Double.parseDouble(a);
-                b+=2;
-                labelTiempo.setText(b+"");
+            int b=(int) Double.parseDouble(a);
+            b+=2;
+            labelTiempo.setText(b+"");
         }
     }
     
@@ -789,7 +789,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             int erro=(int) Double.parseDouble(erroDisparo);
             erro+=1;
             escribir(erro, labelErrores);
-            
             String a=labelTiempo.getText();
             int b=(int) Double.parseDouble(a);
             b-=5;
@@ -859,11 +858,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private void aparecerCadrados(int tempo){
         if (tempo%5==0){
-            xogo1.getObxetivos().get(1).xerarPosicionObxetivo();
+            //xogo1.getObxetivos().get(1).xerarPosicionObxetivo();
             xogo1.getObxetivos().get(1).getBotonCadrado().setVisible(true);
         }
         if (tempo%10==0 && xogo1.getDificultad()!=3){
-            xogo1.getObxetivos().get(2).xerarPosicionObxetivo();
+            //xogo1.getObxetivos().get(2).xerarPosicionObxetivo();
             xogo1.getObxetivos().get(2).getBotonCadrado().setVisible(true);
         }
     }
@@ -889,11 +888,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         clickObxetivo= new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!xogo1.isPausa()){
+                if(!xogo1.isPausa() && xogo1.getBalas()>0){
                     if(obxetivo==xogo1.getObxetivos().get(0)){
                         obxetivo.xerarPosicionObxetivo();
                     }
                     else if (obxetivo==xogo1.getObxetivos().get(1) || obxetivo==xogo1.getObxetivos().get(2)){
+                        obxetivo.xerarPosicionObxetivo();
                         obxetivo.getBotonCadrado().setVisible(false);
                     }
                     sumarAcerto();
@@ -906,21 +906,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public boolean comprobarObxetivos (Obxetivo obxetivo){
         boolean correcto=true;
-        for (int cont=0; cont<arrayBotones.size(); cont++) {
-            if (arrayBotones.get(cont).getX()==obxetivo.getBotonCadrado().getX() && arrayBotones.get(cont).getY()==obxetivo.getBotonCadrado().getY()) {
+        for (int contArray=0; contArray<arrayBotones.size(); contArray++) {
+            if (!comprobarExes(arrayBotones.get(contArray),obxetivo)){
                 correcto=false;
             }
         }
         return correcto;
     }
     
+    private boolean comprobarExes(JButton boton,Obxetivo obxetivo){
+        boolean correctoExe=true;
+        for (int contX=boton.getX(); contX<(boton.getX()+obxetivo.getLadoCadrado()*2); contX++) {
+            for (int contY=boton.getY(); contY<(boton.getY()+obxetivo.getLadoCadrado()*2); contY++) {
+                if (contX==obxetivo.getX() && contY==obxetivo.getY()){
+                    correctoExe=false;
+                }
+            }
+            
+        }
+        return correctoExe;
+    }
+    
     public boolean comprobarObstaculos (Obstaculo obstaculo){
         boolean correcto=true;
-        for (int cont2=0; cont2<arrayBotones.size(); cont2++) {
-            for (int cont=0; cont<obstaculo.getCadrados().size(); cont++) { 
-                if (arrayBotones.get(cont2).getX()==obstaculo.getCadrados().get(cont).getBotonCadrado().getX() && arrayBotones.get(cont2).getY()==obstaculo.getCadrados().get(cont).getBotonCadrado().getY()){
-                    System.out.println("obstaculo encima");
-                    //Esto siempre está mal porque coincide el obstaculo con el de dentro del array
+        for (int botonArray=0; botonArray<arrayBotones.size(); botonArray++) {
+            JButton boton=arrayBotones.get(botonArray);
+            for (int botonObstaculoCont=0; botonObstaculoCont<obstaculo.getCadrados().size(); botonObstaculoCont++) {
+                JButton botonObstaculo=obstaculo.getCadrados().get(botonObstaculoCont).getBotonCadrado();
+                if (boton.getLocation().equals(botonObstaculo.getLocation())){
                     correcto=false;
                 }
             }
@@ -937,6 +950,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mouse = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                
             }
 
             @Override
@@ -945,6 +959,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                
             }
 
             @Override

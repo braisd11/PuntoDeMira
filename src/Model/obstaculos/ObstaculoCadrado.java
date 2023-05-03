@@ -13,21 +13,21 @@ import java.awt.Color;
  *
  * @author a22braisdr
  */
-public class ObstaculoCadradoGrande extends Obstaculo implements Coloreable{
-    
-    public ObstaculoCadradoGrande(Xogo xogo1) {
+public class ObstaculoCadrado extends Obstaculo implements Coloreable {
+
+    public ObstaculoCadrado(Xogo xogo1) {
         super(xogo1);
         cor();
     }
+    
+    
 
-    
-    
     @Override
     public void cor() {
         setIterCadrados(getCadrados().iterator());
         while (getIterCadrados().hasNext()) {
             Cadrado cadrado2 = getIterCadrados().next();
-            cadrado2.getBotonCadrado().setBackground(Color.RED);
+            cadrado2.getBotonCadrado().setBackground(Color.CYAN);
             cadrado2.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
             cadrado2.getBotonCadrado().setOpaque(true);
         }

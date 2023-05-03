@@ -63,11 +63,11 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
             int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
             int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
             setX(numX*ladoCadrado);
-            setY(numY*ladoCadrado);    
-        }
-        comprobarPosicion();
-        if (!xogo1.getVentanaPrincipal().comprobarObxetivos(this)){
-            xerarPosicionObxetivo();
+            setY(numY*ladoCadrado); 
+            comprobarPosicion();
+            while (!xogo1.getVentanaPrincipal().comprobarObxetivos(this)){
+                xerarPosicionObxetivo();
+            }   
         }
     }
     

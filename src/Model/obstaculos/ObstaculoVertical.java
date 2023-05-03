@@ -13,9 +13,9 @@ import java.awt.Color;
  *
  * @author a22braisdr
  */
-public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
+public class ObstaculoVertical extends Obstaculo implements Coloreable {
 
-    public ObstaculoCadradoPequeno(Xogo xogo1) {
+    public ObstaculoVertical(Xogo xogo1) {
         super(xogo1);
         cor();
     }
@@ -27,7 +27,7 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
         setIterCadrados(getCadrados().iterator());
         while (getIterCadrados().hasNext()) {
             Cadrado cadrado2 = getIterCadrados().next();
-            cadrado2.getBotonCadrado().setBackground(Color.CYAN);
+            cadrado2.getBotonCadrado().setBackground(Color.WHITE);
             cadrado2.getBotonCadrado().setSize(ladoCadrado, ladoCadrado);
             cadrado2.getBotonCadrado().setOpaque(true);
         }
@@ -35,12 +35,12 @@ public class ObstaculoCadradoPequeno extends Obstaculo implements Coloreable {
 
     @Override
     public void establecerFicha() {
-        c1.setX(c0.getX()+ladoCadrado);
-        c1.setY(c0.getY());
+        c1.setX(c0.getX());
+        c1.setY(c0.getY()+ladoCadrado);
         c2.setX(c0.getX());
-        c2.setY(c0.getY()+ladoCadrado);
-        c3.setX(c0.getX()+ladoCadrado);
-        c3.setY(c0.getY()+ladoCadrado);
+        c2.setY(c0.getY()+2*ladoCadrado);
+        c3.setX(c0.getX());
+        c3.setY(c0.getY()+3*ladoCadrado);
     }
     
 }

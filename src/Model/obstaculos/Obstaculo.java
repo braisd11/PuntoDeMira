@@ -26,7 +26,6 @@ public abstract class Obstaculo {
     public Obstaculo(Xogo xogo1) {
         this.xogo1=xogo1;
         crearCadrados();
-        xogo1.getVentanaPrincipal().engadirObstaculos(this);
     }
 
     public ArrayList<Cadrado> getCadrados() {
@@ -103,23 +102,26 @@ public abstract class Obstaculo {
     }
     
     public void xerarPosicionObstaculo(){
-        int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
-        int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
-        c0.setX(numX*ladoCadrado);
-        c0.setY(numY*ladoCadrado);
-        establecerFicha();
-        comprobarPosicion();
-        if (!xogo1.getVentanaPrincipal().comprobarObstaculos(this)){
-            xerarPosicionObstaculo();
-            System.out.println("obstaculo mal colocado");
+        
+        do{
+            int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
+            int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
+            c0.setX(numX*ladoCadrado);
+            c0.setY(numY*ladoCadrado); 
+            establecerFicha();
         }
+        while ((!xogo1.getVentanaPrincipal().comprobarObstaculos(this)) || !comprobarPosicion(c3.getX(), c3.getY()));
+        xogo1.getVentanaPrincipal().engadirObstaculos(this);
     }
+        
+        
     
-    private void comprobarPosicion(){
-        if (c3.getX()>=(xogo1.getMAXX()-ladoCadrado) || c3.getY()>=(xogo1.getMAXY()-ladoCadrado)){
-            xerarPosicionObstaculo();
-            System.out.println("obstaculo fora dos limites");
+    private boolean comprobarPosicion(int x, int y){
+        boolean correcto=true;
+        if (x>=(xogo1.getMAXX()-ladoCadrado) || y>=(xogo1.getMAXY()-ladoCadrado)){
+            correcto=false;
         }
+        return correcto;
     }
     
     public abstract void establecerFicha();

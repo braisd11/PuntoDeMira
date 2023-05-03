@@ -5,11 +5,9 @@
 package Model;
 
 import Model.obstaculos.Obstaculo;
-import Model.obstaculos.ObstaculoCadradoGrande;
-import Model.obstaculos.ObstaculoCadradoPequeno;
+import Model.obstaculos.ObstaculoCadrado;
 import Model.obstaculos.ObstaculoL;
-import Model.obstaculos.ObstaculoVerticalGrande;
-import Model.obstaculos.ObstaculoVerticalPequeno;
+import Model.obstaculos.ObstaculoVertical;
 import Model.obxetivos.Obxetivo;
 import Model.obxetivos.ObxetivoGrande;
 import Model.obxetivos.ObxetivoMediano;
@@ -122,15 +120,9 @@ public class Xogo {
     public void empezarPartida(){
         xerarObxetivos();
         pintarObxetivos();
-        if (dificultad==1){
-            for (int cont=0; cont<=dificultad; cont++) {
-                Obstaculo obstaculo=xerarObstaculos();
-            }
-        }
-        else if (dificultad!=1){
-            for (int cont=0; cont<=2; cont++) {
-                Obstaculo obstaculo=xerarObstaculos();
-            }
+        Obstaculo obstaculo;
+        for (int cont=1; cont<=obstaculosColeccion.size(); cont++) {
+            obstaculo=xerarObstaculos(cont);
         }
         establecerPosicionObstaculos();
         pintarObstaculos();
@@ -173,19 +165,19 @@ public class Xogo {
     }
     
     
-    private Obstaculo xerarObstaculos (){
-        int figura=(int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
-        obstaculos.add(obstaculosColeccion.get(figura));
-        ventanaPrincipal.engadirObstaculos(obstaculosColeccion.get(figura));
+    private Obstaculo xerarObstaculos (int figura){
+        engadirArray(obstaculosColeccion.get(figura));
         return obstaculosColeccion.get(figura);
     }
     
+    private void engadirArray (Obstaculo obstaculo){
+        obstaculos.add(obstaculo);
+    }
+    
     private void crearObstaculos (){
-        obstaculosColeccion.put(1, new ObstaculoCadradoPequeno(this));
-        obstaculosColeccion.put(2, new ObstaculoVerticalPequeno(this));
-        obstaculosColeccion.put(3, new ObstaculoCadradoGrande(this));
-        obstaculosColeccion.put(4, new ObstaculoVerticalGrande(this));
-        obstaculosColeccion.put(5, new ObstaculoL(this));
+        obstaculosColeccion.put(1, new ObstaculoCadrado(this));
+        obstaculosColeccion.put(2, new ObstaculoVertical(this));
+        obstaculosColeccion.put(3, new ObstaculoL(this));
     }
     
     
@@ -209,6 +201,7 @@ public class Xogo {
     private void eliminarObstaculos(){
         iterObstaculos=obstaculos.iterator();
         while (iterObstaculos.hasNext()){
+            System.out.println("Borrando");
             Obstaculo obstaculo = iterObstaculos.next();
             obstaculo.setIterCadrados(obstaculo.getCadrados().iterator());
             while (obstaculo.getIterCadrados().hasNext()){
