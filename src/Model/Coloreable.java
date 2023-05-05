@@ -10,5 +10,8 @@ package Model;
  */
 public interface Coloreable {
     
+    /**
+     * Colorea
+     */
     public void cor();
 }

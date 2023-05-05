@@ -101,8 +101,11 @@ public abstract class Obstaculo {
         cadrados.add(c3);
     }
     
+    
+    /**
+     * Xera unha posición para o cadrado c0 do Obstaculo e comproba se é posible
+     */
     public void xerarPosicionObstaculo(){
-        
         do{
             int numX = (int) Math.floor(Math.random() * ((xogo1.getMAXX()/ladoCadrado) - 0 + 1) + 0);
             int numY = (int) Math.floor(Math.random() * ((xogo1.getMAXY()/ladoCadrado) - 0 + 1) + 0);
@@ -111,7 +114,6 @@ public abstract class Obstaculo {
             establecerFicha();
         }
         while ((!xogo1.getVentanaPrincipal().comprobarObstaculos(this)) || !comprobarPosicion(c3.getX(), c3.getY()));
-        xogo1.getVentanaPrincipal().engadirObstaculos(this);
     }
         
         
@@ -124,5 +126,8 @@ public abstract class Obstaculo {
         return correcto;
     }
     
+    /**
+     * Monta o resto de cadrados da ficha con respecto ao cadrado c0
+     */
     public abstract void establecerFicha();
 }

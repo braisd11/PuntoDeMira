@@ -1,0 +1,23 @@
+O programa vai a basearse en un panel onde o obxectivo vai a ser sumar tempo clickando sobre unha figura que será o obxectivo evitando uns obstáculos. O xogo remata cando se esgota o tempo. Para evitar que se esgote o tempo cada vez que acertemos nun obxetivo sumaremos 5 segundos. No caso de ter un erro restaremos 3 segundos. O tempo comeza en 60 segundos.
+Poderemos escoller entre tres dificultades: Fácil, Media e Difícil.
+    • No caso de escoller Fácil, só haberá un obstáculo na partida e tres tamaños de obxetivo.
+    • Na dificultade Media teremos dous obstáculos e os tres tamaños de obxetivo.
+    • Na dificultade Difícil hai dous obstáculos, pero só dous tipos de obxetivos, os dous máis pequenos.
+
+O obxectivo vai a poder ter tres tamaños diferentes que se irán xerando de forma aleatoria. Además diso, os obstáculos van a poder adoptar distintas formas que tamén se irán xerando de forma aleatoria.
+
+A posición tanto dos obstáculos como do obxetivo xérase de forma aleatoria. A posición dos obstáculos vai a ir cambiando cada 20 segundos e a do obxetivo cada vez que se clicka enriba del. Sumarase un punto cada vez que se clicka en un dos obxetivos. 
+
+No caso dos obstáculos, ademáis de ter diferentes tamaños, hai dúas cores. Sobre unha das cores simplemente non se pode clickar. Pola outra cor tampouco se poderá pasar por enriba. No caso de cometer algunha das dúas infraccións sumarase un erro e restaránse 3 segundos. Tamén se sumará un erro no caso de clickar sobre o panel e non sobre o obxetivo.
+
+Teremos un cargador de 10 balas, polo que se se esgotan as balas haberá que pulsar unha tecla para comezar a recarga que dura 3 segundos. Mentres se realice a recarga non se poden sumar puntos pero sí se poden sumar erros.
+
+Con respecto a Base de Datos, teremos dúas táboas. Unha primeira táboa Xogadores que gardará o nome e o seu ID (este último xerarase automáticamente). E por último unha segunda táboa Partidas que gardará un Id_partida (automático), o nome do xogador, os puntos acadados, os erros e a data da partida.
+
+
+
+
+
+
+
+Token: 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

@@ -18,7 +18,6 @@ public class ObxetivoGrande extends Obxetivo {
         super(xogo1);
         cor();
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
-        botonCadrado.setVisible(false);
         this.xerarPosicionObxetivo();
     }
 

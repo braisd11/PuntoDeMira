@@ -5,6 +5,7 @@
  */
 package View;
 
+import Database.Conexion;
 import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
@@ -17,6 +18,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -25,8 +27,12 @@ import javax.swing.Timer;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
     private Xogo xogo1;
+    private Conexion con;
     private Timer tiempo;
     private Timer duracion;
+    private Timer tiempoRecarga;
+    private int espera=3;
+    private int recargando=0;
     private ActionListener clickObxetivo;
     private MouseListener mouse;
     public ArrayList<JButton>arrayBotones=new ArrayList<>();
@@ -38,10 +44,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        con=new Conexion(this); 
         xogo1=new Xogo(this);
         juego.setFocusable(true);
         crearTimerPuntos();
         crearTimerPartida();
+        crearTimerRecarga();
     }
     
     /**
@@ -55,17 +63,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         dialogDificultad = new javax.swing.JDialog();
         panelDialog = new javax.swing.JPanel();
-        botonFacil = new javax.swing.JButton();
-        botonMedia = new javax.swing.JButton();
-        botonDificil = new javax.swing.JButton();
+        botonEstatico = new javax.swing.JButton();
+        botonDinamico = new javax.swing.JButton();
         labelBackgroundDialog = new javax.swing.JLabel();
+        dialogInstrucciones = new javax.swing.JDialog();
+        jTextArea1 = new javax.swing.JTextArea();
+        labelBackgroundDialog1 = new javax.swing.JLabel();
+        dialogInicioSesion = new javax.swing.JDialog();
+        panelDialogInicioSesion = new javax.swing.JPanel();
+        labelUsuario = new javax.swing.JLabel();
+        labelContrasinal = new javax.swing.JLabel();
+        botonEnviar = new javax.swing.JButton();
+        textUsuarioInicio = new javax.swing.JTextField();
+        passwordUsuarioInicio = new javax.swing.JPasswordField();
+        dialogRegistrar = new javax.swing.JDialog();
+        panelDialogRegistrarse = new javax.swing.JPanel();
+        labelUsuario1 = new javax.swing.JLabel();
+        labelContrasinal1 = new javax.swing.JLabel();
+        botonEnviarNovo = new javax.swing.JButton();
+        textUsuarioNovo = new javax.swing.JTextField();
+        passwordUsuarioNovo = new javax.swing.JPasswordField();
+        panelInicio = new javax.swing.JPanel();
+        botonIniciarSesion = new javax.swing.JButton();
+        botonRegistrarse = new javax.swing.JButton();
+        botonAccederInvitado = new javax.swing.JButton();
+        botonCerrar = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
-        fondoPantalla = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
         botonJugar = new javax.swing.JButton();
         botonDificultad = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
         botonInstrucciones = new javax.swing.JButton();
+        fondoPantalla = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
         juego = new javax.swing.JPanel();
         panelJuego = new javax.swing.JPanel();
@@ -75,6 +104,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelTituloCargador = new javax.swing.JLabel();
         labelAciertos = new javax.swing.JLabel();
         labelErrores = new javax.swing.JLabel();
+        labelRecargando = new javax.swing.JLabel();
         labelCargador = new javax.swing.JLabel();
         labelRecarga = new javax.swing.JLabel();
         labelTituloTiempo = new javax.swing.JLabel();
@@ -95,30 +125,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelDialog.setBackground(new java.awt.Color(102, 51, 0));
         panelDialog.setOpaque(false);
 
-        botonFacil.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        botonFacil.setForeground(new java.awt.Color(0, 0, 0));
-        botonFacil.setText("FÁCIL");
-        botonFacil.addActionListener(new java.awt.event.ActionListener() {
+        botonEstatico.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonEstatico.setForeground(new java.awt.Color(0, 0, 0));
+        botonEstatico.setText("ESTÁTICO");
+        botonEstatico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonFacilActionPerformed(evt);
+                botonEstaticoActionPerformed(evt);
             }
         });
 
-        botonMedia.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        botonMedia.setForeground(new java.awt.Color(0, 0, 0));
-        botonMedia.setText("MEDIA");
-        botonMedia.addActionListener(new java.awt.event.ActionListener() {
+        botonDinamico.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonDinamico.setForeground(new java.awt.Color(0, 0, 0));
+        botonDinamico.setText("DINÁMICO");
+        botonDinamico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonMediaActionPerformed(evt);
-            }
-        });
-
-        botonDificil.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        botonDificil.setForeground(new java.awt.Color(0, 0, 0));
-        botonDificil.setText("DIFÍCIL");
-        botonDificil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonDificilActionPerformed(evt);
+                botonDinamicoActionPerformed(evt);
             }
         });
 
@@ -127,29 +148,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelDialogLayout.setHorizontalGroup(
             panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDialogLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(142, 142, 142)
                 .addGroup(panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(botonFacil, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonMedia)
-                    .addComponent(botonDificil))
-                .addContainerGap(180, Short.MAX_VALUE))
+                    .addComponent(botonEstatico, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonDinamico))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
-        panelDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDificil, botonFacil, botonMedia});
+        panelDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDinamico, botonEstatico});
 
         panelDialogLayout.setVerticalGroup(
             panelDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDialogLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(botonFacil, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(146, 146, 146)
+                .addComponent(botonEstatico, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
-                .addComponent(botonMedia)
-                .addGap(51, 51, 51)
-                .addComponent(botonDificil)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addComponent(botonDinamico)
+                .addContainerGap(186, Short.MAX_VALUE))
         );
 
-        panelDialogLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificil, botonFacil, botonMedia});
+        panelDialogLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDinamico, botonEstatico});
 
         dialogDificultad.getContentPane().add(panelDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -157,16 +175,268 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelBackgroundDialog.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
         dialogDificultad.getContentPane().add(labelBackgroundDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 510, 500));
 
+        dialogDificultad.setVisible(false);
+        dialogInstrucciones.setLocation(new java.awt.Point(420, 230));
+        dialogInstrucciones.setPreferredSize(new java.awt.Dimension(600, 500));
+        dialogInstrucciones.setResizable(false);
+        dialogInstrucciones.setSize(new java.awt.Dimension(600, 500));
+        dialogInstrucciones.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(255, 204, 204));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTextArea1.setForeground(new java.awt.Color(0, 0, 0));
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Azul: aparece cada 5 segundos y dura 2 segundos");
+        jTextArea1.setPreferredSize(new java.awt.Dimension(600, 600));
+        dialogInstrucciones.getContentPane().add(jTextArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 620, 500));
+
+        labelBackgroundDialog1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelBackgroundDialog1.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
+        labelBackgroundDialog1.setPreferredSize(new java.awt.Dimension(600, 600));
+        dialogInstrucciones.getContentPane().add(labelBackgroundDialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 610, 440));
+
+        dialogInicioSesion.setVisible(false);
+        dialogInicioSesion.setLocation(new java.awt.Point(420, 230));
+        dialogInicioSesion.setSize(new java.awt.Dimension(400, 320));
+
+        panelDialogInicioSesion.setPreferredSize(new java.awt.Dimension(400, 320));
+
+        labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUsuario.setText("USUARIO:");
+
+        labelContrasinal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelContrasinal.setText("CONTRASEÑA:");
+
+        botonEnviar.setText("ENVIAR");
+        botonEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEnviarActionPerformed(evt);
+            }
+        });
+
+        textUsuarioInicio.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textUsuarioInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textUsuarioInicioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelDialogInicioSesionLayout = new javax.swing.GroupLayout(panelDialogInicioSesion);
+        panelDialogInicioSesion.setLayout(panelDialogInicioSesionLayout);
+        panelDialogInicioSesionLayout.setHorizontalGroup(
+            panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
+                .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelContrasinal)
+                            .addComponent(labelUsuario))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textUsuarioInicio)
+                            .addComponent(passwordUsuarioInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
+                    .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(botonEnviar)))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+        panelDialogInicioSesionLayout.setVerticalGroup(
+            panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelUsuario)
+                    .addComponent(textUsuarioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelContrasinal)
+                    .addComponent(passwordUsuarioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(botonEnviar)
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dialogInicioSesionLayout = new javax.swing.GroupLayout(dialogInicioSesion.getContentPane());
+        dialogInicioSesion.getContentPane().setLayout(dialogInicioSesionLayout);
+        dialogInicioSesionLayout.setHorizontalGroup(
+            dialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogInicioSesionLayout.createSequentialGroup()
+                .addComponent(panelDialogInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        dialogInicioSesionLayout.setVerticalGroup(
+            dialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogInicioSesionLayout.createSequentialGroup()
+                .addComponent(panelDialogInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        dialogRegistrar.setVisible(false);
+        dialogRegistrar.setLocation(new java.awt.Point(420, 230));
+        dialogRegistrar.setSize(new java.awt.Dimension(400, 320));
+
+        panelDialogRegistrarse.setPreferredSize(new java.awt.Dimension(400, 320));
+
+        labelUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUsuario1.setText("USUARIO:");
+
+        labelContrasinal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelContrasinal1.setText("CONTRASEÑA:");
+
+        botonEnviarNovo.setText("ENVIAR");
+        botonEnviarNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEnviarNovoActionPerformed(evt);
+            }
+        });
+
+        textUsuarioNovo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        textUsuarioNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textUsuarioNovoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelDialogRegistrarseLayout = new javax.swing.GroupLayout(panelDialogRegistrarse);
+        panelDialogRegistrarse.setLayout(panelDialogRegistrarseLayout);
+        panelDialogRegistrarseLayout.setHorizontalGroup(
+            panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
+                .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelContrasinal1)
+                            .addComponent(labelUsuario1))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textUsuarioNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(passwordUsuarioNovo)))
+                    .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(botonEnviarNovo)))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+        panelDialogRegistrarseLayout.setVerticalGroup(
+            panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelUsuario1)
+                    .addComponent(textUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelContrasinal1)
+                    .addComponent(passwordUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(botonEnviarNovo)
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dialogRegistrarLayout = new javax.swing.GroupLayout(dialogRegistrar.getContentPane());
+        dialogRegistrar.getContentPane().setLayout(dialogRegistrarLayout);
+        dialogRegistrarLayout.setHorizontalGroup(
+            dialogRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogRegistrarLayout.createSequentialGroup()
+                .addComponent(panelDialogRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        dialogRegistrarLayout.setVerticalGroup(
+            dialogRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogRegistrarLayout.createSequentialGroup()
+                .addComponent(panelDialogRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(150, 150));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelInicio.setPreferredSize(new java.awt.Dimension(1000, 700));
+
+        botonIniciarSesion.setFont(new java.awt.Font("Yu Gothic UI", 0, 24)); // NOI18N
+        botonIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        botonIniciarSesion.setText("INICIAR SESIÓN");
+        botonIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonIniciarSesionActionPerformed(evt);
+            }
+        });
+
+        botonRegistrarse.setFont(new java.awt.Font("Yu Gothic UI", 0, 24)); // NOI18N
+        botonRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
+        botonRegistrarse.setText("REGISTRARSE");
+        botonRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarseActionPerformed(evt);
+            }
+        });
+
+        botonAccederInvitado.setFont(new java.awt.Font("Yu Gothic UI", 0, 24)); // NOI18N
+        botonAccederInvitado.setForeground(new java.awt.Color(0, 0, 0));
+        botonAccederInvitado.setText("ACCEDER COMO INVITADO");
+        botonAccederInvitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAccederInvitadoActionPerformed(evt);
+            }
+        });
+
+        botonCerrar.setFont(new java.awt.Font("Yu Gothic UI", 0, 24)); // NOI18N
+        botonCerrar.setForeground(new java.awt.Color(0, 0, 0));
+        botonCerrar.setText("CERRAR");
+        botonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelInicioLayout = new javax.swing.GroupLayout(panelInicio);
+        panelInicio.setLayout(panelInicioLayout);
+        panelInicioLayout.setHorizontalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addContainerGap(186, Short.MAX_VALUE)
+                .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInicioLayout.createSequentialGroup()
+                        .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botonAccederInvitado)
+                            .addComponent(botonCerrar))
+                        .addGap(292, 292, 292))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInicioLayout.createSequentialGroup()
+                        .addComponent(botonIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(botonRegistrarse)
+                        .addGap(99, 99, 99))))
+        );
+
+        panelInicioLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
+
+        panelInicioLayout.setVerticalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonRegistrarse))
+                .addGap(52, 52, 52)
+                .addComponent(botonAccederInvitado)
+                .addGap(40, 40, 40)
+                .addComponent(botonCerrar)
+                .addContainerGap(267, Short.MAX_VALUE))
+        );
+
+        panelInicioLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
+
+        getContentPane().add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        panelPrincipal.setVisible(false);
         panelPrincipal.setBackground(new java.awt.Color(255, 204, 204));
         panelPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
-
-        fondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
-        fondoPantalla.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         panelBotones.setBackground(new java.awt.Color(255, 204, 204));
         panelBotones.setOpaque(false);
@@ -247,6 +517,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones});
 
+        fondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
+        fondoPantalla.setPreferredSize(new java.awt.Dimension(1000, 700));
+
         labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(0, 0, 0));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -325,7 +598,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
         panelJuegoLayout.setVerticalGroup(
             panelJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 725, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panelLateral.setBackground(new java.awt.Color(255, 204, 204));
@@ -357,8 +630,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelErrores.setForeground(new java.awt.Color(0, 0, 0));
         labelErrores.setText("0");
 
+        labelRecargando.setVisible(false);
+        labelRecargando.setBackground(new java.awt.Color(0, 255, 0));
+        labelRecargando.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        labelRecargando.setForeground(new java.awt.Color(0, 0, 255));
+        labelRecargando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRecargando.setText("3");
+        labelRecargando.setMaximumSize(new java.awt.Dimension(34, 48));
+        labelRecargando.setMinimumSize(new java.awt.Dimension(34, 48));
+        labelRecargando.setPreferredSize(new java.awt.Dimension(34, 48));
+
         labelCargador.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         labelCargador.setForeground(new java.awt.Color(0, 0, 0));
+        labelCargador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCargador.setText("10");
 
         labelRecarga.setVisible(false);
@@ -407,7 +691,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addComponent(labelTituloAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createSequentialGroup()
                             .addGap(51, 51, 51)
-                            .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(5, 5, 5)
+                            .addComponent(labelRecargando, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelTituloTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(panelLateralLayout.createSequentialGroup()
@@ -424,6 +710,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         panelLateralLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {labelTituloAciertos, labelTituloCargador});
+
+        panelLateralLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {labelCargador, labelRecargando});
 
         panelLateralLayout.setVerticalGroup(
             panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,14 +732,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(toggleBotonPausa, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(labelTituloCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelRecargando, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRecarga)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         panelLateralLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {labelTituloAciertos, labelTituloCargador, labelTituloErrores});
+
+        panelLateralLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {labelCargador, labelRecargando});
 
         javax.swing.GroupLayout juegoLayout = new javax.swing.GroupLayout(juego);
         juego.setLayout(juegoLayout);
@@ -466,8 +758,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(juegoLayout.createSequentialGroup()
                 .addGroup(juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
-                    .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE))
+                    .addComponent(panelJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+                    .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -584,11 +876,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        panelPrincipal.setVisible(false);
+        panelInicio.setVisible(true);
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInstruccionesActionPerformed
-        // TODO add your handling code here:
+        dialogInstrucciones.setVisible(true);
     }//GEN-LAST:event_botonInstruccionesActionPerformed
 
     private void juegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_juegoMouseClicked
@@ -616,7 +909,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         if (!xogo1.isPausa()){
             if (evt.getKeyCode()==KeyEvent.VK_SPACE){
-                recargar();
+                xogo1.setPausa(true);
+                tiempoRecarga.restart();
+                labelCargador.setVisible(false);
+                labelRecargando.setVisible(true);
             }
         }
     }//GEN-LAST:event_panelJuegoKeyPressed
@@ -676,23 +972,58 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         toggleBotonPausa.setSelected(false);
     }//GEN-LAST:event_toggleBotonPausaActionPerformed
 
-    private void botonFacilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacilActionPerformed
+    private void botonEstaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstaticoActionPerformed
         // TODO add your handling code here:
-        xogo1.setDificultad(1);
+        xogo1.setDinamico(false);
         dialogDificultad.setVisible(false);
-    }//GEN-LAST:event_botonFacilActionPerformed
+    }//GEN-LAST:event_botonEstaticoActionPerformed
 
-    private void botonMediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMediaActionPerformed
+    private void botonDinamicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDinamicoActionPerformed
         // TODO add your handling code here:
-        xogo1.setDificultad(2);
+        xogo1.setDinamico(true);
         dialogDificultad.setVisible(false);
-    }//GEN-LAST:event_botonMediaActionPerformed
+    }//GEN-LAST:event_botonDinamicoActionPerformed
 
-    private void botonDificilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDificilActionPerformed
+    private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_botonCerrarActionPerformed
+
+    private void botonAccederInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAccederInvitadoActionPerformed
+        panelPrincipal.setVisible(true);
+        panelInicio.setVisible(false);
+    }//GEN-LAST:event_botonAccederInvitadoActionPerformed
+
+    private void botonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesionActionPerformed
+        dialogInicioSesion.setVisible(true);
+    }//GEN-LAST:event_botonIniciarSesionActionPerformed
+
+    private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
+        dialogRegistrar.setVisible(true);
+    }//GEN-LAST:event_botonRegistrarseActionPerformed
+
+    private void textUsuarioInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioInicioActionPerformed
         // TODO add your handling code here:
-        xogo1.setDificultad(3);
-        dialogDificultad.setVisible(false);
-    }//GEN-LAST:event_botonDificilActionPerformed
+    }//GEN-LAST:event_textUsuarioInicioActionPerformed
+
+    private void textUsuarioNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioNovoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textUsuarioNovoActionPerformed
+
+    private void botonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarActionPerformed
+        dialogInicioSesion.setVisible(false);
+    }//GEN-LAST:event_botonEnviarActionPerformed
+
+    @SuppressWarnings("deprecation")
+    private void botonEnviarNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarNovoActionPerformed
+        
+        if (textUsuarioNovo.getText().length()<5 || passwordUsuarioNovo.getText().length()<5){
+            JOptionPane.showMessageDialog(null, "El usuario y la contraseña deben tener más de 5 caracteres");
+        }
+        else {
+            dialogRegistrar.setVisible(false);
+            con.engadirUsuarioNovo(textUsuarioNovo.getText(), passwordUsuarioNovo.getText());
+        }
+    }//GEN-LAST:event_botonEnviarNovoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -737,7 +1068,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
         tiempo.start();
-        duracion.start();
+        if (xogo1.isDinamico()){
+            duracion.start();
+        }
         xogo1.empezarPartida();
     }
     
@@ -787,7 +1120,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if (xogo1.getBalas()>0){
             String erroDisparo=labelErrores.getText();
             int erro=(int) Double.parseDouble(erroDisparo);
-            erro+=1;
+            erro++;
             escribir(erro, labelErrores);
             String a=labelTiempo.getText();
             int b=(int) Double.parseDouble(a);
@@ -844,6 +1177,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
     }
     
+    private void crearTimerRecarga(){
+        tiempoRecarga=new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelJuego.requestFocus();
+                espera--;
+                labelRecargando.setText(espera+"");
+                if (recargando==espera){
+                    recargar();
+                    tiempoRecarga.stop();
+                    
+                    espera=3;
+                }
+            }
+        });
+    }
+    
     private void crearTimerPartida(){
         duracion=new Timer(1000, new ActionListener() {
             int tempo=0;
@@ -856,13 +1206,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
     }
     
+    
+    
     private void aparecerCadrados(int tempo){
         if (tempo%5==0){
-            //xogo1.getObxetivos().get(1).xerarPosicionObxetivo();
             xogo1.getObxetivos().get(1).getBotonCadrado().setVisible(true);
         }
-        if (tempo%10==0 && xogo1.getDificultad()!=3){
-            //xogo1.getObxetivos().get(2).xerarPosicionObxetivo();
+        if (tempo%10==0 && xogo1.isDinamico()){
             xogo1.getObxetivos().get(2).getBotonCadrado().setVisible(true);
         }
     }
@@ -872,12 +1222,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if (tempo%5==2){
             xogo1.getObxetivos().get(1).getBotonCadrado().setVisible(false);
         }
-        if (tempo%10==8 && xogo1.getDificultad()!=3){
+        if (tempo%10==8 && xogo1.isDinamico()){
             xogo1.getObxetivos().get(2).getBotonCadrado().setVisible(false);
         }
     }
     /**
-     * Engade os Obxetivos a un array de Obxetivo
+     * Engade o Listener ao Obxetivo
      * @param obxetivo Obxetivo creado en Obxetivo
      */
     public void engadirObxetivos (Obxetivo obxetivo){
@@ -894,7 +1244,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     }
                     else if (obxetivo==xogo1.getObxetivos().get(1) || obxetivo==xogo1.getObxetivos().get(2)){
                         obxetivo.xerarPosicionObxetivo();
-                        obxetivo.getBotonCadrado().setVisible(false);
+                        if (xogo1.isDinamico()){
+                            obxetivo.getBotonCadrado().setVisible(false);
+                        }
                     }
                     sumarAcerto();
                     restarBala();
@@ -904,6 +1256,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         obxetivo.getBotonCadrado().addActionListener(clickObxetivo);
     }
     
+    
+    /**
+     * Comproba que os obxetivos non coincidan con outros botóns
+     * @param obxetivo Obxetivo
+     * @return true se non coincide con outro botón,pola contra false
+     */
     public boolean comprobarObxetivos (Obxetivo obxetivo){
         boolean correcto=true;
         for (int contArray=0; contArray<arrayBotones.size(); contArray++) {
@@ -927,6 +1285,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return correctoExe;
     }
     
+    /**
+     * Comproba si o obstáculo coincide con outro botón do array arrayBotones
+     * @param obstaculo obstáculo a comprobar
+     * @return true se non coincide con outro botón,pola contra false
+     */
     public boolean comprobarObstaculos (Obstaculo obstaculo){
         boolean correcto=true;
         for (int botonArray=0; botonArray<arrayBotones.size(); botonArray++) {
@@ -941,12 +1304,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return correcto;
     }
     
+    
+    /**
+     * Engade os botóns do obstáculo ao arrayBotones
+     * @param obstaculo Obstáculo a engadir
+     */
     public void engadirObstaculos (Obstaculo obstaculo){
         engadirBotons(obstaculo);
-        engadirListener(obstaculo);
     }
     
-    private void engadirListener(Obstaculo obstaculo){
+    
+    /**
+     * Engade o Listener ao Obstáculo
+     * @param obstaculo Obstáculo ao que queremos engadir o Listener
+     */
+    public void engadirListener(Obstaculo obstaculo){
         mouse = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1024,43 +1396,69 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private void recargar(){
         xogo1.setBalas(10);
+        xogo1.setPausa(false);
+        labelCargador.setVisible(true);
+        labelRecargando.setVisible(false);
+        labelRecargando.setText("3");
         labelCargador.setText("10");
         labelCargador.setForeground(Color.black);
         labelRecarga.setVisible(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonDificil;
+    private javax.swing.JButton botonAccederInvitado;
+    private javax.swing.JButton botonCerrar;
     private javax.swing.JButton botonDificultad;
-    private javax.swing.JButton botonFacil;
+    private javax.swing.JButton botonDinamico;
+    private javax.swing.JButton botonEnviar;
+    private javax.swing.JButton botonEnviarNovo;
+    private javax.swing.JButton botonEstatico;
     private javax.swing.JButton botonGuardarPuntuacion;
+    private javax.swing.JButton botonIniciarSesion;
     private javax.swing.JButton botonInstrucciones;
     private javax.swing.JButton botonJugar;
-    private javax.swing.JButton botonMedia;
+    private javax.swing.JButton botonRegistrarse;
     private javax.swing.JButton botonReiniciar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirJuego;
     private javax.swing.JDialog dialogDificultad;
+    private javax.swing.JDialog dialogInicioSesion;
+    private javax.swing.JDialog dialogInstrucciones;
+    private javax.swing.JDialog dialogRegistrar;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel juego;
     private javax.swing.JLabel labelAciertos;
     private javax.swing.JLabel labelBackgroundDialog;
+    private javax.swing.JLabel labelBackgroundDialog1;
     private javax.swing.JLabel labelBackgroundGameOver;
     private javax.swing.JLabel labelCargador;
+    private javax.swing.JLabel labelContrasinal;
+    private javax.swing.JLabel labelContrasinal1;
     private javax.swing.JLabel labelErrores;
     private javax.swing.JLabel labelRecarga;
+    private javax.swing.JLabel labelRecargando;
     private javax.swing.JLabel labelTiempo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelTituloAciertos;
     private javax.swing.JLabel labelTituloCargador;
     private javax.swing.JLabel labelTituloErrores;
     private javax.swing.JLabel labelTituloTiempo;
+    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JLabel labelUsuario1;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelBotonesGameOver;
     private javax.swing.JPanel panelDialog;
+    private javax.swing.JPanel panelDialogInicioSesion;
+    private javax.swing.JPanel panelDialogRegistrarse;
     private javax.swing.JPanel panelGameOver;
+    private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel panelJuego;
     private javax.swing.JPanel panelLateral;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPasswordField passwordUsuarioInicio;
+    private javax.swing.JPasswordField passwordUsuarioNovo;
+    private javax.swing.JTextField textUsuarioInicio;
+    private javax.swing.JTextField textUsuarioNovo;
     private javax.swing.JToggleButton toggleBotonPausa;
     // End of variables declaration//GEN-END:variables
 }

@@ -56,7 +56,8 @@ public abstract class Obxetivo extends Cadrado implements Coloreable {
     
     
     /**
-     * Xéranse dous números aleatorios para darlle a unhas coordenadas x e y
+     * Xéranse dous números aleatorios para darlle a unhas coordenadas x e y. 
+     * Compróbase se esa posición é válida
      */
     public void xerarPosicionObxetivo(){
         if (xogo1.getBalas()>0){

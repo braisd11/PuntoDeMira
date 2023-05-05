@@ -33,6 +33,7 @@ public class ObstaculoCadrado extends Obstaculo implements Coloreable {
         }
     }
 
+    
     @Override
     public void establecerFicha() {
         c1.setX(c0.getX()+ladoCadrado);

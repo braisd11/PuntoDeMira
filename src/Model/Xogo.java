@@ -31,7 +31,7 @@ public class Xogo {
     private Iterator<Obstaculo> iterObstaculos;
     private HashMap<Integer,Obstaculo> obstaculosColeccion=new HashMap<>();
     private boolean pausa=false;
-    private int dificultad=2;
+    private boolean dinamico=true;
     private int balas=10;
     private int acerto=5;
     private int erro=3;
@@ -56,13 +56,13 @@ public class Xogo {
     public void setIterObxetivos(Iterator<Obxetivo> iterObxetivos) {
         this.iterObxetivos = iterObxetivos;
     }
-    
-    public int getDificultad() {
-        return dificultad;
+
+    public boolean isDinamico() {
+        return dinamico;
     }
 
-    public void setDificultad(int dificultad) {
-        this.dificultad = dificultad;
+    public void setDinamico(boolean dinamico) {
+        this.dinamico = dinamico;
     }
     
     public int getMAXX() {
@@ -115,31 +115,32 @@ public class Xogo {
     
     
     /**
-     * Dalle una posición na Ventana Principal aos tres Obxetivos
+     * Xera os Obstáculos e os Obxetivos
      */
     public void empezarPartida(){
-        xerarObxetivos();
-        pintarObxetivos();
         Obstaculo obstaculo;
-        for (int cont=1; cont<=obstaculosColeccion.size(); cont++) {
-            obstaculo=xerarObstaculos(cont);
+        if (!dinamico){
+            for (int cont=1; cont<=obstaculosColeccion.size()-1; cont++) {
+                obstaculo=xerarObstaculos(cont);
+            }
+        }
+        else {
+            for (int cont=1; cont<=obstaculosColeccion.size(); cont++) {
+                obstaculo=xerarObstaculos(cont);
+            }
         }
         establecerPosicionObstaculos();
+        xerarObxetivos();
+        pintarObxetivos();
         pintarObstaculos();
     }
     
     
     
     private void xerarObxetivos(){
-        if (dificultad==3){
-            xerarObxetivoPequeno();
-            xerarObxetivoMediano();
-        }
-        else {
-            xerarObxetivoPequeno();
-            xerarObxetivoMediano();
-            xerarObxetivoGrande();
-        }
+        xerarObxetivoPequeno();
+        xerarObxetivoMediano();
+        xerarObxetivoGrande();
     }
     
     
@@ -178,6 +179,9 @@ public class Xogo {
         obstaculosColeccion.put(1, new ObstaculoCadrado(this));
         obstaculosColeccion.put(2, new ObstaculoVertical(this));
         obstaculosColeccion.put(3, new ObstaculoL(this));
+        ventanaPrincipal.engadirListener(obstaculosColeccion.get(1));
+        ventanaPrincipal.engadirListener(obstaculosColeccion.get(2));
+        ventanaPrincipal.engadirListener(obstaculosColeccion.get(3));
     }
     
     
@@ -201,7 +205,6 @@ public class Xogo {
     private void eliminarObstaculos(){
         iterObstaculos=obstaculos.iterator();
         while (iterObstaculos.hasNext()){
-            System.out.println("Borrando");
             Obstaculo obstaculo = iterObstaculos.next();
             obstaculo.setIterCadrados(obstaculo.getCadrados().iterator());
             while (obstaculo.getIterCadrados().hasNext()){
@@ -236,11 +239,15 @@ public class Xogo {
         }
     }
     
-    private void establecerPosicionObstaculos(){
+    /**
+     * Recorre o array obstaculos e xera unha posición para eles,ademáis de engadilos ao arrayBotones da VentanaPrincipal 
+     */
+    public void establecerPosicionObstaculos(){
         iterObstaculos=obstaculos.iterator();
         while (iterObstaculos.hasNext()){
             Obstaculo obstaculo = iterObstaculos.next();
             obstaculo.xerarPosicionObstaculo();
+            ventanaPrincipal.engadirObstaculos(obstaculo);
         }
     }
 }
