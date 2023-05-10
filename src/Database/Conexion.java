@@ -78,6 +78,7 @@ public class Conexion {
         }
     }
     
+    
     /**
      * Comproba que se o usuario existe
      * @param usuario Usuario a comprobar
@@ -100,6 +101,7 @@ public class Conexion {
         }
         return existir;
     }
+    
     
     /**
      * Comproba que se o contrasinal existe

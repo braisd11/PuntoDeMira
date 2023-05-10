@@ -6,6 +6,7 @@
 package View;
 
 import Database.Conexion;
+import Model.Timers;
 import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+import javax.swing.JPanel;
 
 /**
  *
@@ -28,11 +29,7 @@ import javax.swing.Timer;
 public class VentanaPrincipal extends javax.swing.JFrame {
     private Xogo xogo1;
     private Conexion con;
-    private Timer tiempo;
-    private Timer duracion;
-    private Timer tiempoRecarga;
-    private int espera=3;
-    private int recargando=0;
+    private Timers timer;
     private ActionListener clickObxetivo;
     private MouseListener mouse;
     /**
@@ -55,6 +52,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void setXogo1(Xogo xogo1) {
         this.xogo1 = xogo1;
     }
+
+    public JLabel getLabelRecargando() {
+        return labelRecargando;
+    }
+
+    public void setLabelRecargando(JLabel labelRecargando) {
+        this.labelRecargando = labelRecargando;
+    }
+
+    public JPanel getPanelJuego() {
+        return panelJuego;
+    }
+
+    public void setPanelJuego(JPanel panelJuego) {
+        this.panelJuego = panelJuego;
+    }
+
+    public JLabel getLabelTiempo() {
+        return labelTiempo;
+    }
+
+    public void setLabelTiempo(JLabel labelTiempo) {
+        this.labelTiempo = labelTiempo;
+    }
     
     
     
@@ -65,10 +86,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         con=new Conexion(this); 
         xogo1=new Xogo(this);
+        timer=new Timers(this);
         juego.setFocusable(true);
-        crearTimerPuntos();
-        crearTimerPartida();
-        crearTimerRecarga();
     }
     
     /**
@@ -636,6 +655,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 juegoMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                juegoMouseExited(evt);
+            }
         });
         juego.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -651,6 +673,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelJuego.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panelJuegoMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                panelJuegoMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 panelJuegoMousePressed(evt);
@@ -898,17 +923,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugarActionPerformed
-        // TODO add your handling code here:
         iniciarPartida();
     }//GEN-LAST:event_botonJugarActionPerformed
 
     private void botonDificultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDificultadActionPerformed
-        // TODO add your handling code here:
         dialogDificultad.setVisible(true);
     }//GEN-LAST:event_botonDificultadActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        // TODO add your handling code here:
         panelPrincipal.setVisible(false);
         panelInicio.setVisible(true);
         xogo1.setUsuario(null);
@@ -926,7 +948,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_juegoMouseClicked
 
     private void panelJuegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJuegoMouseClicked
-        // TODO add your handling code here:
         if (!xogo1.isPausa()){
             sumarErro();
             restarBala();
@@ -934,7 +955,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_panelJuegoMouseClicked
 
     private void panelJuegoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelJuegoKeyPressed
-        // TODO add your handling code here:
         if (evt.getKeyCode()==KeyEvent.VK_ESCAPE){
             if (xogo1.isPausa()){
                 quitarPausa();
@@ -945,8 +965,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         if (!xogo1.isPausa()){
             if (evt.getKeyCode()==KeyEvent.VK_SPACE){
-                //xogo1.setPausa(true);
-                tiempoRecarga.restart();
+                timer.getTiempoRecarga().restart();
                 labelCargador.setVisible(false);
                 labelRecargando.setVisible(true);
             }
@@ -964,13 +983,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_panelJuegoMousePressed
 
     private void botonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReiniciarActionPerformed
-        // TODO add your handling code here:
         reiniciar();
         iniciarPartida();
     }//GEN-LAST:event_botonReiniciarActionPerformed
 
     private void botonSalirJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirJuegoActionPerformed
-        // TODO add your handling code here:
         juego.setVisible(false);
         panelPrincipal.setVisible(true);
         reiniciar();
@@ -997,7 +1014,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_toggleBotonPausaMousePressed
 
     private void toggleBotonPausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBotonPausaActionPerformed
-        // TODO add your handling code here:
         if (xogo1.isPausa()){
             quitarPausa();
         }
@@ -1009,13 +1025,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_toggleBotonPausaActionPerformed
 
     private void botonEstaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstaticoActionPerformed
-        // TODO add your handling code here:
         xogo1.setDificultad("Estático");
         dialogDificultad.setVisible(false);
     }//GEN-LAST:event_botonEstaticoActionPerformed
 
     private void botonDinamicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDinamicoActionPerformed
-        // TODO add your handling code here:
         xogo1.setDificultad("Dinámico");
         dialogDificultad.setVisible(false);
     }//GEN-LAST:event_botonDinamicoActionPerformed
@@ -1078,6 +1092,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         con.guardarPuntuacion(xogo1.getUsuario());
     }//GEN-LAST:event_botonGuardarPuntuacionActionPerformed
 
+    private void panelJuegoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJuegoMouseExited
+        
+    }//GEN-LAST:event_panelJuegoMouseExited
+
+    private void juegoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_juegoMouseExited
+        if (timer.getTiempo().isRunning()){
+            sumarErro();
+        }
+    }//GEN-LAST:event_juegoMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1120,8 +1144,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void iniciarPartida(){
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
-        tiempo.start();
-        duracion.start();
+        timer.getTiempo().start();
+        timer.getDuracion().start();
         xogo1.empezarPartida();
         panelJuego.setComponentZOrder(fondoJuego, panelJuego.getComponentCount()-1);
     }
@@ -1202,7 +1226,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     
     /**
-     * Método que escribe nas distintas JLabel das puntuacións
+     * Escribe nas distintas JLabel das puntuacións
      * @param num int que imos a escribir
      * @param etiqueta JLabel na que imos a escribir
      */
@@ -1210,60 +1234,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         etiqueta.setText(""+num);
     }
     
-    
-    
-    private void crearTimerPuntos(){
-        tiempo=new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelJuego.requestFocus();
-                String a=labelTiempo.getText();
-                int b=(int) Double.parseDouble(a);
-                b--;
-                labelTiempo.setText(b+"");
-                if (b<=0){
-                    labelTiempo.setText("0");
-                    mostrarFinDeXogo();
-                }
-            }
-        });
-    }
-    
-    private void crearTimerRecarga(){
-        tiempoRecarga=new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelJuego.requestFocus();
-                espera--;
-                labelRecargando.setText(espera+"");
-                if (recargando==espera){
-                    recargar();
-                    tiempoRecarga.stop();
-                    
-                    espera=3;
-                }
-            }
-        });
-    }
-    
-    private void crearTimerPartida(){
-        duracion=new Timer(1000, new ActionListener() {
-            int tempo=0;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tempo++;
-                xogo1.setDuracionTotal(tempo);
-                if (xogo1.getDificultad()=="Dinámico"){
-                    aparecerCadrados(tempo);
-                    desaparecerCadrados(tempo);
-                }
-            }
-        });
-    }
-    
-    
-    
-    private void aparecerCadrados(int tempo){
+    /**
+     * Fai que aparezan os Obxetivos
+     * @param tempo tempo transcorrido
+     */
+    public void aparecerCadrados(int tempo){
         if (tempo%5==0){
             xogo1.getObxetivoVermello().getBotonCadrado().setVisible(true);
         }
@@ -1272,8 +1247,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
     
-    
-    private void desaparecerCadrados(int tempo){
+    /**
+     * Fai que desaparezan os Obxetivos
+     * @param tempo tempo transcorrido
+     */
+    public void desaparecerCadrados(int tempo){
         if (tempo%5==2){
             xogo1.getObxetivoRosa().getBotonCadrado().setVisible(false);
         }
@@ -1281,6 +1259,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             xogo1.getObxetivoVermello().getBotonCadrado().setVisible(false);
         }
     }
+    
+    
     /**
      * Engade o Listener ao Obxetivo
      * @param obxetivo Obxetivo creado en Obxetivo
@@ -1293,7 +1273,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         clickObxetivo= new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!xogo1.isPausa() && xogo1.getBalas()>0 && !tiempoRecarga.isRunning()){
+                if(!xogo1.isPausa() && xogo1.getBalas()>0 && !timer.getTiempoRecarga().isRunning()){
                     if(obxetivo==xogo1.getObxetivoVerde()){
                         obxetivo.xerarPosicionObxetivo();
                     }
@@ -1377,7 +1357,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mouse = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
             }
 
             @Override
@@ -1386,7 +1365,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
             }
 
             @Override
@@ -1395,7 +1373,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     sumarErro();
                 }
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
             }
@@ -1411,11 +1388,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
     
-    private void mostrarFinDeXogo(){
+    
+    /**
+     * Mostra o menú de fin de xogo
+     */
+    public void mostrarFinDeXogo(){
         juego.setVisible(false);
         panelGameOver.setVisible(true);
-        tiempo.stop();
-        duracion.stop();
+        timer.getTiempo().stop();
+        timer.getDuracion().stop();
         arrayBotones.clear();
     }
     
@@ -1436,8 +1417,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void pausa(){
         toggleBotonPausa.setText("START");
         xogo1.setPausa(true);
-        tiempo.stop();
-        duracion.stop();
+        timer.getTiempo().stop();
+        timer.getDuracion().stop();
     }
     
     /**
@@ -1446,11 +1427,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void quitarPausa(){
         toggleBotonPausa.setText("PAUSE");
         xogo1.setPausa(false);
-        tiempo.restart();
-        duracion.start();
+        timer.getTiempo().restart();
+        timer.getDuracion().start();
     }
     
-    private void recargar(){
+    
+    /**
+     * Recarga o cargador
+     */
+    public void recargar(){
         xogo1.setBalas(10);
         xogo1.setPausa(false);
         labelCargador.setVisible(true);
