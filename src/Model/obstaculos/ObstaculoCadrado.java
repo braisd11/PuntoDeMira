@@ -15,6 +15,11 @@ import java.awt.Color;
  */
 public class ObstaculoCadrado extends Obstaculo implements Coloreable {
 
+    
+    /**
+     * Construtor do Obstaculo Cadrado
+     * @param xogo1 Xogo
+     */
     public ObstaculoCadrado(Xogo xogo1) {
         super(xogo1);
         cor();

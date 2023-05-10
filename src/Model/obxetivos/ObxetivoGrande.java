@@ -13,25 +13,37 @@ import java.awt.Color;
  */
 public class ObxetivoGrande extends Obxetivo {
     
-    
+    /**
+     * Construtor do Obxetivo de cor vermello
+     * @param xogo1 Xogo
+     */
     public ObxetivoGrande(Xogo xogo1) {
         super(xogo1);
         cor();
+        this.acerto=4;
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
         this.xerarPosicionObxetivo();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLadoCadrado() {
         return ladoCadrado;
     }
 
+    /**
+     *
+     * @param LADOCADRADO
+     */
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
 
     @Override
     public void cor() {
-        botonCadrado.setBackground(Color.RED);
+        botonCadrado.setBackground(Color.PINK);
         botonCadrado.setOpaque(true);
     }
 }

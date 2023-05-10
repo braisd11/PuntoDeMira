@@ -16,76 +16,154 @@ import java.util.Iterator;
 public abstract class Obstaculo {
     private ArrayList<Cadrado> cadrados = new ArrayList<>();
     private Iterator<Cadrado> iterCadrados;
+    /**
+     * Tamaño do lado de cada Cadrado do Obstáculo
+     */
     protected int ladoCadrado=70;
     private Xogo xogo1;
+    /**
+     * Primeiro dos Cadrados
+     */
     protected Cadrado c0;
+    /**
+     * Segundo dos Cadrados
+     */
     protected Cadrado c1;
+    /**
+     * Terceiro dos Cadrados
+     */
     protected Cadrado c2;
+    /**
+     * Cuarto dos Cadrados
+     */
     protected Cadrado c3;
 
+    
+    /**
+     * Construtor do Obstaculo
+     * @param xogo1 Xogo
+     */
     public Obstaculo(Xogo xogo1) {
         this.xogo1=xogo1;
         crearCadrados();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Cadrado> getCadrados() {
         return cadrados;
     }
 
+    /**
+     *
+     * @param cadrados
+     */
     public void setCadrados(ArrayList<Cadrado> cadrados) {
         this.cadrados = cadrados;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLadoCadrado() {
         return ladoCadrado;
     }
 
+    /**
+     *
+     * @param ladoCadrado
+     */
     public void setLadoCadrado(int ladoCadrado) {
         this.ladoCadrado = ladoCadrado;
     }
     
-    
-
+    /**
+     *
+     * @return
+     */
     public Iterator<Cadrado> getIterCadrados() {
         return iterCadrados;
     }
 
+    /**
+     *
+     * @param iterCadrados
+     */
     public void setIterCadrados(Iterator<Cadrado> iterCadrados) {
         this.iterCadrados = iterCadrados;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cadrado getC0() {
         return c0;
     }
 
+    /**
+     *
+     * @param c0
+     */
     public void setC0(Cadrado c0) {
         this.c0 = c0;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cadrado getC1() {
         return c1;
     }
 
+    /**
+     *
+     * @param c1
+     */
     public void setC1(Cadrado c1) {
         this.c1 = c1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cadrado getC2() {
         return c2;
     }
 
+    /**
+     *
+     * @param c2
+     */
     public void setC2(Cadrado c2) {
         this.c2 = c2;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cadrado getC3() {
         return c3;
     }
 
+    /**
+     *
+     * @param c3
+     */
     public void setC3(Cadrado c3) {
         this.c3 = c3;
     }
     
+    
+    /**
+     * Crea os Cadrados que forman o Obstáculo
+     */
     public void crearCadrados(){
         c0 = new Cadrado(xogo1);
         c1 = new Cadrado(xogo1);

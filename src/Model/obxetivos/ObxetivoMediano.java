@@ -13,24 +13,38 @@ import java.awt.Color;
  */
 public class ObxetivoMediano extends Obxetivo{
     
+    
+    /**
+     * Construtor do Obxetivo de cor rosa
+     * @param xogo1 Xogo
+     */
     public ObxetivoMediano(Xogo xogo1) {
         super(xogo1);
         cor();
+        this.acerto=3;
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
         this.xerarPosicionObxetivo();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLadoCadrado() {
         return ladoCadrado;
     }
 
+    /**
+     *
+     * @param LADOCADRADO
+     */
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
 
     @Override
     public void cor() {
-        botonCadrado.setBackground(Color.BLUE);
+        botonCadrado.setBackground(Color.RED);
         botonCadrado.setOpaque(true);
     }
 }

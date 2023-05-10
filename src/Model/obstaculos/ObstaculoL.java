@@ -14,9 +14,11 @@ import java.awt.Color;
  * @author a22braisdr
  */
 public class ObstaculoL extends Obstaculo implements Coloreable{
-
     
-
+    /**
+     * Construtor do Obstaculo en L
+     * @param xogo1 Xogo
+     */
     public ObstaculoL(Xogo xogo1) {
         super(xogo1);
         cor();

@@ -35,7 +35,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private int recargando=0;
     private ActionListener clickObxetivo;
     private MouseListener mouse;
+    /**
+     * Array de botóns dos obstáculos
+     */
     public ArrayList<JButton>arrayBotones=new ArrayList<>();
+
+    /**
+     *
+     * @return
+     */
+    public Xogo getXogo1() {
+        return xogo1;
+    }
+
+    /**
+     *
+     * @param xogo1
+     */
+    public void setXogo1(Xogo xogo1) {
+        this.xogo1 = xogo1;
+    }
     
     
     
@@ -67,15 +86,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonDinamico = new javax.swing.JButton();
         labelBackgroundDialog = new javax.swing.JLabel();
         dialogInstrucciones = new javax.swing.JDialog();
-        jTextArea1 = new javax.swing.JTextArea();
+        textoInstrucciones = new javax.swing.JTextArea();
         labelBackgroundDialog1 = new javax.swing.JLabel();
         dialogInicioSesion = new javax.swing.JDialog();
         panelDialogInicioSesion = new javax.swing.JPanel();
         labelUsuario = new javax.swing.JLabel();
         labelContrasinal = new javax.swing.JLabel();
-        botonEnviar = new javax.swing.JButton();
+        botonEnviarInicioSesion = new javax.swing.JButton();
         textUsuarioInicio = new javax.swing.JTextField();
         passwordUsuarioInicio = new javax.swing.JPasswordField();
+        fondoPantallaInicio = new javax.swing.JLabel();
         dialogRegistrar = new javax.swing.JDialog();
         panelDialogRegistrarse = new javax.swing.JPanel();
         labelUsuario1 = new javax.swing.JLabel();
@@ -83,11 +103,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonEnviarNovo = new javax.swing.JButton();
         textUsuarioNovo = new javax.swing.JTextField();
         passwordUsuarioNovo = new javax.swing.JPasswordField();
+        fondoPantallaRegistrar = new javax.swing.JLabel();
         panelInicio = new javax.swing.JPanel();
+        panelBotonesInicio = new javax.swing.JPanel();
         botonIniciarSesion = new javax.swing.JButton();
         botonRegistrarse = new javax.swing.JButton();
         botonAccederInvitado = new javax.swing.JButton();
         botonCerrar = new javax.swing.JButton();
+        fondoPantallaPrincipal = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         botonJugar = new javax.swing.JButton();
@@ -98,6 +121,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelTitulo = new javax.swing.JLabel();
         juego = new javax.swing.JPanel();
         panelJuego = new javax.swing.JPanel();
+        fondoJuego = new javax.swing.JLabel();
         panelLateral = new javax.swing.JPanel();
         labelTituloAciertos = new javax.swing.JLabel();
         labelTituloErrores = new javax.swing.JLabel();
@@ -110,6 +134,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelTituloTiempo = new javax.swing.JLabel();
         labelTiempo = new javax.swing.JLabel();
         toggleBotonPausa = new javax.swing.JToggleButton();
+        fondoLateral = new javax.swing.JLabel();
         panelGameOver = new javax.swing.JPanel();
         labelBackgroundGameOver = new javax.swing.JLabel();
         panelBotonesGameOver = new javax.swing.JPanel();
@@ -172,48 +197,62 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         dialogDificultad.getContentPane().add(panelDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         labelBackgroundDialog.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelBackgroundDialog.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
+        labelBackgroundDialog.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
         dialogDificultad.getContentPane().add(labelBackgroundDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 510, 500));
 
-        dialogDificultad.setVisible(false);
         dialogInstrucciones.setLocation(new java.awt.Point(420, 230));
-        dialogInstrucciones.setPreferredSize(new java.awt.Dimension(600, 500));
+        dialogInstrucciones.setMinimumSize(new java.awt.Dimension(600, 500));
+        dialogInstrucciones.setPreferredSize(new java.awt.Dimension(600, 550));
         dialogInstrucciones.setResizable(false);
-        dialogInstrucciones.setSize(new java.awt.Dimension(600, 500));
+        dialogInstrucciones.setSize(new java.awt.Dimension(600, 550));
         dialogInstrucciones.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 204, 204));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Azul: aparece cada 5 segundos y dura 2 segundos");
-        jTextArea1.setPreferredSize(new java.awt.Dimension(600, 600));
-        dialogInstrucciones.getContentPane().add(jTextArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 620, 500));
+        textoInstrucciones.setOpaque(true);
+        textoInstrucciones.setEditable(false);
+        textoInstrucciones.setBackground(new java.awt.Color(0, 0, 0));
+        textoInstrucciones.setColumns(20);
+        textoInstrucciones.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        textoInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
+        textoInstrucciones.setLineWrap(true);
+        textoInstrucciones.setRows(5);
+        textoInstrucciones.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos si se trata del objetivo verde,3 si es el objetivo rojo y 4 si es el objetivo rosa.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Cada 30 aciertos, los errores restarán 2 segundos más, y cada 50 aciertos los aciertos sum   arán 1 segundo más\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Rosa: aparece cada 5 segundos y dura 2 segundos");
+        textoInstrucciones.setMaximumSize(new java.awt.Dimension(600, 550));
+        textoInstrucciones.setMinimumSize(new java.awt.Dimension(600, 550));
+        textoInstrucciones.setPreferredSize(new java.awt.Dimension(600, 550));
+        dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, -1));
 
         labelBackgroundDialog1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelBackgroundDialog1.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
-        labelBackgroundDialog1.setPreferredSize(new java.awt.Dimension(600, 600));
-        dialogInstrucciones.getContentPane().add(labelBackgroundDialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 610, 440));
+        labelBackgroundDialog1.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        labelBackgroundDialog1.setMaximumSize(new java.awt.Dimension(600, 550));
+        labelBackgroundDialog1.setMinimumSize(new java.awt.Dimension(600, 550));
+        labelBackgroundDialog1.setOpaque(true);
+        labelBackgroundDialog1.setPreferredSize(new java.awt.Dimension(600, 550));
+        dialogInstrucciones.getContentPane().add(labelBackgroundDialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, -1, -1));
 
         dialogInicioSesion.setVisible(false);
         dialogInicioSesion.setLocation(new java.awt.Point(420, 230));
+        dialogInicioSesion.setMinimumSize(new java.awt.Dimension(400, 320));
+        dialogInicioSesion.setResizable(false);
         dialogInicioSesion.setSize(new java.awt.Dimension(400, 320));
+        dialogInicioSesion.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelDialogInicioSesion.setMaximumSize(new java.awt.Dimension(400, 320));
+        panelDialogInicioSesion.setMinimumSize(new java.awt.Dimension(400, 320));
+        panelDialogInicioSesion.setOpaque(false);
         panelDialogInicioSesion.setPreferredSize(new java.awt.Dimension(400, 320));
 
+        labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
         labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelUsuario.setText("USUARIO:");
 
+        labelContrasinal.setForeground(new java.awt.Color(255, 255, 255));
         labelContrasinal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelContrasinal.setText("CONTRASEÑA:");
 
-        botonEnviar.setText("ENVIAR");
-        botonEnviar.addActionListener(new java.awt.event.ActionListener() {
+        botonEnviarInicioSesion.setText("ENVIAR");
+        botonEnviarInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonEnviarActionPerformed(evt);
+                botonEnviarInicioSesionActionPerformed(evt);
             }
         });
 
@@ -241,13 +280,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                             .addComponent(passwordUsuarioInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
                     .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(botonEnviar)))
+                        .addComponent(botonEnviarInicioSesion)))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         panelDialogInicioSesionLayout.setVerticalGroup(
             panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDialogInicioSesionLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(panelDialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelUsuario)
                     .addComponent(textUsuarioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,34 +295,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(labelContrasinal)
                     .addComponent(passwordUsuarioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addComponent(botonEnviar)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addComponent(botonEnviarInicioSesion)
+                .addGap(83, 83, 83))
         );
 
-        javax.swing.GroupLayout dialogInicioSesionLayout = new javax.swing.GroupLayout(dialogInicioSesion.getContentPane());
-        dialogInicioSesion.getContentPane().setLayout(dialogInicioSesionLayout);
-        dialogInicioSesionLayout.setHorizontalGroup(
-            dialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogInicioSesionLayout.createSequentialGroup()
-                .addComponent(panelDialogInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        dialogInicioSesionLayout.setVerticalGroup(
-            dialogInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogInicioSesionLayout.createSequentialGroup()
-                .addComponent(panelDialogInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        dialogInicioSesion.getContentPane().add(panelDialogInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        fondoPantallaInicio.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        fondoPantallaInicio.setMaximumSize(new java.awt.Dimension(400, 320));
+        fondoPantallaInicio.setMinimumSize(new java.awt.Dimension(400, 320));
+        fondoPantallaInicio.setPreferredSize(new java.awt.Dimension(400, 320));
+        dialogInicioSesion.getContentPane().add(fondoPantallaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dialogRegistrar.setVisible(false);
         dialogRegistrar.setLocation(new java.awt.Point(420, 230));
         dialogRegistrar.setSize(new java.awt.Dimension(400, 320));
+        dialogRegistrar.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelDialogRegistrarse.setMaximumSize(new java.awt.Dimension(400, 320));
+        panelDialogRegistrarse.setMinimumSize(new java.awt.Dimension(400, 320));
+        panelDialogRegistrarse.setOpaque(false);
         panelDialogRegistrarse.setPreferredSize(new java.awt.Dimension(400, 320));
 
+        labelUsuario1.setForeground(new java.awt.Color(255, 255, 255));
         labelUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelUsuario1.setText("USUARIO:");
 
+        labelContrasinal1.setForeground(new java.awt.Color(255, 255, 255));
         labelContrasinal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelContrasinal1.setText("CONTRASEÑA:");
 
@@ -319,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addComponent(botonEnviarNovo)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDialogRegistrarseLayout.setVerticalGroup(
             panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,30 +372,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(passwordUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addComponent(botonEnviarNovo)
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout dialogRegistrarLayout = new javax.swing.GroupLayout(dialogRegistrar.getContentPane());
-        dialogRegistrar.getContentPane().setLayout(dialogRegistrarLayout);
-        dialogRegistrarLayout.setHorizontalGroup(
-            dialogRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogRegistrarLayout.createSequentialGroup()
-                .addComponent(panelDialogRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        dialogRegistrarLayout.setVerticalGroup(
-            dialogRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogRegistrarLayout.createSequentialGroup()
-                .addComponent(panelDialogRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        dialogRegistrar.getContentPane().add(panelDialogRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 320));
+
+        fondoPantallaRegistrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        fondoPantallaRegistrar.setMaximumSize(new java.awt.Dimension(400, 320));
+        fondoPantallaRegistrar.setMinimumSize(new java.awt.Dimension(400, 320));
+        fondoPantallaRegistrar.setPreferredSize(new java.awt.Dimension(400, 320));
+        dialogRegistrar.getContentPane().add(fondoPantallaRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(150, 150));
+        setMaximumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelInicio.setComponentZOrder(panelBotonesInicio, 0);
+        panelInicio.setMaximumSize(new java.awt.Dimension(1000, 700));
+        panelInicio.setMinimumSize(new java.awt.Dimension(1000, 700));
         panelInicio.setPreferredSize(new java.awt.Dimension(1000, 700));
+
+        panelBotonesInicio.setOpaque(false);
 
         botonIniciarSesion.setFont(new java.awt.Font("Yu Gothic UI", 0, 24)); // NOI18N
         botonIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
@@ -395,42 +432,72 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout panelInicioLayout = new javax.swing.GroupLayout(panelInicio);
-        panelInicio.setLayout(panelInicioLayout);
-        panelInicioLayout.setHorizontalGroup(
-            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInicioLayout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInicioLayout.createSequentialGroup()
-                        .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+        javax.swing.GroupLayout panelBotonesInicioLayout = new javax.swing.GroupLayout(panelBotonesInicio);
+        panelBotonesInicio.setLayout(panelBotonesInicioLayout);
+        panelBotonesInicioLayout.setHorizontalGroup(
+            panelBotonesInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesInicioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotonesInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesInicioLayout.createSequentialGroup()
+                        .addGroup(panelBotonesInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(botonAccederInvitado)
                             .addComponent(botonCerrar))
-                        .addGap(292, 292, 292))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInicioLayout.createSequentialGroup()
+                        .addGap(193, 193, 193))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesInicioLayout.createSequentialGroup()
                         .addComponent(botonIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
-                        .addComponent(botonRegistrarse)
-                        .addGap(99, 99, 99))))
+                        .addComponent(botonRegistrarse)))
+                .addContainerGap())
         );
 
-        panelInicioLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
+        panelBotonesInicioLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
 
-        panelInicioLayout.setVerticalGroup(
-            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInicioLayout.createSequentialGroup()
-                .addGap(191, 191, 191)
-                .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        panelBotonesInicioLayout.setVerticalGroup(
+            panelBotonesInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesInicioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotonesInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonRegistrarse))
                 .addGap(52, 52, 52)
                 .addComponent(botonAccederInvitado)
                 .addGap(40, 40, 40)
                 .addComponent(botonCerrar)
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        panelInicioLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
+        panelBotonesInicioLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
+
+        fondoPantallaPrincipal.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        fondoPantallaPrincipal.setDisabledIcon(null);
+        fondoPantallaPrincipal.setOpaque(true);
+        fondoPantallaPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
+
+        javax.swing.GroupLayout panelInicioLayout = new javax.swing.GroupLayout(panelInicio);
+        panelInicio.setLayout(panelInicioLayout);
+        panelInicioLayout.setHorizontalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addComponent(fondoPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInicioLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelBotonesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        panelInicioLayout.setVerticalGroup(
+            panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInicioLayout.createSequentialGroup()
+                .addComponent(fondoPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInicioLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelBotonesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         getContentPane().add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -517,11 +584,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones});
 
-        fondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoDePantalla.jpg")); // NOI18N
+        fondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
         fondoPantalla.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
-        labelTitulo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("PUNTO DE MIRA");
 
@@ -562,6 +629,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         juego.setVisible(false);
         juego.setBackground(new java.awt.Color(255, 204, 204));
+        juego.setMaximumSize(new java.awt.Dimension(1000, 700));
+        juego.setMinimumSize(new java.awt.Dimension(1000, 700));
         juego.setPreferredSize(new java.awt.Dimension(1000, 700));
         juego.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -573,8 +642,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 juegoKeyPressed(evt);
             }
         });
+        juego.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelJuego.setBackground(new java.awt.Color(0, 0, 0));
+        panelJuego.setMaximumSize(new java.awt.Dimension(700, 700));
+        panelJuego.setMinimumSize(new java.awt.Dimension(700, 700));
         panelJuego.setPreferredSize(new java.awt.Dimension(700, 700));
         panelJuego.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -590,18 +662,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        setAlwaysOnTop(false);
+        fondoJuego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fondoJuego.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoJuego.jpg")); // NOI18N
+        fondoJuego.setMaximumSize(new java.awt.Dimension(700, 700));
+        fondoJuego.setMinimumSize(new java.awt.Dimension(700, 700));
+        fondoJuego.setPreferredSize(new java.awt.Dimension(700, 700));
+
         javax.swing.GroupLayout panelJuegoLayout = new javax.swing.GroupLayout(panelJuego);
         panelJuego.setLayout(panelJuegoLayout);
         panelJuegoLayout.setHorizontalGroup(
             panelJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(panelJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelJuegoLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(fondoJuego, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         panelJuegoLayout.setVerticalGroup(
             panelJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(panelJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelJuegoLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(fondoJuego, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
+        juego.add(panelJuego, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         panelLateral.setBackground(new java.awt.Color(255, 204, 204));
+        panelLateral.setMaximumSize(new java.awt.Dimension(300, 700));
+        panelLateral.setMinimumSize(new java.awt.Dimension(300, 700));
         panelLateral.setOpaque(false);
         panelLateral.setPreferredSize(new java.awt.Dimension(300, 700));
         panelLateral.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -609,54 +702,65 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 panelLateralKeyPressed(evt);
             }
         });
+        panelLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelTituloAciertos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelTituloAciertos.setForeground(new java.awt.Color(0, 0, 0));
+        labelTituloAciertos.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloAciertos.setText("ACIERTOS");
+        panelLateral.add(labelTituloAciertos, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 25, 217, 40));
 
         labelTituloErrores.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelTituloErrores.setForeground(new java.awt.Color(0, 0, 0));
+        labelTituloErrores.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloErrores.setText("ERRORES");
+        panelLateral.add(labelTituloErrores, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 142, 217, 40));
 
         labelTituloCargador.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelTituloCargador.setForeground(new java.awt.Color(0, 0, 0));
+        labelTituloCargador.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloCargador.setText("CARGADOR");
+        panelLateral.add(labelTituloCargador, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 538, 217, 40));
 
         labelAciertos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelAciertos.setForeground(new java.awt.Color(0, 0, 0));
+        labelAciertos.setForeground(new java.awt.Color(255, 255, 255));
         labelAciertos.setText("0");
+        panelLateral.add(labelAciertos, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 71, 98, 31));
 
         labelErrores.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelErrores.setForeground(new java.awt.Color(0, 0, 0));
+        labelErrores.setForeground(new java.awt.Color(255, 255, 255));
         labelErrores.setText("0");
+        panelLateral.add(labelErrores, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 188, 98, 31));
 
         labelRecargando.setVisible(false);
         labelRecargando.setBackground(new java.awt.Color(0, 255, 0));
         labelRecargando.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelRecargando.setForeground(new java.awt.Color(0, 0, 255));
+        labelRecargando.setForeground(new java.awt.Color(255, 0, 255));
         labelRecargando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelRecargando.setText("3");
         labelRecargando.setMaximumSize(new java.awt.Dimension(34, 48));
         labelRecargando.setMinimumSize(new java.awt.Dimension(34, 48));
         labelRecargando.setPreferredSize(new java.awt.Dimension(34, 48));
+        panelLateral.add(labelRecargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 580, 50, 40));
 
         labelCargador.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelCargador.setForeground(new java.awt.Color(0, 0, 0));
+        labelCargador.setForeground(new java.awt.Color(255, 255, 255));
         labelCargador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCargador.setText("10");
+        panelLateral.add(labelCargador, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 580, 50, 40));
 
         labelRecarga.setVisible(false);
         labelRecarga.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        labelRecarga.setForeground(new java.awt.Color(0, 0, 0));
+        labelRecarga.setForeground(new java.awt.Color(255, 255, 255));
         labelRecarga.setText("PULSA \"SPACE\" PARA RECARGAR");
+        panelLateral.add(labelRecarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 627, -1, -1));
 
         labelTituloTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelTituloTiempo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTituloTiempo.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloTiempo.setText("TIEMPO");
+        panelLateral.add(labelTituloTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 324, 217, 39));
 
         labelTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
-        labelTiempo.setForeground(new java.awt.Color(0, 0, 0));
+        labelTiempo.setForeground(new java.awt.Color(255, 255, 255));
         labelTiempo.setText("50");
+        panelLateral.add(labelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 369, 98, 31));
 
         toggleBotonPausa.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         toggleBotonPausa.setForeground(new java.awt.Color(0, 0, 0));
@@ -676,92 +780,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 toggleBotonPausaKeyPressed(evt);
             }
         });
+        panelLateral.add(toggleBotonPausa, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 439, 152, 62));
 
-        javax.swing.GroupLayout panelLateralLayout = new javax.swing.GroupLayout(panelLateral);
-        panelLateral.setLayout(panelLateralLayout);
-        panelLateralLayout.setHorizontalGroup(
-            panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelLateralLayout.createSequentialGroup()
-                    .addGap(63, 63, 63)
-                    .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(labelErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelTituloErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelTituloAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLateralLayout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(5, 5, 5)
-                            .addComponent(labelRecargando, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelTituloTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(panelLateralLayout.createSequentialGroup()
-                    .addGap(33, 33, 33)
-                    .addComponent(labelTituloCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLateralLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(labelRecarga)
-                    .addGap(68, 68, 68)))
-            .addGroup(panelLateralLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(toggleBotonPausa, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        fondoLateral.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fondoLateral.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPantallaLateral2.jpg")); // NOI18N
+        fondoLateral.setMaximumSize(new java.awt.Dimension(300, 700));
+        fondoLateral.setMinimumSize(new java.awt.Dimension(300, 700));
+        fondoLateral.setPreferredSize(new java.awt.Dimension(300, 700));
+        panelLateral.add(fondoLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        panelLateralLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {labelTituloAciertos, labelTituloCargador});
-
-        panelLateralLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {labelCargador, labelRecargando});
-
-        panelLateralLayout.setVerticalGroup(
-            panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLateralLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(labelTituloAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelAciertos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(labelTituloErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
-                .addComponent(labelTituloTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(toggleBotonPausa, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(labelTituloCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelCargador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelRecargando, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelRecarga)
-                .addContainerGap(84, Short.MAX_VALUE))
-        );
-
-        panelLateralLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {labelTituloAciertos, labelTituloCargador, labelTituloErrores});
-
-        panelLateralLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {labelCargador, labelRecargando});
-
-        javax.swing.GroupLayout juegoLayout = new javax.swing.GroupLayout(juego);
-        juego.setLayout(juegoLayout);
-        juegoLayout.setHorizontalGroup(
-            juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(juegoLayout.createSequentialGroup()
-                .addComponent(panelJuego, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
-        );
-        juegoLayout.setVerticalGroup(
-            juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(juegoLayout.createSequentialGroup()
-                .addGroup(juegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
-                    .addComponent(panelLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        juego.add(panelLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, -1, -1));
 
         getContentPane().add(juego, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -801,6 +829,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonGuardarPuntuacion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         botonGuardarPuntuacion.setForeground(new java.awt.Color(0, 0, 0));
         botonGuardarPuntuacion.setText("GUARDAR PUNTUACIÓN");
+        botonGuardarPuntuacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarPuntuacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBotonesGameOverLayout = new javax.swing.GroupLayout(panelBotonesGameOver);
         panelBotonesGameOver.setLayout(panelBotonesGameOverLayout);
@@ -878,6 +911,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         panelPrincipal.setVisible(false);
         panelInicio.setVisible(true);
+        xogo1.setUsuario(null);
+        textUsuarioInicio.setText(null);
+        passwordUsuarioInicio.setText(null);
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInstruccionesActionPerformed
@@ -909,7 +945,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         if (!xogo1.isPausa()){
             if (evt.getKeyCode()==KeyEvent.VK_SPACE){
-                xogo1.setPausa(true);
+                //xogo1.setPausa(true);
                 tiempoRecarga.restart();
                 labelCargador.setVisible(false);
                 labelRecargando.setVisible(true);
@@ -974,13 +1010,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonEstaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEstaticoActionPerformed
         // TODO add your handling code here:
-        xogo1.setDinamico(false);
+        xogo1.setDificultad("Estático");
         dialogDificultad.setVisible(false);
     }//GEN-LAST:event_botonEstaticoActionPerformed
 
     private void botonDinamicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDinamicoActionPerformed
         // TODO add your handling code here:
-        xogo1.setDinamico(true);
+        xogo1.setDificultad("Dinámico");
         dialogDificultad.setVisible(false);
     }//GEN-LAST:event_botonDinamicoActionPerformed
 
@@ -991,6 +1027,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void botonAccederInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAccederInvitadoActionPerformed
         panelPrincipal.setVisible(true);
         panelInicio.setVisible(false);
+        xogo1.setUsuario("Invitado");
     }//GEN-LAST:event_botonAccederInvitadoActionPerformed
 
     private void botonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesionActionPerformed
@@ -1009,13 +1046,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textUsuarioNovoActionPerformed
 
-    private void botonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarActionPerformed
+    private void botonEnviarInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarInicioSesionActionPerformed
         dialogInicioSesion.setVisible(false);
-    }//GEN-LAST:event_botonEnviarActionPerformed
+        if (con.comprobarUsuario(textUsuarioInicio.getText())&& con.comprobarContrasenha(textUsuarioInicio.getText(),passwordUsuarioInicio.getText())){
+            panelInicio.setVisible(false);
+            panelPrincipal.setVisible(true);
+            xogo1.setUsuario(textUsuarioInicio.getText());
+        }
+        else if (!con.comprobarUsuario(textUsuarioInicio.getText())){
+            JOptionPane.showMessageDialog(panelBotones, "El usuario no existe");
+        }
+        else {
+            JOptionPane.showMessageDialog(panelBotones, "La contraseña no es correcta");
+        }
+    }//GEN-LAST:event_botonEnviarInicioSesionActionPerformed
 
     @SuppressWarnings("deprecation")
     private void botonEnviarNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarNovoActionPerformed
-        
         if (textUsuarioNovo.getText().length()<5 || passwordUsuarioNovo.getText().length()<5){
             JOptionPane.showMessageDialog(null, "El usuario y la contraseña deben tener más de 5 caracteres");
         }
@@ -1023,7 +1070,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             dialogRegistrar.setVisible(false);
             con.engadirUsuarioNovo(textUsuarioNovo.getText(), passwordUsuarioNovo.getText());
         }
+        textUsuarioNovo.setText(null);
+        passwordUsuarioNovo.setText(null);
     }//GEN-LAST:event_botonEnviarNovoActionPerformed
+
+    private void botonGuardarPuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarPuntuacionActionPerformed
+        con.guardarPuntuacion(xogo1.getUsuario());
+    }//GEN-LAST:event_botonGuardarPuntuacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1068,10 +1121,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelPrincipal.setVisible(false);
         juego.setVisible(true);
         tiempo.start();
-        if (xogo1.isDinamico()){
-            duracion.start();
-        }
+        duracion.start();
         xogo1.empezarPartida();
+        panelJuego.setComponentZOrder(fondoJuego, panelJuego.getComponentCount()-1);
     }
     
     
@@ -1099,37 +1151,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     /**
-     * Suma un acerto
+     * Suma un acerto e suma un numero de segundos dependendo do obxetivo
+     * @param obxetivo Obxetivo que se clickou
      */
-    public void sumarAcerto (){
+    public void sumarAcerto (Obxetivo obxetivo){
         if (xogo1.getBalas()>0){
-            String puntuacionFicha=labelAciertos.getText();
-            int puntuacion=(int) Double.parseDouble(puntuacionFicha);
-            puntuacion+=1;
-            escribir(puntuacion, labelAciertos);
-            
+            xogo1.setPuntos(xogo1.getPuntos()+1);
+            escribir(xogo1.getPuntos(), labelAciertos);
+            if (xogo1.getPuntos()%30==0){
+                xogo1.setErro(xogo1.getErro()+2);
+            }
+            if (xogo1.getPuntos()%50==0){
+                xogo1.setAcerto(xogo1.getAcerto()+1);
+            }
             String a=labelTiempo.getText();
             int b=(int) Double.parseDouble(a);
-            b+=2;
+            b += obxetivo.getAcerto();
             labelTiempo.setText(b+"");
         }
     }
     
     
     private void sumarErro (){
-        if (xogo1.getBalas()>0){
-            String erroDisparo=labelErrores.getText();
-            int erro=(int) Double.parseDouble(erroDisparo);
-            erro++;
-            escribir(erro, labelErrores);
-            String a=labelTiempo.getText();
-            int b=(int) Double.parseDouble(a);
-            b-=5;
-            labelTiempo.setText(b+"");
-            if (b<=0){
-                labelTiempo.setText("0");
-                mostrarFinDeXogo();
-            }
+        xogo1.setFallos(xogo1.getFallos()+1);
+        escribir(xogo1.getFallos(), labelErrores);
+        String a=labelTiempo.getText();
+        int b=(int) Double.parseDouble(a);
+        b -= xogo1.getErro();
+        labelTiempo.setText(b+"");
+        if (b<=0){
+            labelTiempo.setText("0");
+            mostrarFinDeXogo();
         }
     }
     
@@ -1200,8 +1252,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tempo++;
-                aparecerCadrados(tempo);
-                desaparecerCadrados(tempo);
+                xogo1.setDuracionTotal(tempo);
+                if (xogo1.getDificultad()=="Dinámico"){
+                    aparecerCadrados(tempo);
+                    desaparecerCadrados(tempo);
+                }
             }
         });
     }
@@ -1210,20 +1265,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private void aparecerCadrados(int tempo){
         if (tempo%5==0){
-            xogo1.getObxetivos().get(1).getBotonCadrado().setVisible(true);
+            xogo1.getObxetivoVermello().getBotonCadrado().setVisible(true);
         }
-        if (tempo%10==0 && xogo1.isDinamico()){
-            xogo1.getObxetivos().get(2).getBotonCadrado().setVisible(true);
+        if (tempo%10==0){
+            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(true);
         }
     }
     
     
     private void desaparecerCadrados(int tempo){
         if (tempo%5==2){
-            xogo1.getObxetivos().get(1).getBotonCadrado().setVisible(false);
+            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(false);
         }
-        if (tempo%10==8 && xogo1.isDinamico()){
-            xogo1.getObxetivos().get(2).getBotonCadrado().setVisible(false);
+        if (tempo%10==8){
+            xogo1.getObxetivoVermello().getBotonCadrado().setVisible(false);
         }
     }
     /**
@@ -1238,17 +1293,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         clickObxetivo= new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!xogo1.isPausa() && xogo1.getBalas()>0){
-                    if(obxetivo==xogo1.getObxetivos().get(0)){
+                if(!xogo1.isPausa() && xogo1.getBalas()>0 && !tiempoRecarga.isRunning()){
+                    if(obxetivo==xogo1.getObxetivoVerde()){
                         obxetivo.xerarPosicionObxetivo();
                     }
-                    else if (obxetivo==xogo1.getObxetivos().get(1) || obxetivo==xogo1.getObxetivos().get(2)){
+                    else if (obxetivo==xogo1.getObxetivoRosa() || obxetivo==xogo1.getObxetivoVermello()){
                         obxetivo.xerarPosicionObxetivo();
-                        if (xogo1.isDinamico()){
+                        if (xogo1.getDificultad()=="Dinámico"){
                             obxetivo.getBotonCadrado().setVisible(false);
                         }
                     }
-                    sumarAcerto();
+                    sumarAcerto(obxetivo);
                     restarBala();
                 }
             }
@@ -1372,6 +1427,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         recargar();
         xogo1.eliminarTodo();
         panelGameOver.setVisible(false);
+        xogo1.reiniciarEstadisticas();
     }
     
     /**
@@ -1401,7 +1457,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelRecargando.setVisible(false);
         labelRecargando.setText("3");
         labelCargador.setText("10");
-        labelCargador.setForeground(Color.black);
+        labelCargador.setForeground(Color.white);
         labelRecarga.setVisible(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1409,7 +1465,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonCerrar;
     private javax.swing.JButton botonDificultad;
     private javax.swing.JButton botonDinamico;
-    private javax.swing.JButton botonEnviar;
+    private javax.swing.JButton botonEnviarInicioSesion;
     private javax.swing.JButton botonEnviarNovo;
     private javax.swing.JButton botonEstatico;
     private javax.swing.JButton botonGuardarPuntuacion;
@@ -1424,8 +1480,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog dialogInicioSesion;
     private javax.swing.JDialog dialogInstrucciones;
     private javax.swing.JDialog dialogRegistrar;
+    private javax.swing.JLabel fondoJuego;
+    private javax.swing.JLabel fondoLateral;
     private javax.swing.JLabel fondoPantalla;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel fondoPantallaInicio;
+    private javax.swing.JLabel fondoPantallaPrincipal;
+    private javax.swing.JLabel fondoPantallaRegistrar;
     private javax.swing.JPanel juego;
     private javax.swing.JLabel labelAciertos;
     private javax.swing.JLabel labelBackgroundDialog;
@@ -1447,6 +1507,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelUsuario1;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelBotonesGameOver;
+    private javax.swing.JPanel panelBotonesInicio;
     private javax.swing.JPanel panelDialog;
     private javax.swing.JPanel panelDialogInicioSesion;
     private javax.swing.JPanel panelDialogRegistrarse;
@@ -1459,6 +1520,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordUsuarioNovo;
     private javax.swing.JTextField textUsuarioInicio;
     private javax.swing.JTextField textUsuarioNovo;
+    private javax.swing.JTextArea textoInstrucciones;
     private javax.swing.JToggleButton toggleBotonPausa;
     // End of variables declaration//GEN-END:variables
 }

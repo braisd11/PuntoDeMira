@@ -31,87 +31,284 @@ public class Xogo {
     private Iterator<Obstaculo> iterObstaculos;
     private HashMap<Integer,Obstaculo> obstaculosColeccion=new HashMap<>();
     private boolean pausa=false;
-    private boolean dinamico=true;
+    private String dificultad="Dinámico";
     private int balas=10;
-    private int acerto=5;
-    private int erro=3;
+    private int acerto=2;
+    private int erro=5;
+    private String usuario;
+    private int puntos=0;
+    private int duracionTotal=0;
+    private int fallos=0;
+    private Obxetivo obxetivoVerde;
+    private Obxetivo obxetivoVermello;
+    private Obxetivo obxetivoRosa;
     
+
+    /**
+     * Construtor da clase Xogo
+     * @param ventanaPrincipal Interface gráfica 
+     */
     public Xogo(VentanaPrincipal ventanaPrincipal){
         this.ventanaPrincipal=ventanaPrincipal;
         crearObstaculos();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Obxetivo> getObxetivos() {
         return obxetivos;
     }
 
+    /**
+     *
+     * @param obxetivos
+     */
     public void setObxetivos(ArrayList<Obxetivo> obxetivos) {
         this.obxetivos = obxetivos;
     }
 
+    /**
+     *
+     * @return
+     */
     public Iterator<Obxetivo> getIterObxetivos() {
         return iterObxetivos;
     }
 
+    /**
+     *
+     * @param iterObxetivos
+     */
     public void setIterObxetivos(Iterator<Obxetivo> iterObxetivos) {
         this.iterObxetivos = iterObxetivos;
     }
 
-    public boolean isDinamico() {
-        return dinamico;
+    /**
+     *
+     * @return
+     */
+    public String getDificultad() {
+        return dificultad;
     }
 
-    public void setDinamico(boolean dinamico) {
-        this.dinamico = dinamico;
+    /**
+     *
+     * @param dificultad
+     */
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public int getMAXX() {
         return MAXX;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMAXY() {
         return MAXY;
     }
     
+    /**
+     *
+     * @return
+     */
     public VentanaPrincipal getVentanaPrincipal() {
         return ventanaPrincipal;
     }
 
+    /**
+     *
+     * @param ventanaPrincipal
+     */
     public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPausa() {
         return pausa;
     }
 
+    /**
+     *
+     * @param pausa
+     */
     public void setPausa(boolean pausa) {
         this.pausa = pausa;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBalas() {
         return balas;
     }
 
+    /**
+     *
+     * @param balas
+     */
     public void setBalas(int balas) {
         this.balas = balas;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAcerto() {
         return acerto;
     }
 
+    /**
+     *
+     * @param acerto
+     */
     public void setAcerto(int acerto) {
         this.acerto = acerto;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getErro() {
         return erro;
     }
 
+    /**
+     *
+     * @param erro
+     */
     public void setErro(int erro) {
         this.erro = erro;
     }
+
+    /**
+     *
+     * @return
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     *
+     * @param usuario
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getDuracionTotal() {
+        return duracionTotal;
+    }
+
+    /**
+     *
+     * @param duracionTotal
+     */
+    public void setDuracionTotal(int duracionTotal) {
+        this.duracionTotal = duracionTotal;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getFallos() {
+        return fallos;
+    }
+
+    /**
+     *
+     * @param fallos
+     */
+    public void setFallos(int fallos) {
+        this.fallos = fallos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getPuntos() {
+        return puntos;
+    }
+
+    /**
+     *
+     * @param puntos
+     */
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Obxetivo getObxetivoVerde() {
+        return obxetivoVerde;
+    }
+
+    /**
+     *
+     * @param obxetivoVerde
+     */
+    public void setObxetivoVerde(Obxetivo obxetivoVerde) {
+        this.obxetivoVerde = obxetivoVerde;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Obxetivo getObxetivoVermello() {
+        return obxetivoVermello;
+    }
+
+    /**
+     *
+     * @param obxetivoVermello
+     */
+    public void setObxetivoVermello(Obxetivo obxetivoVermello) {
+        this.obxetivoVermello = obxetivoVermello;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Obxetivo getObxetivoRosa() {
+        return obxetivoRosa;
+    }
+
+    /**
+     *
+     * @param obxetivoRosa
+     */
+    public void setObxetivoRosa(Obxetivo obxetivoRosa) {
+        this.obxetivoRosa = obxetivoRosa;
+    }
+    
     
     
     /**
@@ -119,7 +316,7 @@ public class Xogo {
      */
     public void empezarPartida(){
         Obstaculo obstaculo;
-        if (!dinamico){
+        if (dificultad=="estatico"){
             for (int cont=1; cont<=obstaculosColeccion.size()-1; cont++) {
                 obstaculo=xerarObstaculos(cont);
             }
@@ -138,9 +335,9 @@ public class Xogo {
     
     
     private void xerarObxetivos(){
-        xerarObxetivoPequeno();
-        xerarObxetivoMediano();
-        xerarObxetivoGrande();
+        obxetivoVerde=xerarObxetivoPequeno();
+        obxetivoVermello=xerarObxetivoMediano();
+        obxetivoRosa=xerarObxetivoGrande();
     }
     
     
@@ -249,5 +446,16 @@ public class Xogo {
             obstaculo.xerarPosicionObstaculo();
             ventanaPrincipal.engadirObstaculos(obstaculo);
         }
+    }
+    
+    /**
+     * Reinicia os valores do Xogo
+     */
+    public void reiniciarEstadisticas(){
+        puntos=0;
+        fallos=0;
+        duracionTotal=0;
+        erro=5;
+        acerto=1;
     }
 }

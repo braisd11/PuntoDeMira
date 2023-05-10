@@ -13,17 +13,30 @@ import java.awt.Color;
  */
 public class ObxetivoPequeno extends Obxetivo {
     
+    /**
+     * Construtor do Obxetivo de cor verde
+     * @param xogo1 Xogo
+     */
     public ObxetivoPequeno(Xogo xogo1) {
         super(xogo1);
         cor();
+        this.acerto=2;
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
         this.xerarPosicionObxetivo();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLadoCadrado() {
         return ladoCadrado;
     }
 
+    /**
+     *
+     * @param LADOCADRADO
+     */
     public void setLadoCadrado(int LADOCADRADO) {
         this.ladoCadrado = LADOCADRADO;
     }
