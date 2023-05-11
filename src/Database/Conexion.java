@@ -12,6 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import Database.Partida;
+import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  *
@@ -26,6 +30,7 @@ public class Conexion {
      * Variable para a interfaz gráfica
      */
     public VentanaPrincipal ventanaPrincipal;
+    private ArrayList<Partida> partida=new ArrayList<>();
     
     /**
      * Construtor da Clase Conexion
@@ -151,5 +156,26 @@ public class Conexion {
     }
     
     
-    
+    public ArrayList<Partida> listar(){
+        String query="select * from partidas";
+        try{
+            PreparedStatement stmt= con.prepareStatement(query);
+            ResultSet result = stmt.executeQuery(query);
+            partida.removeAll(partida);
+            while (result.next()){
+                int id=result.getInt(1);
+                String nombre=result.getString(2);
+                int aciertos=result.getInt(3);
+                int errores=result.getInt(4);
+                int duracion=result.getInt(5);
+                Date fecha=result.getDate(6);
+                String dificultad=result.getString(7);
+                partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(ventanaPrincipal, "Error as acceder a la Base de Datos");
+        }
+        return partida;
+    }
 }

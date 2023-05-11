@@ -6,27 +6,36 @@
 package View;
 
 import Database.Conexion;
+import Database.Partida;
 import Model.Timers;
 import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
+import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author a22braisdr
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends javax.swing.JFrame{
     private Xogo xogo1;
     private Conexion con;
     private Timers timer;
@@ -84,6 +93,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(null);
         con=new Conexion(this); 
         xogo1=new Xogo(this);
         timer=new Timers(this);
@@ -117,12 +127,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fondoPantallaInicio = new javax.swing.JLabel();
         dialogRegistrar = new javax.swing.JDialog();
         panelDialogRegistrarse = new javax.swing.JPanel();
-        labelUsuario1 = new javax.swing.JLabel();
-        labelContrasinal1 = new javax.swing.JLabel();
+        labelUsuarioNovo = new javax.swing.JLabel();
+        labelContrasinalNovo = new javax.swing.JLabel();
         botonEnviarNovo = new javax.swing.JButton();
         textUsuarioNovo = new javax.swing.JTextField();
         passwordUsuarioNovo = new javax.swing.JPasswordField();
         fondoPantallaRegistrar = new javax.swing.JLabel();
+        dialogPuntuaciones = new javax.swing.JDialog();
+        panelPuntuaciones = new javax.swing.JPanel();
+        tituloPuntuaciones = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaPuntuaciones = new javax.swing.JTable();
+        fondoPuntuaciones = new javax.swing.JLabel();
         panelInicio = new javax.swing.JPanel();
         panelBotonesInicio = new javax.swing.JPanel();
         botonIniciarSesion = new javax.swing.JButton();
@@ -160,9 +176,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonReiniciar = new javax.swing.JButton();
         botonSalirJuego = new javax.swing.JButton();
         botonGuardarPuntuacion = new javax.swing.JButton();
+        botonMostrarPuntuaciones = new javax.swing.JButton();
 
-        dialogDificultad.setVisible(false);
-        dialogDificultad.setLocation(new java.awt.Point(420, 230));
+        dialogDificultad.setLocation(new java.awt.Point(420, 300));
         dialogDificultad.setSize(new java.awt.Dimension(500, 500));
         dialogDificultad.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -216,12 +232,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         dialogDificultad.getContentPane().add(panelDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         labelBackgroundDialog.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelBackgroundDialog.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        try{
+            labelBackgroundDialog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+        }
         dialogDificultad.getContentPane().add(labelBackgroundDialog, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 510, 500));
 
-        dialogInstrucciones.setLocation(new java.awt.Point(420, 230));
+        dialogInstrucciones.setLocation(new java.awt.Point(420, 200));
         dialogInstrucciones.setMinimumSize(new java.awt.Dimension(600, 500));
-        dialogInstrucciones.setPreferredSize(new java.awt.Dimension(600, 550));
         dialogInstrucciones.setResizable(false);
         dialogInstrucciones.setSize(new java.awt.Dimension(600, 550));
         dialogInstrucciones.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -241,15 +260,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, -1));
 
         labelBackgroundDialog1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelBackgroundDialog1.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        try{
+            labelBackgroundDialog1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+        }
         labelBackgroundDialog1.setMaximumSize(new java.awt.Dimension(600, 550));
         labelBackgroundDialog1.setMinimumSize(new java.awt.Dimension(600, 550));
         labelBackgroundDialog1.setOpaque(true);
         labelBackgroundDialog1.setPreferredSize(new java.awt.Dimension(600, 550));
         dialogInstrucciones.getContentPane().add(labelBackgroundDialog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, -1, -1));
 
-        dialogInicioSesion.setVisible(false);
-        dialogInicioSesion.setLocation(new java.awt.Point(420, 230));
+        dialogInicioSesion.setLocation(new java.awt.Point(420, 300));
         dialogInicioSesion.setMinimumSize(new java.awt.Dimension(400, 320));
         dialogInicioSesion.setResizable(false);
         dialogInicioSesion.setSize(new java.awt.Dimension(400, 320));
@@ -320,14 +342,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         dialogInicioSesion.getContentPane().add(panelDialogInicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        fondoPantallaInicio.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        try{
+            fondoPantallaInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            labelUsuario.setForeground(Color.black);
+            labelContrasinal.setForeground(Color.black);
+        }
         fondoPantallaInicio.setMaximumSize(new java.awt.Dimension(400, 320));
         fondoPantallaInicio.setMinimumSize(new java.awt.Dimension(400, 320));
         fondoPantallaInicio.setPreferredSize(new java.awt.Dimension(400, 320));
         dialogInicioSesion.getContentPane().add(fondoPantallaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        dialogRegistrar.setVisible(false);
-        dialogRegistrar.setLocation(new java.awt.Point(420, 230));
+        dialogRegistrar.setLocation(new java.awt.Point(420, 300));
+        dialogRegistrar.setResizable(false);
         dialogRegistrar.setSize(new java.awt.Dimension(400, 320));
         dialogRegistrar.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -336,13 +364,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelDialogRegistrarse.setOpaque(false);
         panelDialogRegistrarse.setPreferredSize(new java.awt.Dimension(400, 320));
 
-        labelUsuario1.setForeground(new java.awt.Color(255, 255, 255));
-        labelUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelUsuario1.setText("USUARIO:");
+        labelUsuarioNovo.setForeground(new java.awt.Color(255, 255, 255));
+        labelUsuarioNovo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUsuarioNovo.setText("USUARIO:");
 
-        labelContrasinal1.setForeground(new java.awt.Color(255, 255, 255));
-        labelContrasinal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelContrasinal1.setText("CONTRASEÑA:");
+        labelContrasinalNovo.setForeground(new java.awt.Color(255, 255, 255));
+        labelContrasinalNovo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelContrasinalNovo.setText("CONTRASEÑA:");
 
         botonEnviarNovo.setText("ENVIAR");
         botonEnviarNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -367,8 +395,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelContrasinal1)
-                            .addComponent(labelUsuario1))
+                            .addComponent(labelContrasinalNovo)
+                            .addComponent(labelUsuarioNovo))
                         .addGap(18, 18, 18)
                         .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textUsuarioNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
@@ -383,11 +411,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(panelDialogRegistrarseLayout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUsuario1)
+                    .addComponent(labelUsuarioNovo)
                     .addComponent(textUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(panelDialogRegistrarseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelContrasinal1)
+                    .addComponent(labelContrasinalNovo)
                     .addComponent(passwordUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addComponent(botonEnviarNovo)
@@ -396,14 +424,86 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         dialogRegistrar.getContentPane().add(panelDialogRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 320));
 
-        fondoPantallaRegistrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        try{
+            fondoPantallaRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            labelUsuarioNovo.setForeground(Color.black);
+            labelContrasinalNovo.setForeground(Color.black);
+        }
         fondoPantallaRegistrar.setMaximumSize(new java.awt.Dimension(400, 320));
         fondoPantallaRegistrar.setMinimumSize(new java.awt.Dimension(400, 320));
         fondoPantallaRegistrar.setPreferredSize(new java.awt.Dimension(400, 320));
         dialogRegistrar.getContentPane().add(fondoPantallaRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        dialogPuntuaciones.setLocation(new java.awt.Point(400, 250));
+        dialogPuntuaciones.setMaximumSize(new java.awt.Dimension(650, 500));
+        dialogPuntuaciones.setMinimumSize(new java.awt.Dimension(650, 500));
+        dialogPuntuaciones.setPreferredSize(new java.awt.Dimension(650, 500));
+        dialogPuntuaciones.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelPuntuaciones.setMaximumSize(new java.awt.Dimension(650, 500));
+        panelPuntuaciones.setMinimumSize(new java.awt.Dimension(650, 500));
+        panelPuntuaciones.setOpaque(false);
+        panelPuntuaciones.setPreferredSize(new java.awt.Dimension(650, 500));
+
+        tituloPuntuaciones.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tituloPuntuaciones.setForeground(new java.awt.Color(255, 255, 255));
+        tituloPuntuaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloPuntuaciones.setText("PUNTUACIONES");
+        tituloPuntuaciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        tablaPuntuaciones.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.white, java.awt.Color.yellow, java.awt.Color.pink));
+        tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tablaPuntuaciones);
+
+        javax.swing.GroupLayout panelPuntuacionesLayout = new javax.swing.GroupLayout(panelPuntuaciones);
+        panelPuntuaciones.setLayout(panelPuntuacionesLayout);
+        panelPuntuacionesLayout.setHorizontalGroup(
+            panelPuntuacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPuntuacionesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tituloPuntuaciones)
+                .addGap(219, 219, 219))
+            .addGroup(panelPuntuacionesLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        panelPuntuacionesLayout.setVerticalGroup(
+            panelPuntuacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPuntuacionesLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(tituloPuntuaciones)
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addGap(111, 111, 111))
+        );
+
+        dialogPuntuaciones.getContentPane().add(panelPuntuaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
+
+        fondoPuntuaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        try{
+            fondoPuntuaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e){
+            tituloPuntuaciones.setForeground(Color.black);
+        }
+        fondoPuntuaciones.setMaximumSize(new java.awt.Dimension(650, 500));
+        fondoPuntuaciones.setMinimumSize(new java.awt.Dimension(650, 500));
+        fondoPuntuaciones.setPreferredSize(new java.awt.Dimension(650, 500));
+        dialogPuntuaciones.getContentPane().add(fondoPuntuaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(150, 150));
+        setIconImage(getIconImage());
+        setLocation(new java.awt.Point(0, 0));
         setMaximumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -488,8 +588,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelBotonesInicioLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonAccederInvitado, botonCerrar, botonIniciarSesion, botonRegistrarse});
 
-        fondoPantallaPrincipal.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
-        fondoPantallaPrincipal.setDisabledIcon(null);
+        try{
+            fondoPantallaPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao cargar o Fondo de Pantalla");
+        }
         fondoPantallaPrincipal.setOpaque(true);
         fondoPantallaPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
 
@@ -521,7 +625,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         panelPrincipal.setVisible(false);
-        panelPrincipal.setBackground(new java.awt.Color(255, 204, 204));
         panelPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         panelBotones.setBackground(new java.awt.Color(255, 204, 204));
@@ -603,11 +706,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones});
 
-        fondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPrincipal.jpg")); // NOI18N
+        try{
+            fondoPantalla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            labelTitulo.setForeground(Color.black);
+        }
         fondoPantalla.setPreferredSize(new java.awt.Dimension(1000, 700));
 
+        labelTitulo.setBackground(new java.awt.Color(0, 0, 0));
         labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
-        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        labelTitulo.setForeground(new java.awt.Color(200, 100, 50));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("PUNTO DE MIRA");
 
@@ -689,7 +798,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setAlwaysOnTop(false);
         fondoJuego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fondoJuego.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoJuego.jpg")); // NOI18N
+        try{
+            fondoJuego.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoJuego.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Non se cargou o Fondo de Pantalla correctamente");
+        }
         fondoJuego.setMaximumSize(new java.awt.Dimension(700, 700));
         fondoJuego.setMinimumSize(new java.awt.Dimension(700, 700));
         fondoJuego.setPreferredSize(new java.awt.Dimension(700, 700));
@@ -808,7 +922,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelLateral.add(toggleBotonPausa, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 439, 152, 62));
 
         fondoLateral.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fondoLateral.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\fondoPantallaLateral2.jpg")); // NOI18N
+        try{
+            fondoLateral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPantallaLateral2.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Non se cargou o Fondo de Pantalla correctamente");
+        }
         fondoLateral.setMaximumSize(new java.awt.Dimension(300, 700));
         fondoLateral.setMinimumSize(new java.awt.Dimension(300, 700));
         fondoLateral.setPreferredSize(new java.awt.Dimension(300, 700));
@@ -829,7 +948,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         labelBackgroundGameOver.setBackground(new java.awt.Color(0, 0, 0));
         labelBackgroundGameOver.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelBackgroundGameOver.setIcon(new javax.swing.ImageIcon("C:\\Users\\a22braisdr\\Documents\\NetBeansProjects\\GaleriaDeTiro\\gameOver.jpg")); // NOI18N
+        try{
+            labelBackgroundGameOver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/gameOver.jpg"))); // NOI18N
+        }
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Non se cargou o Fondo de Pantalla correctamente");
+        }
 
         panelBotonesGameOver.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -860,6 +984,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        botonMostrarPuntuaciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botonMostrarPuntuaciones.setForeground(new java.awt.Color(0, 0, 0));
+        botonMostrarPuntuaciones.setText("MOSTRAR PUNTUACIONES");
+        botonMostrarPuntuaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMostrarPuntuacionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBotonesGameOverLayout = new javax.swing.GroupLayout(panelBotonesGameOver);
         panelBotonesGameOver.setLayout(panelBotonesGameOverLayout);
         panelBotonesGameOverLayout.setHorizontalGroup(
@@ -868,16 +1001,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(botonGuardarPuntuacion))
-                    .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
                         .addComponent(botonReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(163, 163, 163)
-                        .addComponent(botonSalirJuego)))
+                        .addComponent(botonSalirJuego))
+                    .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonMostrarPuntuaciones)
+                            .addComponent(botonGuardarPuntuacion))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonGuardarPuntuacion, botonSalirJuego});
+        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonGuardarPuntuacion, botonMostrarPuntuaciones, botonSalirJuego});
 
         panelBotonesGameOverLayout.setVerticalGroup(
             panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -886,19 +1021,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonSalirJuego))
-                .addGap(67, 67, 67)
+                .addGap(29, 29, 29)
+                .addComponent(botonMostrarPuntuaciones)
+                .addGap(18, 18, 18)
                 .addComponent(botonGuardarPuntuacion)
-                .addContainerGap())
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonGuardarPuntuacion, botonReiniciar, botonSalirJuego});
+        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonGuardarPuntuacion, botonMostrarPuntuaciones, botonReiniciar, botonSalirJuego});
 
         javax.swing.GroupLayout panelGameOverLayout = new javax.swing.GroupLayout(panelGameOver);
         panelGameOver.setLayout(panelGameOverLayout);
         panelGameOverLayout.setHorizontalGroup(
             panelGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGameOverLayout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
+                .addContainerGap(224, Short.MAX_VALUE)
                 .addGroup(panelGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGameOverLayout.createSequentialGroup()
                         .addComponent(labelBackgroundGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -914,7 +1051,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(labelBackgroundGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(panelBotonesGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelGameOver, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -943,8 +1080,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInstruccionesActionPerformed
 
     private void juegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_juegoMouseClicked
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_juegoMouseClicked
 
     private void panelJuegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJuegoMouseClicked
@@ -990,6 +1125,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void botonSalirJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirJuegoActionPerformed
         juego.setVisible(false);
         panelPrincipal.setVisible(true);
+        botonGuardarPuntuacion.setEnabled(true);
         reiniciar();
     }//GEN-LAST:event_botonSalirJuegoActionPerformed
 
@@ -1090,6 +1226,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonGuardarPuntuacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarPuntuacionActionPerformed
         con.guardarPuntuacion(xogo1.getUsuario());
+        botonGuardarPuntuacion.setEnabled(false);
     }//GEN-LAST:event_botonGuardarPuntuacionActionPerformed
 
     private void panelJuegoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJuegoMouseExited
@@ -1097,10 +1234,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_panelJuegoMouseExited
 
     private void juegoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_juegoMouseExited
-        if (timer.getTiempo().isRunning()){
-            sumarErro();
-        }
+        
     }//GEN-LAST:event_juegoMouseExited
+
+    private void botonMostrarPuntuacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMostrarPuntuacionesActionPerformed
+        dialogPuntuaciones.setVisible(true);
+        mostrarTabla();
+    }//GEN-LAST:event_botonMostrarPuntuacionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1132,6 +1272,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                cambiarApariencia();
                 new VentanaPrincipal().setVisible(true);
             }
         });
@@ -1405,6 +1546,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelTiempo.setText("50");
         labelAciertos.setText("0");
         labelErrores.setText("0");
+        botonGuardarPuntuacion.setEnabled(true);
         recargar();
         xogo1.eliminarTodo();
         panelGameOver.setVisible(false);
@@ -1445,6 +1587,68 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelCargador.setForeground(Color.white);
         labelRecarga.setVisible(false);
     }
+
+    
+    /**
+     * Pon un icono na ventana do JFrame
+     * @return Imaxe a poñer de Icono
+     */
+    @Override
+    public Image getIconImage() {
+        Image retValue =null;
+        try{
+            retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("recursos/icon.png"));
+        }
+        catch (NullPointerException e){
+        }
+        return retValue;
+    }
+    
+    
+    private static void cambiarApariencia(){
+        try {
+            UIManager.setLookAndFeel(new BernsteinLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void mostrarTabla(){
+        con.listar();
+        rellenarTabla();
+    }
+    
+    private void rellenarTabla(){
+        DefaultTableModel model=new DefaultTableModel();
+        try{
+            ArrayList<Object> nombreColumna = new ArrayList<>();
+            nombreColumna.add("ID");
+            nombreColumna.add("NOMBRE");
+            nombreColumna.add("ACIERTOS");
+            nombreColumna.add("FALLOS");
+            nombreColumna.add("DURACIÓN");
+            nombreColumna.add("FECHA");
+            nombreColumna.add("DIFICULTAD");
+            
+            for(Object columna : nombreColumna){
+                model.addColumn(columna);
+            }
+            for(Partida DatoNivel : con.listar()){
+                model.addRow(new Object[]{ DatoNivel.getId(),
+                                           DatoNivel.getNombre(),
+                                           DatoNivel.getAciertos(),
+                                           DatoNivel.getErrores(),
+                                           DatoNivel.getDuracion(),
+                                           DatoNivel.getFecha(),
+                                           DatoNivel.getDificultad()
+                                          }); 
+            }
+            tablaPuntuaciones.setModel(model);
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(dialogPuntuaciones, "Error al llenar la tabla");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAccederInvitado;
     private javax.swing.JButton botonCerrar;
@@ -1457,6 +1661,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonIniciarSesion;
     private javax.swing.JButton botonInstrucciones;
     private javax.swing.JButton botonJugar;
+    private javax.swing.JButton botonMostrarPuntuaciones;
     private javax.swing.JButton botonRegistrarse;
     private javax.swing.JButton botonReiniciar;
     private javax.swing.JButton botonSalir;
@@ -1464,6 +1669,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog dialogDificultad;
     private javax.swing.JDialog dialogInicioSesion;
     private javax.swing.JDialog dialogInstrucciones;
+    private javax.swing.JDialog dialogPuntuaciones;
     private javax.swing.JDialog dialogRegistrar;
     private javax.swing.JLabel fondoJuego;
     private javax.swing.JLabel fondoLateral;
@@ -1471,6 +1677,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel fondoPantallaInicio;
     private javax.swing.JLabel fondoPantallaPrincipal;
     private javax.swing.JLabel fondoPantallaRegistrar;
+    private javax.swing.JLabel fondoPuntuaciones;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel juego;
     private javax.swing.JLabel labelAciertos;
     private javax.swing.JLabel labelBackgroundDialog;
@@ -1478,7 +1686,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelBackgroundGameOver;
     private javax.swing.JLabel labelCargador;
     private javax.swing.JLabel labelContrasinal;
-    private javax.swing.JLabel labelContrasinal1;
+    private javax.swing.JLabel labelContrasinalNovo;
     private javax.swing.JLabel labelErrores;
     private javax.swing.JLabel labelRecarga;
     private javax.swing.JLabel labelRecargando;
@@ -1489,7 +1697,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelTituloErrores;
     private javax.swing.JLabel labelTituloTiempo;
     private javax.swing.JLabel labelUsuario;
-    private javax.swing.JLabel labelUsuario1;
+    private javax.swing.JLabel labelUsuarioNovo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelBotonesGameOver;
     private javax.swing.JPanel panelBotonesInicio;
@@ -1501,11 +1709,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelJuego;
     private javax.swing.JPanel panelLateral;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelPuntuaciones;
     private javax.swing.JPasswordField passwordUsuarioInicio;
     private javax.swing.JPasswordField passwordUsuarioNovo;
+    private javax.swing.JTable tablaPuntuaciones;
     private javax.swing.JTextField textUsuarioInicio;
     private javax.swing.JTextField textUsuarioNovo;
     private javax.swing.JTextArea textoInstrucciones;
+    private javax.swing.JLabel tituloPuntuaciones;
     private javax.swing.JToggleButton toggleBotonPausa;
     // End of variables declaration//GEN-END:variables
+
 }
