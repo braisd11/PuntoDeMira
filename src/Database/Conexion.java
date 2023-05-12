@@ -54,6 +54,10 @@ public class Conexion {
         }
         catch(SQLException e){
             JOptionPane.showMessageDialog(ventanaPrincipal, "Error al acceder a la Base de Datos");
+            ventanaPrincipal.getBotonIniciarSesion().setEnabled(false);
+            ventanaPrincipal.getBotonRegistrarse().setEnabled(false);
+            ventanaPrincipal.getBotonGuardarPuntuacion().setEnabled(false);
+            ventanaPrincipal.getBotonMostrarPuntuaciones().setEnabled(false);
         }
         return con;
     }
@@ -67,15 +71,14 @@ public class Conexion {
         String insertString= "insert into jugadores (Id,Nombre,Contrasenha) values (null,?,MD5(?))";
         if (!comprobarUsuario(usuario)){
             try{
-            PreparedStatement insertJugador=con.prepareStatement(insertString);
-            insertJugador.setString(1, usuario);
-            insertJugador.setString(2, contrasinal);
-            insertJugador.execute();
-            JOptionPane.showMessageDialog(ventanaPrincipal, "Usuario Registrado!");
+                PreparedStatement insertJugador=con.prepareStatement(insertString);
+                insertJugador.setString(1, usuario);
+                insertJugador.setString(2, contrasinal);
+                insertJugador.execute();
+                JOptionPane.showMessageDialog(ventanaPrincipal, "Usuario Registrado!");
             }
             catch (NullPointerException | SQLException e){
                 JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
-                ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
             }
         }
         else {
@@ -102,9 +105,8 @@ public class Conexion {
             }
         }
         catch (NullPointerException | SQLException e){
-                JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
-                ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
-            }
+            JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
+        }
         return existir;
     }
     
@@ -152,26 +154,20 @@ public class Conexion {
     }
     
     
-    public ArrayList<Partida> listar(){
+    public ArrayList<Partida> listar() throws SQLException{
         String query="select * from partidas";
-        try{
-            PreparedStatement stmt= con.prepareStatement(query);
-            ResultSet result = stmt.executeQuery(query);
-            partida.removeAll(partida);
-            while (result.next()){
-                int id=result.getInt(1);
-                String nombre=result.getString(2);
-                int aciertos=result.getInt(3);
-                int errores=result.getInt(4);
-                int duracion=result.getInt(5);
-                Date fecha=result.getDate(6);
-                String dificultad=result.getString(7);
-                partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
-            }
-        }
-        catch (NullPointerException | SQLException e){
-            JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
-            ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
+        PreparedStatement stmt= con.prepareStatement(query);
+        ResultSet result = stmt.executeQuery(query);
+        partida.removeAll(partida);
+        while (result.next()){
+            int id=result.getInt(1);
+            String nombre=result.getString(2);
+            int aciertos=result.getInt(3);
+            int errores=result.getInt(4);
+            int duracion=result.getInt(5);
+            Date fecha=result.getDate(6);
+            String dificultad=result.getString(7);
+            partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
         }
         return partida;
     }

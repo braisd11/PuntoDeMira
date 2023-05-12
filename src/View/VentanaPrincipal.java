@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,8 +88,20 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         this.labelTiempo = labelTiempo;
     }
 
-    public JDialog getDialogPuntuaciones() {
-        return dialogPuntuaciones;
+    public JButton getBotonIniciarSesion() {
+        return botonIniciarSesion;
+    }
+
+    public JButton getBotonRegistrarse() {
+        return botonRegistrarse;
+    }
+
+    public JButton getBotonGuardarPuntuacion() {
+        return botonGuardarPuntuacion;
+    }
+
+    public JButton getBotonMostrarPuntuaciones() {
+        return botonMostrarPuntuaciones;
     }
     
     
@@ -1009,33 +1022,32 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(botonReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addComponent(botonSalirJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
+                .addGap(205, 205, 205)
                 .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
-                        .addComponent(botonReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163)
-                        .addComponent(botonSalirJuego))
-                    .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonMostrarPuntuaciones)
-                            .addComponent(botonGuardarPuntuacion))))
+                    .addComponent(botonMostrarPuntuaciones)
+                    .addComponent(botonGuardarPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonGuardarPuntuacion, botonMostrarPuntuaciones, botonSalirJuego});
+        panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonGuardarPuntuacion, botonMostrarPuntuaciones, botonReiniciar, botonSalirJuego});
 
         panelBotonesGameOverLayout.setVerticalGroup(
             panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesGameOverLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelBotonesGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonSalirJuego))
-                .addGap(29, 29, 29)
-                .addComponent(botonMostrarPuntuaciones)
+                    .addComponent(botonReiniciar)
+                    .addComponent(botonSalirJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(botonMostrarPuntuaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonGuardarPuntuacion)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         panelBotonesGameOverLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonGuardarPuntuacion, botonMostrarPuntuaciones, botonReiniciar, botonSalirJuego});
@@ -1045,23 +1057,23 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         panelGameOverLayout.setHorizontalGroup(
             panelGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGameOverLayout.createSequentialGroup()
-                .addContainerGap(224, Short.MAX_VALUE)
+                .addContainerGap(191, Short.MAX_VALUE)
                 .addGroup(panelGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGameOverLayout.createSequentialGroup()
                         .addComponent(labelBackgroundGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(262, 262, 262))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGameOverLayout.createSequentialGroup()
                         .addComponent(panelBotonesGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(187, 187, 187))))
+                        .addGap(138, 138, 138))))
         );
         panelGameOverLayout.setVerticalGroup(
             panelGameOverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGameOverLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(labelBackgroundGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118)
+                .addGap(113, 113, 113)
                 .addComponent(panelBotonesGameOver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelGameOver, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1610,40 +1622,42 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }
     
     private void mostrarTabla(){
-        con.listar();
-        rellenarTabla();
+        try {
+            con.listar();
+            rellenarTabla();
+        }
+        catch (SQLException | NullPointerException e){
+            JOptionPane.showMessageDialog(panelBotones, "Error al mostrar la tabla");
+            dialogPuntuaciones.setVisible(false);
+        }
     }
     
-    private void rellenarTabla(){
+    private void rellenarTabla() throws SQLException{
         DefaultTableModel model=new DefaultTableModel();
-        try{
-            ArrayList<Object> nombreColumna = new ArrayList<>();
-            nombreColumna.add("ID");
-            nombreColumna.add("NOMBRE");
-            nombreColumna.add("ACIERTOS");
-            nombreColumna.add("FALLOS");
-            nombreColumna.add("DURACIÓN");
-            nombreColumna.add("FECHA");
-            nombreColumna.add("DIFICULTAD");
-            
-            for(Object columna : nombreColumna){
-                model.addColumn(columna);
-            }
-            for(Partida DatoNivel : con.listar()){
-                model.addRow(new Object[]{ DatoNivel.getId(),
-                                           DatoNivel.getNombre(),
-                                           DatoNivel.getAciertos(),
-                                           DatoNivel.getErrores(),
-                                           DatoNivel.getDuracion(),
-                                           DatoNivel.getFecha(),
-                                           DatoNivel.getDificultad()
-                                          }); 
-            }
-            tablaPuntuaciones.setModel(model);
+        ArrayList<Object> nombreColumna = new ArrayList<>();
+        nombreColumna.add("ID");
+        nombreColumna.add("NOMBRE");
+        nombreColumna.add("ACIERTOS");
+        nombreColumna.add("FALLOS");
+        nombreColumna.add("DURACIÓN");
+        nombreColumna.add("FECHA");
+        nombreColumna.add("DIFICULTAD");
+
+        for(Object columna : nombreColumna){
+            model.addColumn(columna);
         }
-        catch (Exception e){
-            JOptionPane.showMessageDialog(dialogPuntuaciones, "Error al llenar la tabla");
+        for(Partida DatoNivel : con.listar()){
+            model.addRow(new Object[]{ DatoNivel.getId(),
+                                       DatoNivel.getNombre(),
+                                       DatoNivel.getAciertos(),
+                                       DatoNivel.getErrores(),
+                                       DatoNivel.getDuracion(),
+                                       DatoNivel.getFecha(),
+                                       DatoNivel.getDificultad()
+                                      }); 
         }
+        tablaPuntuaciones.setModel(model);
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAccederInvitado;

@@ -1413,7 +1413,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="224" max="32767" attributes="0"/>
+                  <EmptySpace pref="191" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="labelBackgroundGameOver" min="-2" pref="440" max="-2" attributes="0"/>
@@ -1421,7 +1421,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="panelBotonesGameOver" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -1432,9 +1432,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Component id="labelBackgroundGameOver" min="-2" pref="187" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                   <Component id="panelBotonesGameOver" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="160" max="32767" attributes="0"/>
+                  <EmptySpace pref="196" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1465,20 +1465,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="botonReiniciar" linkSize="16" min="-2" pref="248" max="-2" attributes="0"/>
+                      <EmptySpace pref="163" max="32767" attributes="0"/>
+                      <Component id="botonSalirJuego" linkSize="16" min="-2" pref="248" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="botonReiniciar" min="-2" pref="166" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                              <Component id="botonSalirJuego" linkSize="6" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="botonMostrarPuntuaciones" linkSize="6" min="-2" max="-2" attributes="0"/>
-                                  <Component id="botonGuardarPuntuacion" linkSize="6" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="botonMostrarPuntuaciones" linkSize="16" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonGuardarPuntuacion" linkSize="16" min="-2" pref="248" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -1487,16 +1484,16 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="botonReiniciar" linkSize="7" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="botonSalirJuego" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonReiniciar" linkSize="17" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonSalirJuego" linkSize="17" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="botonMostrarPuntuaciones" linkSize="7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botonGuardarPuntuacion" linkSize="7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <Component id="botonMostrarPuntuaciones" linkSize="17" min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonGuardarPuntuacion" linkSize="17" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
