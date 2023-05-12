@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -84,6 +85,10 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
     public void setLabelTiempo(JLabel labelTiempo) {
         this.labelTiempo = labelTiempo;
+    }
+
+    public JDialog getDialogPuntuaciones() {
+        return dialogPuntuaciones;
     }
     
     
@@ -437,9 +442,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         dialogRegistrar.getContentPane().add(fondoPantallaRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dialogPuntuaciones.setLocation(new java.awt.Point(400, 250));
-        dialogPuntuaciones.setMaximumSize(new java.awt.Dimension(650, 500));
         dialogPuntuaciones.setMinimumSize(new java.awt.Dimension(650, 500));
-        dialogPuntuaciones.setPreferredSize(new java.awt.Dimension(650, 500));
         dialogPuntuaciones.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelPuntuaciones.setMaximumSize(new java.awt.Dimension(650, 500));
@@ -462,6 +465,13 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
             }
         ));
+        tablaPuntuaciones.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        tablaPuntuaciones.setEnabled(false);
+        tablaPuntuaciones.setFillsViewportHeight(true);
+        tablaPuntuaciones.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaPuntuaciones.setOpaque(false);
+        tablaPuntuaciones.getTableHeader().setResizingAllowed(false);
+        tablaPuntuaciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaPuntuaciones);
 
         javax.swing.GroupLayout panelPuntuacionesLayout = new javax.swing.GroupLayout(panelPuntuaciones);
@@ -1108,13 +1118,9 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }//GEN-LAST:event_panelJuegoKeyPressed
 
     private void juegoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_juegoKeyPressed
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_juegoKeyPressed
 
     private void panelJuegoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJuegoMousePressed
-        // TODO add your handling code here:
-
     }//GEN-LAST:event_panelJuegoMousePressed
 
     private void botonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReiniciarActionPerformed
@@ -1130,23 +1136,15 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }//GEN-LAST:event_botonSalirJuegoActionPerformed
 
     private void panelLateralKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelLateralKeyPressed
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_panelLateralKeyPressed
 
     private void panelGameOverKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelGameOverKeyPressed
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_panelGameOverKeyPressed
 
     private void toggleBotonPausaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toggleBotonPausaKeyPressed
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_toggleBotonPausaKeyPressed
 
     private void toggleBotonPausaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toggleBotonPausaMousePressed
-        // TODO add your handling code here:
-        
     }//GEN-LAST:event_toggleBotonPausaMousePressed
 
     private void toggleBotonPausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBotonPausaActionPerformed
@@ -1189,11 +1187,9 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 
     private void textUsuarioInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioInicioActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_textUsuarioInicioActionPerformed
 
     private void textUsuarioNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioNovoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_textUsuarioNovoActionPerformed
 
     private void botonEnviarInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarInicioSesionActionPerformed

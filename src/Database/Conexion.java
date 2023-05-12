@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import Database.Partida;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -47,14 +46,14 @@ public class Conexion {
      * @return 
      */
     public Connection abrirConexion(){
-        String url="jdbc:mysql://localhost/punto_de_mira";
+        String url="jdbc:mysql://localhost/punto_de_ira";
         String user="root";
         String password="root";
         try{
             con=DriverManager.getConnection(url, user, password);
         }
         catch(SQLException e){
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(ventanaPrincipal, "Error al acceder a la Base de Datos");
         }
         return con;
     }
@@ -74,8 +73,9 @@ public class Conexion {
             insertJugador.execute();
             JOptionPane.showMessageDialog(ventanaPrincipal, "Usuario Registrado!");
             }
-            catch(SQLException e){
-                JOptionPane.showMessageDialog(ventanaPrincipal, "Error al registrar al usuario!");
+            catch (NullPointerException | SQLException e){
+                JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
+                ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
             }
         }
         else {
@@ -101,9 +101,10 @@ public class Conexion {
                 }
             }
         }
-        catch (SQLException e){
-            e.getMessage();
-        }
+        catch (NullPointerException | SQLException e){
+                JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
+                ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
+            }
         return existir;
     }
     
@@ -126,9 +127,7 @@ public class Conexion {
                 existir=true;
             }
         }
-        catch (SQLException e){
-            e.getMessage();
-        }
+        catch (NullPointerException | SQLException e){}
         return existir;
     }
     
@@ -149,10 +148,7 @@ public class Conexion {
             insertPartida.execute();
             JOptionPane.showMessageDialog(ventanaPrincipal, "Puntuación Guardada");
         }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(ventanaPrincipal, "Error al guardar la puntuación");
-            System.out.println(e.getMessage());
-        }
+        catch(SQLException | NullPointerException e){}
     }
     
     
@@ -173,8 +169,9 @@ public class Conexion {
                 partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
             }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(ventanaPrincipal, "Error as acceder a la Base de Datos");
+        catch (NullPointerException | SQLException e){
+            JOptionPane.showMessageDialog(ventanaPrincipal, "Hubo un error al acceder a la Base de Datos");
+            ventanaPrincipal.getDialogPuntuaciones().setVisible(false);
         }
         return partida;
     }
