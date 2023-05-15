@@ -12,6 +12,10 @@ import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
 import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
+import com.jtattoo.plaf.fast.FastLookAndFeel;
+import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import com.jtattoo.plaf.mint.MintLookAndFeel;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -29,8 +33,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -170,6 +176,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         botonDificultad = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
         botonInstrucciones = new javax.swing.JButton();
+        botonReiniciarEstadisticas = new javax.swing.JButton();
         fondoPantalla = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
         juego = new javax.swing.JPanel();
@@ -469,7 +476,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         tituloPuntuaciones.setText("PUNTUACIONES");
         tituloPuntuaciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        tablaPuntuaciones.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.white, java.awt.Color.yellow, java.awt.Color.pink));
         tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -483,6 +489,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         tablaPuntuaciones.setFillsViewportHeight(true);
         tablaPuntuaciones.setGridColor(new java.awt.Color(0, 0, 0));
         tablaPuntuaciones.setOpaque(false);
+        tablaPuntuaciones.setShowGrid(true);
         tablaPuntuaciones.getTableHeader().setResizingAllowed(false);
         tablaPuntuaciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaPuntuaciones);
@@ -695,39 +702,56 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             }
         });
 
+        botonReiniciarEstadisticas.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        botonReiniciarEstadisticas.setForeground(new java.awt.Color(0, 0, 0));
+        botonReiniciarEstadisticas.setText("REINICIAR ESTADÍSTICAS");
+        botonReiniciarEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonReiniciarEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReiniciarEstadisticasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
         panelBotones.setLayout(panelBotonesLayout);
         panelBotonesLayout.setHorizontalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonDificultad)
-                    .addComponent(botonSalir)
-                    .addComponent(botonInstrucciones))
+                    .addComponent(botonInstrucciones)
+                    .addComponent(botonReiniciarEstadisticas))
                 .addGap(76, 76, 76))
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonSalir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDificultad, botonInstrucciones, botonJugar, botonSalir});
+        panelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonDificultad, botonInstrucciones, botonJugar, botonReiniciarEstadisticas, botonSalir});
 
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(13, 13, 13)
                 .addComponent(botonJugar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonDificultad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(botonReiniciarEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(botonSalir)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonJugar, botonSalir});
 
-        panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones});
+        panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonDificultad, botonInstrucciones, botonReiniciarEstadisticas});
 
         try{
             fondoPantalla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoPrincipal.jpg"))); // NOI18N
@@ -1250,6 +1274,14 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         mostrarTabla();
     }//GEN-LAST:event_botonMostrarPuntuacionesActionPerformed
 
+    private void botonReiniciarEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReiniciarEstadisticasActionPerformed
+        int confirmar=JOptionPane.showConfirmDialog(panelBotones, "Estás seguro de que quieres reiniciar las estadísticas?");
+        if (JOptionPane.OK_OPTION == confirmar){
+            con.reiniciarEstadisticas();
+            JOptionPane.showMessageDialog(panelBotones, "Las Estadísticas se reiniciaron con éxito!");
+        }
+    }//GEN-LAST:event_botonReiniciarEstadisticasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1615,7 +1647,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     private static void cambiarApariencia(){
         try {
-            UIManager.setLookAndFeel(new BernsteinLookAndFeel());
+            UIManager.setLookAndFeel(new GraphiteLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1657,7 +1689,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                                       }); 
         }
         tablaPuntuaciones.setModel(model);
-        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAccederInvitado;
@@ -1674,6 +1705,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private javax.swing.JButton botonMostrarPuntuaciones;
     private javax.swing.JButton botonRegistrarse;
     private javax.swing.JButton botonReiniciar;
+    private javax.swing.JButton botonReiniciarEstadisticas;
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirJuego;
     private javax.swing.JDialog dialogDificultad;

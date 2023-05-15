@@ -46,7 +46,7 @@ public class Conexion {
      * @return 
      */
     public Connection abrirConexion(){
-        String url="jdbc:mysql://localhost/punto_de_ira";
+        String url="jdbc:mysql://localhost/punto_de_mira";
         String user="root";
         String password="root";
         try{
@@ -150,7 +150,9 @@ public class Conexion {
             insertPartida.execute();
             JOptionPane.showMessageDialog(ventanaPrincipal, "Puntuación Guardada");
         }
-        catch(SQLException | NullPointerException e){}
+        catch(SQLException | NullPointerException e){
+            JOptionPane.showMessageDialog(ventanaPrincipal, "No se pudo guardar la puntuación correctamente");
+        }
     }
     
     
@@ -170,5 +172,17 @@ public class Conexion {
             partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
         }
         return partida;
+    }
+    
+    
+    public void reiniciarEstadisticas(){
+        String insertString= "truncate table partidas";
+        try{
+            PreparedStatement truncateTable=con.prepareStatement(insertString);
+            truncateTable.execute();
+        }
+        catch(SQLException | NullPointerException e){
+            JOptionPane.showMessageDialog(ventanaPrincipal, "No se pudo guardar la puntuación correctamente");
+        }
     }
 }
