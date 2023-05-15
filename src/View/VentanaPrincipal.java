@@ -1540,6 +1540,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             public void mouseClicked(MouseEvent e) {
                 if (!xogo1.isPausa()){
                     sumarErro();
+                    restarBala();
                 }
             }
 
