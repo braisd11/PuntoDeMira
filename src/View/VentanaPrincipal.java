@@ -746,7 +746,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                 .addComponent(botonReiniciarEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonSalir)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonJugar, botonSalir});
@@ -1538,6 +1538,9 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         mouse = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (!xogo1.isPausa()){
+                    sumarErro();
+                }
             }
 
             @Override
