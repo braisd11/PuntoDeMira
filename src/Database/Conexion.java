@@ -58,6 +58,7 @@ public class Conexion {
             ventanaPrincipal.getBotonRegistrarse().setEnabled(false);
             ventanaPrincipal.getBotonGuardarPuntuacion().setEnabled(false);
             ventanaPrincipal.getBotonMostrarPuntuaciones().setEnabled(false);
+            ventanaPrincipal.getBotonReiniciarEstadisticas().setEnabled(false);
         }
         return con;
     }

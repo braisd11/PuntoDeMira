@@ -11,11 +11,7 @@ import Model.Timers;
 import Model.Xogo;
 import Model.obstaculos.Obstaculo;
 import Model.obxetivos.Obxetivo;
-import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
-import com.jtattoo.plaf.fast.FastLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
-import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import com.jtattoo.plaf.mint.MintLookAndFeel;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -29,14 +25,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -108,6 +101,10 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
     public JButton getBotonMostrarPuntuaciones() {
         return botonMostrarPuntuaciones;
+    }
+
+    public JButton getBotonReiniciarEstadisticas() {
+        return botonReiniciarEstadisticas;
     }
     
     
@@ -278,11 +275,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         textoInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
         textoInstrucciones.setLineWrap(true);
         textoInstrucciones.setRows(5);
-        textoInstrucciones.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos si se trata del objetivo verde,3 si es el objetivo rojo y 4 si es el objetivo rosa.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Cada 30 aciertos, los errores restarán 2 segundos más, y cada 50 aciertos los aciertos sum   arán 1 segundo más\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Rosa: aparece cada 5 segundos y dura 2 segundos");
+        textoInstrucciones.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos si se trata del objetivo verde,3 si es el objetivo rojo y 4 si es el objetivo rosa.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error. Estos            obstáculos cambiarán de posición cada 10 segundos.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Cada 30 aciertos, los errores restarán 2 segundos más, y cada 50 aciertos los aciertos sum   arán 1 segundo más\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Rosa: aparece cada 5 segundos y dura 2 segundos");
         textoInstrucciones.setMaximumSize(new java.awt.Dimension(600, 550));
         textoInstrucciones.setMinimumSize(new java.awt.Dimension(600, 550));
         textoInstrucciones.setPreferredSize(new java.awt.Dimension(600, 550));
-        dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, -1));
+        dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, 560));
 
         labelBackgroundDialog1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         try{
@@ -1416,15 +1413,17 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }
     
     /**
-     * Fai que aparezan os Obxetivos
+     * Fai que aparezan os Obxetivos dándolles unha posición nova
      * @param tempo tempo transcorrido
      */
     public void aparecerCadrados(int tempo){
         if (tempo%5==0){
             xogo1.getObxetivoVermello().getBotonCadrado().setVisible(true);
+            xogo1.getObxetivoVermello().xerarPosicionObxetivo();
         }
         if (tempo%10==0){
             xogo1.getObxetivoRosa().getBotonCadrado().setVisible(true);
+            xogo1.getObxetivoRosa().xerarPosicionObxetivo();
         }
     }
     
@@ -1455,17 +1454,24 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!xogo1.isPausa() && xogo1.getBalas()>0 && !timer.getTiempoRecarga().isRunning()){
+                    sumarAcerto(obxetivo);
+                    cambiarObstáculos();
+                    restarBala();
                     if(obxetivo==xogo1.getObxetivoVerde()){
                         obxetivo.xerarPosicionObxetivo();
                     }
-                    else if (obxetivo==xogo1.getObxetivoRosa() || obxetivo==xogo1.getObxetivoVermello()){
-                        obxetivo.xerarPosicionObxetivo();
+                    else if (obxetivo==xogo1.getObxetivoVermello()){
                         if (xogo1.getDificultad()=="Dinámico"){
                             obxetivo.getBotonCadrado().setVisible(false);
                         }
                     }
-                    sumarAcerto(obxetivo);
-                    restarBala();
+                    else if (obxetivo==xogo1.getObxetivoRosa()) {
+                        xogo1.setBalas(xogo1.getBalas()+4);
+                        escribir(xogo1.getBalas(), labelCargador);
+                        if (xogo1.getDificultad()=="Dinámico"){
+                            obxetivo.getBotonCadrado().setVisible(false);
+                        }
+                    }
                 }
             }
         };
@@ -1694,6 +1700,18 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         }
         tablaPuntuaciones.setModel(model);
     }
+    
+    
+    private void cambiarObstáculos (){
+        if (xogo1.getPuntos()%10==0){
+            arrayBotones.clear();
+            xogo1.getObstaculos().clear();
+            xogo1.xerarObstaculos();
+            xogo1.establecerPosicionObstaculos();
+            xogo1.pintarObstaculos();
+            panelJuego.setComponentZOrder(fondoJuego, panelJuego.getComponentCount()-1);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAccederInvitado;
     private javax.swing.JButton botonCerrar;
@@ -1765,5 +1783,4 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private javax.swing.JLabel tituloPuntuaciones;
     private javax.swing.JToggleButton toggleBotonPausa;
     // End of variables declaration//GEN-END:variables
-
 }

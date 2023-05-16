@@ -308,6 +308,14 @@ public class Xogo {
     public void setObxetivoRosa(Obxetivo obxetivoRosa) {
         this.obxetivoRosa = obxetivoRosa;
     }
+
+    /**
+     * 
+     * @return Array obstaculos
+     */
+    public ArrayList<Obstaculo> getObstaculos() {
+        return obstaculos;
+    }
     
     
     
@@ -315,17 +323,7 @@ public class Xogo {
      * Xera os Obstáculos e os Obxetivos
      */
     public void empezarPartida(){
-        Obstaculo obstaculo;
-        if (dificultad=="estatico"){
-            for (int cont=1; cont<=obstaculosColeccion.size()-1; cont++) {
-                obstaculo=xerarObstaculos(cont);
-            }
-        }
-        else {
-            for (int cont=1; cont<=obstaculosColeccion.size(); cont++) {
-                obstaculo=xerarObstaculos(cont);
-            }
-        }
+        xerarObstaculos();
         establecerPosicionObstaculos();
         xerarObxetivos();
         pintarObxetivos();
@@ -362,10 +360,21 @@ public class Xogo {
         return obxetivoGrande;
     }
     
+    public void xerarObstaculos(){
+        if (dificultad=="estatico"){
+            for (int cont=1; cont<=obstaculosColeccion.size()-1; cont++) {
+                engadirObstaculo(cont);
+            }
+        }
+        else {
+            for (int cont=1; cont<=obstaculosColeccion.size(); cont++) {
+                engadirObstaculo(cont);
+            }
+        }
+    }
     
-    private Obstaculo xerarObstaculos (int figura){
+    private void engadirObstaculo (int figura){
         engadirArray(obstaculosColeccion.get(figura));
-        return obstaculosColeccion.get(figura);
     }
     
     private void engadirArray (Obstaculo obstaculo){
