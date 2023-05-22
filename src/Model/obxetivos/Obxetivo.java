@@ -5,7 +5,7 @@
 package Model.obxetivos;
 
 import Model.Cadrado;
-import Model.Coloreable;
+import Interfaces.Coloreable;
 import Model.Xogo;
 import javax.swing.JButton;
 

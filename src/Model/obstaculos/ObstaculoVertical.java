@@ -5,7 +5,7 @@
 package Model.obstaculos;
 
 import Model.Cadrado;
-import Model.Coloreable;
+import Interfaces.Coloreable;
 import Model.Xogo;
 import java.awt.Color;
 

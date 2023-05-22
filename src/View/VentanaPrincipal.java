@@ -1456,13 +1456,15 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                 if(!xogo1.isPausa() && xogo1.getBalas()>0 && !timer.getTiempoRecarga().isRunning()){
                     sumarAcerto(obxetivo);
                     cambiarObstáculos();
-                    restarBala();
                     if(obxetivo==xogo1.getObxetivoVerde()){
                         obxetivo.xerarPosicionObxetivo();
                     }
                     else if (obxetivo==xogo1.getObxetivoVermello()){
                         if (xogo1.getDificultad()=="Dinámico"){
                             obxetivo.getBotonCadrado().setVisible(false);
+                        }
+                        else {
+                            obxetivo.xerarPosicionObxetivo();
                         }
                     }
                     else if (obxetivo==xogo1.getObxetivoRosa()) {
@@ -1471,7 +1473,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                         if (xogo1.getDificultad()=="Dinámico"){
                             obxetivo.getBotonCadrado().setVisible(false);
                         }
+                        else {
+                            obxetivo.xerarPosicionObxetivo();
+                        }
                     }
+                    restarBala();
                 }
             }
         };
@@ -1506,6 +1512,8 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         }
         return correctoExe;
     }
+    
+    
     
     /**
      * Comproba si o obstáculo coincide con outro botón do array arrayBotones
@@ -1553,7 +1561,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             @Override
             public void mousePressed(MouseEvent e) {
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
             }

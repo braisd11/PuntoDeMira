@@ -156,7 +156,11 @@ public class Conexion {
         }
     }
     
-    
+    /**
+     * Lista as partidas xogadas
+     * @return Partida
+     * @throws SQLException Excepción da Base de Datos
+     */
     public ArrayList<Partida> listar() throws SQLException{
         String query="select * from partidas";
         PreparedStatement stmt= con.prepareStatement(query);
@@ -175,7 +179,9 @@ public class Conexion {
         return partida;
     }
     
-    
+    /**
+     * Reincia a táboa de estatísticas
+     */
     public void reiniciarEstadisticas(){
         String insertString= "truncate table partidas";
         try{

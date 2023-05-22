@@ -360,8 +360,12 @@ public class Xogo {
         return obxetivoGrande;
     }
     
+    
+    /**
+     * Xera dous ou tres obstáculos dependendo da dificutade escollida
+     */
     public void xerarObstaculos(){
-        if (dificultad=="estatico"){
+        if (dificultad=="Estático"){
             for (int cont=1; cont<=obstaculosColeccion.size()-1; cont++) {
                 engadirObstaculo(cont);
             }
