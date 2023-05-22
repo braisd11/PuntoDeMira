@@ -1360,16 +1360,28 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         if (xogo1.getBalas()>0){
             xogo1.setPuntos(xogo1.getPuntos()+1);
             escribir(xogo1.getPuntos(), labelAciertos);
-            if (xogo1.getPuntos()%30==0){
-                xogo1.setErro(xogo1.getErro()+2);
-            }
-            if (xogo1.getPuntos()%50==0){
-                xogo1.setAcerto(xogo1.getAcerto()+1);
-            }
+            aumentarDificultade();
             String a=labelTiempo.getText();
             int b=(int) Double.parseDouble(a);
             b += obxetivo.getAcerto();
-            labelTiempo.setText(b+"");
+            escribir(b, labelTiempo);
+        }
+    }
+
+    private void aumentarDificultade() {
+        aumentarPuntosErro();
+        aumentarPuntosAcerto();
+    }
+
+    private void aumentarPuntosAcerto() {
+        if (xogo1.getPuntos()%50==0){
+            xogo1.setAcerto(xogo1.getAcerto()+1);
+        }
+    }
+
+    private void aumentarPuntosErro() {
+        if (xogo1.getPuntos()%30==0){
+            xogo1.setErro(xogo1.getErro()+2);
         }
     }
     
@@ -1382,7 +1394,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         b -= xogo1.getErro();
         labelTiempo.setText(b+"");
         if (b<=0){
-            labelTiempo.setText("0");
+            escribir(0, labelTiempo);
             mostrarFinDeXogo();
         }
     }
@@ -1393,8 +1405,12 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     public void restarBala (){
         xogo1.setBalas(xogo1.getBalas()-1);
         escribir(xogo1.getBalas(), labelCargador);
+        comprobarBalas();
+    }
+
+    private void comprobarBalas() {
         if (xogo1.getBalas()<=0){
-            labelCargador.setText("0");
+            escribir(0, labelCargador);
             labelRecarga.setVisible(true);
         }
         else if (xogo1.getBalas()<=3){
@@ -1417,13 +1433,21 @@ public class VentanaPrincipal extends javax.swing.JFrame{
      * @param tempo tempo transcorrido
      */
     public void aparecerCadrados(int tempo){
-        if (tempo%5==0){
-            xogo1.getObxetivoVermello().getBotonCadrado().setVisible(true);
-            xogo1.getObxetivoVermello().xerarPosicionObxetivo();
-        }
+        aparecerObxetivoVermello(tempo);
+        aparecerObxetivoRosa(tempo);
+    }
+
+    private void aparecerObxetivoRosa(int tempo) {
         if (tempo%10==0){
-            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(true);
             xogo1.getObxetivoRosa().xerarPosicionObxetivo();
+            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(true);
+        }
+    }
+
+    private void aparecerObxetivoVermello(int tempo) {
+        if (tempo%5==0){
+            xogo1.getObxetivoVermello().xerarPosicionObxetivo();
+            xogo1.getObxetivoVermello().getBotonCadrado().setVisible(true);
         }
     }
     
@@ -1431,12 +1455,20 @@ public class VentanaPrincipal extends javax.swing.JFrame{
      * Fai que desaparezan os Obxetivos
      * @param tempo tempo transcorrido
      */
-    public void desaparecerCadrados(int tempo){
-        if (tempo%5==2){
-            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(false);
-        }
+    public void desaparecerObxetivos(int tempo){
+        desparecerObxetivoRosa(tempo);
+        desaparecerObxetivoVermello(tempo);
+    }
+
+    private void desaparecerObxetivoVermello(int tempo) {
         if (tempo%10==8){
             xogo1.getObxetivoVermello().getBotonCadrado().setVisible(false);
+        }
+    }
+
+    private void desparecerObxetivoRosa(int tempo) {
+        if (tempo%5==2){
+            xogo1.getObxetivoRosa().getBotonCadrado().setVisible(false);
         }
     }
     
@@ -1508,7 +1540,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                     correctoExe=false;
                 }
             }
-            
         }
         return correctoExe;
     }
@@ -1601,9 +1632,9 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     
     private void reiniciar(){
-        labelTiempo.setText("50");
-        labelAciertos.setText("0");
-        labelErrores.setText("0");
+        escribir(50, labelTiempo);
+        escribir(0, labelAciertos);
+        escribir(0, labelErrores);
         botonGuardarPuntuacion.setEnabled(true);
         recargar();
         xogo1.eliminarTodo();
@@ -1640,8 +1671,8 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         xogo1.setPausa(false);
         labelCargador.setVisible(true);
         labelRecargando.setVisible(false);
-        labelRecargando.setText("3");
-        labelCargador.setText("10");
+        escribir(3, labelRecargando);
+        escribir(10, labelCargador);
         labelCargador.setForeground(Color.white);
         labelRecarga.setVisible(false);
     }

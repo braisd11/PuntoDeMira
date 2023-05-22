@@ -204,6 +204,7 @@ public abstract class Obstaculo {
         return correcto;
     }
     
+    
     /**
      * Monta o resto de cadrados da ficha con respecto ao cadrado c0
      */

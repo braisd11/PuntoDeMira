@@ -52,6 +52,7 @@ public class Timers {
     public void setTiempoRecarga(Timer tiempoRecarga) {
         this.tiempoRecarga = tiempoRecarga;
     }
+
     
     
     
@@ -66,11 +67,12 @@ public class Timers {
                 ventanaPrincipal.getXogo1().setDuracionTotal(tempo);
                 if (ventanaPrincipal.getXogo1().getDificultad()=="Dinámico"){
                     ventanaPrincipal.aparecerCadrados(tempo);
-                    ventanaPrincipal.desaparecerCadrados(tempo);
+                    ventanaPrincipal.desaparecerObxetivos(tempo);
                 }
             }
         });
     }
+    
     
     
     private void crearTimerRecarga(){
