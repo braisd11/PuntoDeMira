@@ -21,14 +21,8 @@ import java.util.Date;
  * @author a22braisdr
  */
 public class Conexion {
-    /**
-     * Variable para a conexión
-     */
-    public Connection con=null;
-    /**
-     * Variable para a interfaz gráfica
-     */
-    public VentanaPrincipal ventanaPrincipal;
+    private Connection con=null;
+    private VentanaPrincipal ventanaPrincipal;
     private ArrayList<Partida> partida=new ArrayList<>();
     
     /**
