@@ -11,16 +11,17 @@ import java.awt.Color;
  *
  * @author brais
  */
-public class ObxetivoPequeno extends Obxetivo {
+public class ObxetivoVermello extends Obxetivo{
+    
     
     /**
-     * Construtor do Obxetivo de cor verde
+     * Construtor do Obxetivo de cor rosa
      * @param xogo1 Xogo
      */
-    public ObxetivoPequeno(Xogo xogo1) {
+    public ObxetivoVermello(Xogo xogo1) {
         super(xogo1);
         cor();
-        this.acerto=2;
+        this.acerto=3;
         botonCadrado.setSize(ladoCadrado, ladoCadrado);
         this.xerarPosicionObxetivo();
     }
@@ -43,7 +44,7 @@ public class ObxetivoPequeno extends Obxetivo {
 
     @Override
     public void cor() {
-        botonCadrado.setBackground(Color.GREEN);
+        botonCadrado.setBackground(Color.RED);
         botonCadrado.setOpaque(true);
     }
 }

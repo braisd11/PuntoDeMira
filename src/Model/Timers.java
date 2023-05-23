@@ -66,7 +66,7 @@ public class Timers {
                 tempo++;
                 ventanaPrincipal.getXogo1().setDuracionTotal(tempo);
                 if (ventanaPrincipal.getXogo1().getDificultad()=="Dinámico"){
-                    ventanaPrincipal.aparecerCadrados(tempo);
+                    ventanaPrincipal.aparecerObxetivos(tempo);
                     ventanaPrincipal.desaparecerObxetivos(tempo);
                 }
             }

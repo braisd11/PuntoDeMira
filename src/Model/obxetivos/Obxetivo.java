@@ -16,10 +16,6 @@ import javax.swing.JButton;
  */
 public abstract class Obxetivo extends Cadrado implements Coloreable {
     /**
-     * Tamaño do lado do Obxetivo
-     */
-    protected int ladoCadrado=35;
-    /**
      * Segundos que suma cada acerto
      */
     protected int acerto;

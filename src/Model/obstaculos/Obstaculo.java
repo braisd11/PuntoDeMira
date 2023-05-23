@@ -164,7 +164,7 @@ public abstract class Obstaculo {
     /**
      * Crea os Cadrados que forman o Obstáculo
      */
-    public void crearCadrados(){
+    private void crearCadrados(){
         c0 = new Cadrado(xogo1);
         c1 = new Cadrado(xogo1);
         c2 = new Cadrado(xogo1);

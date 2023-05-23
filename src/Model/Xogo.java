@@ -9,9 +9,9 @@ import Model.obstaculos.ObstaculoCadrado;
 import Model.obstaculos.ObstaculoL;
 import Model.obstaculos.ObstaculoVertical;
 import Model.obxetivos.Obxetivo;
-import Model.obxetivos.ObxetivoGrande;
-import Model.obxetivos.ObxetivoMediano;
-import Model.obxetivos.ObxetivoPequeno;
+import Model.obxetivos.ObxetivoRosa;
+import Model.obxetivos.ObxetivoVermello;
+import Model.obxetivos.ObxetivoVerde;
 import View.VentanaPrincipal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -340,7 +340,7 @@ public class Xogo {
     
     
     private Obxetivo xerarObxetivoPequeno (){
-        Obxetivo obxetivoPequeno= new ObxetivoPequeno(this);
+        Obxetivo obxetivoPequeno= new ObxetivoVerde(this);
         obxetivos.add(obxetivoPequeno);
         return obxetivoPequeno;
     }
@@ -348,14 +348,14 @@ public class Xogo {
     
     
     private Obxetivo xerarObxetivoMediano (){
-        Obxetivo obxetivoMediano= new ObxetivoMediano(this);
+        Obxetivo obxetivoMediano= new ObxetivoVermello(this);
         obxetivos.add(obxetivoMediano);
         return obxetivoMediano;
     }
     
     
     private Obxetivo xerarObxetivoGrande (){
-        Obxetivo obxetivoGrande= new ObxetivoGrande(this);
+        Obxetivo obxetivoGrande= new ObxetivoRosa(this);
         obxetivos.add(obxetivoGrande);
         return obxetivoGrande;
     }
@@ -401,6 +401,7 @@ public class Xogo {
     public void eliminarTodo(){
         eliminarObxetivos();
         eliminarObstaculos();
+        reiniciarEstadisticas();
     }
     
     private void eliminarObxetivos(){
@@ -464,7 +465,7 @@ public class Xogo {
     /**
      * Reinicia os valores do Xogo
      */
-    public void reiniciarEstadisticas(){
+    private void reiniciarEstadisticas(){
         puntos=0;
         fallos=0;
         duracionTotal=0;

@@ -1433,7 +1433,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
      * Fai que aparezan os Obxetivos dándolles unha posición nova
      * @param tempo tempo transcorrido
      */
-    public void aparecerCadrados(int tempo){
+    public void aparecerObxetivos(int tempo){
         aparecerObxetivoVermello(tempo);
         aparecerObxetivoRosa(tempo);
     }
@@ -1640,23 +1640,18 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         recargar();
         xogo1.eliminarTodo();
         panelGameOver.setVisible(false);
-        xogo1.reiniciarEstadisticas();
     }
     
-    /**
-     * Pausa o xogo
-     */
-    public void pausa(){
+    
+    private void pausa(){
         toggleBotonPausa.setText("START");
         xogo1.setPausa(true);
         timer.getTiempo().stop();
         timer.getDuracion().stop();
     }
     
-    /**
-     * Quita a pausa do xogo
-     */
-    public void quitarPausa(){
+    
+    private void quitarPausa(){
         toggleBotonPausa.setText("PAUSE");
         xogo1.setPausa(false);
         timer.getTiempo().restart();
