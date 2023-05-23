@@ -12,7 +12,6 @@ import java.util.Date;
  * @author a22braisdr
  */
 public class Partida {
-    private int id;
     private String nombre;
     private int aciertos;
     private int errores;
@@ -20,8 +19,7 @@ public class Partida {
     private Date fecha;
     private String dificultad;
 
-    public Partida(int id, String nombre, int aciertos, int errores, int duracion, Date fecha, String dificultad) {
-        this.id = id;
+    public Partida(String nombre, int aciertos, int errores, int duracion, Date fecha, String dificultad) {
         this.nombre = nombre;
         this.aciertos = aciertos;
         this.errores = errores;
@@ -29,18 +27,7 @@ public class Partida {
         this.fecha = fecha;
         this.dificultad = dificultad;
     }
-
     
-
-    
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -89,10 +76,5 @@ public class Partida {
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
-    
-    
-    
-    
-    
     
 }

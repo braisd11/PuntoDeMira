@@ -162,19 +162,18 @@ public class Conexion {
      * @throws SQLException Excepción da Base de Datos
      */
     public ArrayList<Partida> listar() throws SQLException{
-        String query="select * from partidas";
+        String query="select * from partidas order by aciertos desc";
         PreparedStatement stmt= con.prepareStatement(query);
         ResultSet result = stmt.executeQuery(query);
         partida.removeAll(partida);
         while (result.next()){
-            int id=result.getInt(1);
             String nombre=result.getString(2);
             int aciertos=result.getInt(3);
             int errores=result.getInt(4);
             int duracion=result.getInt(5);
             Date fecha=result.getDate(6);
             String dificultad=result.getString(7);
-            partida.add(new Partida(id, nombre, aciertos, errores, duracion, fecha, dificultad));
+            partida.add(new Partida(nombre, aciertos, errores, duracion, fecha, dificultad));
         }
         return partida;
     }

@@ -486,6 +486,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         tablaPuntuaciones.setFillsViewportHeight(true);
         tablaPuntuaciones.setGridColor(new java.awt.Color(0, 0, 0));
         tablaPuntuaciones.setOpaque(false);
+        tablaPuntuaciones.setSelectionBackground(new java.awt.Color(255, 102, 102));
         tablaPuntuaciones.setShowGrid(true);
         tablaPuntuaciones.getTableHeader().setResizingAllowed(false);
         tablaPuntuaciones.getTableHeader().setReorderingAllowed(false);
@@ -1716,7 +1717,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private void rellenarTabla() throws SQLException{
         DefaultTableModel model=new DefaultTableModel();
         ArrayList<Object> nombreColumna = new ArrayList<>();
-        nombreColumna.add("ID");
         nombreColumna.add("NOMBRE");
         nombreColumna.add("ACIERTOS");
         nombreColumna.add("FALLOS");
@@ -1728,8 +1728,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             model.addColumn(columna);
         }
         for(Partida DatoNivel : con.listar()){
-            model.addRow(new Object[]{ DatoNivel.getId(),
-                                       DatoNivel.getNombre(),
+            model.addRow(new Object[]{ DatoNivel.getNombre(),
                                        DatoNivel.getAciertos(),
                                        DatoNivel.getErrores(),
                                        DatoNivel.getDuracion(),
