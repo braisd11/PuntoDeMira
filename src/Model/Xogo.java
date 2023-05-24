@@ -36,7 +36,8 @@ public class Xogo {
     private int acerto=2;
     private int erro=5;
     private String usuario;
-    private int puntos=0;
+    private int acertosTotais=0;
+    private int puntosTotais=0;
     private int duracionTotal=0;
     private int fallos=0;
     private Obxetivo obxetivoVerde;
@@ -249,16 +250,16 @@ public class Xogo {
      *
      * @return
      */
-    public int getPuntos() {
-        return puntos;
+    public int getAcertosTotais() {
+        return acertosTotais;
     }
 
     /**
      *
-     * @param puntos
+     * @param acertosTotais
      */
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
+    public void setAcertosTotais(int acertosTotais) {
+        this.acertosTotais = acertosTotais;
     }
 
     /**
@@ -315,6 +316,14 @@ public class Xogo {
      */
     public ArrayList<Obstaculo> getObstaculos() {
         return obstaculos;
+    }
+
+    public int getPuntosTotais() {
+        return puntosTotais;
+    }
+
+    public void setPuntosTotais(int puntosTotais) {
+        this.puntosTotais = puntosTotais;
     }
     
     
@@ -462,14 +471,56 @@ public class Xogo {
         }
     }
     
-    /**
-     * Reinicia os valores do Xogo
-     */
+    
     private void reiniciarEstadisticas(){
-        puntos=0;
+        acertosTotais=0;
         fallos=0;
         duracionTotal=0;
         erro=5;
         acerto=1;
+    }
+    
+    
+    /**
+     * Elimina os obstáculos e crea unhos novos en outra posición
+     */
+    public void cambiarObstáculos (){
+        if (acertosTotais%10==0){
+            ventanaPrincipal.getArrayBotones().clear();
+            obstaculos.clear();
+            xerarObstaculos();
+            establecerPosicionObstaculos();
+            pintarObstaculos();
+            ventanaPrincipal.getPanelJuego().setComponentZOrder(ventanaPrincipal.getFondoJuego(), ventanaPrincipal.getPanelJuego().getComponentCount()-1);
+        }
+    }
+    
+    
+    /**
+     * Realiza unha acción dependendo do tipo de Obxetivo
+     * @param obxetivo Obxetivo clickado
+     */
+    public void obxetivoClickado(Obxetivo obxetivo) {
+        if(obxetivo==obxetivoVerde){
+            obxetivo.xerarPosicionObxetivo();
+        }
+        else if (obxetivo==obxetivoVermello){
+            if (dificultad=="Dinámico"){
+                obxetivo.getBotonCadrado().setVisible(false);
+            }
+            else {
+                obxetivo.xerarPosicionObxetivo();
+            }
+        }
+        else if (obxetivo==obxetivoRosa) {
+            balas += 4;
+            ventanaPrincipal.escribir(getBalas(), ventanaPrincipal.getLabelCargador());
+            if (dificultad=="Dinámico"){
+                obxetivo.getBotonCadrado().setVisible(false);
+            }
+            else {
+                obxetivo.xerarPosicionObxetivo();
+            }
+        }
     }
 }

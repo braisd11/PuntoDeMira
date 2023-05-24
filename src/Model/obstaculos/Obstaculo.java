@@ -191,17 +191,7 @@ public abstract class Obstaculo {
             c0.setY(numY*ladoCadrado); 
             establecerFicha();
         }
-        while ((!xogo1.getVentanaPrincipal().comprobarObstaculos(this)) || !comprobarPosicion(c3.getX(), c3.getY()));
-    }
-        
-        
-    
-    private boolean comprobarPosicion(int x, int y){
-        boolean correcto=true;
-        if (x>=(xogo1.getMAXX()-ladoCadrado) || y>=(xogo1.getMAXY()-ladoCadrado)){
-            correcto=false;
-        }
-        return correcto;
+        while ((!xogo1.getVentanaPrincipal().comprobarObstaculos(this)) || !c3.comprobarPosicion(c3.getX(), c3.getY()));
     }
     
     

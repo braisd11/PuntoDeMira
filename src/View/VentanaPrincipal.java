@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -44,10 +45,8 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private ActionListener clickObxetivo;
     private MouseListener mouse;
     private Sound sound;
-    /**
-     * Array de botóns dos obstáculos
-     */
-    public ArrayList<JButton>arrayBotones=new ArrayList<>();
+    private ArrayList<JButton>arrayBotones=new ArrayList<>();
+    private Iterator<JButton> iterBotones;
 
     /**
      *
@@ -107,6 +106,18 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
     public JButton getBotonReiniciarEstadisticas() {
         return botonReiniciarEstadisticas;
+    }
+
+    public ArrayList<JButton> getArrayBotones() {
+        return arrayBotones;
+    }
+
+    public JLabel getFondoJuego() {
+        return fondoJuego;
+    }
+
+    public JLabel getLabelCargador() {
+        return labelCargador;
     }
     
     
@@ -194,6 +205,8 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         labelTituloTiempo = new javax.swing.JLabel();
         labelTiempo = new javax.swing.JLabel();
         toggleBotonPausa = new javax.swing.JToggleButton();
+        labelTituloPuntos = new javax.swing.JLabel();
+        labelPuntos = new javax.swing.JLabel();
         fondoLateral = new javax.swing.JLabel();
         panelGameOver = new javax.swing.JPanel();
         labelBackgroundGameOver = new javax.swing.JLabel();
@@ -278,11 +291,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         textoInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
         textoInstrucciones.setLineWrap(true);
         textoInstrucciones.setRows(5);
-        textoInstrucciones.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla.\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumara un acierto y aumentará el tiempo de juego en 2 segundos si se trata del objetivo verde,3 si es el objetivo rojo y 4 si es el objetivo rosa. Además, el      objetivo rosa sumará 3 balas al cargador, para poder seguir sin perder tiempo recargando.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error. Estos            obstáculos cambiarán de posición cada 10 segundos.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Cada 30 aciertos, los errores restarán 2 segundos más, y cada 50 aciertos los aciertos sum   arán 1 segundo más\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n- El objetivo será aguantar el máximo tiempo posible clickando sobre los objetivos.\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Rosa: aparece cada 5 segundos y dura 2 segundos");
+        textoInstrucciones.setText("\t\t\n\t\t\tINSTRUCCIONES:\n\t\n- Debes clickar sobre los objetivos pequeños que aparecen en pantalla. Con 10 errores o quedándote sin tiempo perderás\n\n- Hay tres objetivos.\n\n- Clickar sobre un objetivo sumará un acierto y aumentará el tiempo de juego en 2 segundos si se trata del objetivo verde,3 si es el objetivo rojo y 4 si es el objetivo rosa. Además, el      objetivo rosa sumará 3 balas al cargador, para poder seguir sin perder tiempo recargando.\n\n- OJO! Pasar por encima de un obstáculo restará 5 segundos y sumará un error. Estos            obstáculos cambiarán de posición cada 10 aciertos.\n\n- Cada obstáculo tiene varios botones, por lo que puede llegar a restar más de 5 segundos.\n\n- Cada 30 aciertos, los errores restarán 2 segundos más, y cada 50 aciertos los aciertos sum   arán 1 segundo más\n\n- Podemos quedarnos sin balas (tendremos 10), por lo que tendremos que recargar.\n\n- La recarga dura 3 segundos.\n\n\n- Tendremos dos dificultades:\n\n\t- Estático: dos obstáculos y tres objetivos siempre visibles.\n\n\t- Dinámico: tres obstáculos y tres objetivos, que aparecen cada cierto tiempo.\n\t\t- Verde: siempre presente\n\t\t- Rojo: aparece cada 10 segundos y dura 5 segundos\n\t\t- Rosa: aparece cada 5 segundos y dura 2 segundos");
         textoInstrucciones.setMaximumSize(new java.awt.Dimension(600, 550));
         textoInstrucciones.setMinimumSize(new java.awt.Dimension(600, 550));
         textoInstrucciones.setPreferredSize(new java.awt.Dimension(600, 550));
-        dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, 560));
+        dialogInstrucciones.getContentPane().add(textoInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 580));
 
         labelBackgroundDialog1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         try{
@@ -942,12 +955,12 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         labelTituloTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         labelTituloTiempo.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloTiempo.setText("TIEMPO");
-        panelLateral.add(labelTituloTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 324, 217, 39));
+        panelLateral.add(labelTituloTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 217, 39));
 
         labelTiempo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         labelTiempo.setForeground(new java.awt.Color(255, 255, 255));
         labelTiempo.setText("50");
-        panelLateral.add(labelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 369, 98, 31));
+        panelLateral.add(labelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 98, 31));
 
         toggleBotonPausa.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         toggleBotonPausa.setForeground(new java.awt.Color(0, 0, 0));
@@ -968,6 +981,19 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             }
         });
         panelLateral.add(toggleBotonPausa, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 439, 152, 62));
+
+        labelTituloPuntos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        labelTituloPuntos.setForeground(new java.awt.Color(255, 255, 255));
+        labelTituloPuntos.setText("PUNTOS");
+        labelTituloPuntos.setMaximumSize(new java.awt.Dimension(151, 48));
+        labelTituloPuntos.setMinimumSize(new java.awt.Dimension(151, 48));
+        labelTituloPuntos.setPreferredSize(new java.awt.Dimension(151, 48));
+        panelLateral.add(labelTituloPuntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+
+        labelPuntos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        labelPuntos.setForeground(new java.awt.Color(255, 255, 255));
+        labelPuntos.setText("0");
+        panelLateral.add(labelPuntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, -1, -1));
 
         fondoLateral.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         try{
@@ -1335,7 +1361,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     /**
      * Colorea o Cadrado no Panel
-     * @param botonCadrado Label do Cadrado a colorear
+     * @param botonCadrado Label do Cadrado tempoActual colorear
      */
     public void pintarCadrado(JButton botonCadrado){
         panelJuego.add(botonCadrado);
@@ -1349,7 +1375,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     /**
      * Borra o Cadrado no Panel
-     * @param botonCadrado Label do Cadrado a colorear
+     * @param botonCadrado Label do Cadrado tempoActual colorear
      */
     public void borrarCadrados(JButton botonCadrado){
         panelJuego.remove(botonCadrado);
@@ -1362,14 +1388,28 @@ public class VentanaPrincipal extends javax.swing.JFrame{
      */
     public void sumarAcerto (Obxetivo obxetivo){
         if (xogo1.getBalas()>0){
-            xogo1.setPuntos(xogo1.getPuntos()+1);
-            escribir(xogo1.getPuntos(), labelAciertos);
+            xogo1.setAcertosTotais(xogo1.getAcertosTotais()+1);
+            escribir(xogo1.getAcertosTotais(), labelAciertos);
             aumentarDificultade();
-            String a=labelTiempo.getText();
-            int b=(int) Double.parseDouble(a);
-            b += obxetivo.getAcerto();
-            escribir(b, labelTiempo);
+            sumarTempo(obxetivo);
+            sumarPuntos(obxetivo);
         }
+    }
+    
+    
+    private void sumarPuntos(Obxetivo obxetivo) {
+        String puntosActuais=labelPuntos.getText();
+        int puntosNovos=(int) Double.parseDouble(puntosActuais);
+        puntosNovos += obxetivo.getAcerto();
+        xogo1.setPuntosTotais(puntosNovos);
+        escribir(puntosNovos, labelPuntos);
+    }
+    
+    private void sumarTempo(Obxetivo obxetivo) throws NumberFormatException {
+        String tempoActual=labelTiempo.getText();
+        int tempoNovo=(int) Double.parseDouble(tempoActual);
+        tempoNovo += obxetivo.getAcerto();
+        escribir(tempoNovo, labelTiempo);
     }
 
     private void aumentarDificultade() {
@@ -1378,13 +1418,13 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }
 
     private void aumentarPuntosAcerto() {
-        if (xogo1.getPuntos()%50==0){
+        if (xogo1.getAcertosTotais()%50==0){
             xogo1.setAcerto(xogo1.getAcerto()+1);
         }
     }
 
     private void aumentarPuntosErro() {
-        if (xogo1.getPuntos()%30==0){
+        if (xogo1.getAcertosTotais()%30==0){
             xogo1.setErro(xogo1.getErro()+2);
         }
     }
@@ -1397,10 +1437,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         int b=(int) Double.parseDouble(a);
         b -= xogo1.getErro();
         labelTiempo.setText(b+"");
+        
         if (b<=0){
             escribir(0, labelTiempo);
-            mostrarFinDeXogo();
         }
+        comprobarPerder();
     }
     
     /**
@@ -1420,15 +1461,18 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         else if (xogo1.getBalas()<=3){
             labelCargador.setForeground(Color.red);
         }
+        else {
+            labelCargador.setForeground(Color.white);
+        }
     }
     
     
     /**
      * Escribe nas distintas JLabel das puntuacións
-     * @param num int que imos a escribir
-     * @param etiqueta JLabel na que imos a escribir
+     * @param num int que imos tempoActual escribir
+     * @param etiqueta JLabel na que imos tempoActual escribir
      */
-    private void escribir (int num, JLabel etiqueta){
+    public void escribir (int num, JLabel etiqueta){
         etiqueta.setText(""+num);
     }
     
@@ -1491,34 +1535,16 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(!xogo1.isPausa() && xogo1.getBalas()>0 && !timer.getTiempoRecarga().isRunning()){
                     sumarAcerto(obxetivo);
-                    cambiarObstáculos();
-                    if(obxetivo==xogo1.getObxetivoVerde()){
-                        obxetivo.xerarPosicionObxetivo();
-                    }
-                    else if (obxetivo==xogo1.getObxetivoVermello()){
-                        if (xogo1.getDificultad()=="Dinámico"){
-                            obxetivo.getBotonCadrado().setVisible(false);
-                        }
-                        else {
-                            obxetivo.xerarPosicionObxetivo();
-                        }
-                    }
-                    else if (obxetivo==xogo1.getObxetivoRosa()) {
-                        xogo1.setBalas(xogo1.getBalas()+4);
-                        escribir(xogo1.getBalas(), labelCargador);
-                        if (xogo1.getDificultad()=="Dinámico"){
-                            obxetivo.getBotonCadrado().setVisible(false);
-                        }
-                        else {
-                            obxetivo.xerarPosicionObxetivo();
-                        }
-                    }
+                    xogo1.cambiarObstáculos();
+                    xogo1.obxetivoClickado(obxetivo);
                     restarBala();
                 }
             }
         };
         obxetivo.getBotonCadrado().addActionListener(clickObxetivo);
     }
+
+    
     
     
     /**
@@ -1528,8 +1554,10 @@ public class VentanaPrincipal extends javax.swing.JFrame{
      */
     public boolean comprobarObxetivos (Obxetivo obxetivo){
         boolean correcto=true;
-        for (int contArray=0; contArray<arrayBotones.size(); contArray++) {
-            if (!comprobarExes(arrayBotones.get(contArray),obxetivo)){
+        iterBotones=arrayBotones.iterator();
+        while (iterBotones.hasNext()){
+            JButton boton=iterBotones.next();
+            if (!comprobarExes(boton,obxetivo)){
                 correcto=false;
             }
         }
@@ -1552,7 +1580,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     /**
      * Comproba si o obstáculo coincide con outro botón do array arrayBotones
-     * @param obstaculo obstáculo a comprobar
+     * @param obstaculo obstáculo tempoActual comprobar
      * @return true se non coincide con outro botón,pola contra false
      */
     public boolean comprobarObstaculos (Obstaculo obstaculo){
@@ -1572,7 +1600,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     
     /**
      * Engade os botóns do obstáculo ao arrayBotones
-     * @param obstaculo Obstáculo a engadir
+     * @param obstaculo Obstáculo tempoActual engadir
      */
     public void engadirObstaculos (Obstaculo obstaculo){
         engadirBotons(obstaculo);
@@ -1639,6 +1667,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         escribir(50, labelTiempo);
         escribir(0, labelAciertos);
         escribir(0, labelErrores);
+        escribir(0, labelPuntos);
         botonGuardarPuntuacion.setEnabled(true);
         recargar();
         xogo1.eliminarTodo();
@@ -1676,10 +1705,15 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         labelRecarga.setVisible(false);
     }
 
+    private void comprobarPerder() {
+        if (labelTiempo.getText().equals("0") || xogo1.getFallos()==10){
+            mostrarFinDeXogo();
+        }
+    }
     
     /**
      * Pon un icono na ventana do JFrame
-     * @return Imaxe a poñer de Icono
+     * @return Imaxe tempoActual poñer de Icono
      */
     @Override
     public Image getIconImage() {
@@ -1716,6 +1750,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         DefaultTableModel model=new DefaultTableModel();
         ArrayList<Object> nombreColumna = new ArrayList<>();
         nombreColumna.add("NOMBRE");
+        nombreColumna.add("PUNTOS");
         nombreColumna.add("ACIERTOS");
         nombreColumna.add("FALLOS");
         nombreColumna.add("DURACIÓN");
@@ -1727,6 +1762,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         }
         for(Partida DatoNivel : con.listar()){
             model.addRow(new Object[]{ DatoNivel.getNombre(),
+                                       DatoNivel.getPuntos(),
                                        DatoNivel.getAciertos(),
                                        DatoNivel.getErrores(),
                                        DatoNivel.getDuracion(),
@@ -1738,16 +1774,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }
     
     
-    private void cambiarObstáculos (){
-        if (xogo1.getPuntos()%10==0){
-            arrayBotones.clear();
-            xogo1.getObstaculos().clear();
-            xogo1.xerarObstaculos();
-            xogo1.establecerPosicionObstaculos();
-            xogo1.pintarObstaculos();
-            panelJuego.setComponentZOrder(fondoJuego, panelJuego.getComponentCount()-1);
-        }
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAccederInvitado;
     private javax.swing.JButton botonCerrar;
@@ -1788,6 +1815,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private javax.swing.JLabel labelContrasinal;
     private javax.swing.JLabel labelContrasinalNovo;
     private javax.swing.JLabel labelErrores;
+    private javax.swing.JLabel labelPuntos;
     private javax.swing.JLabel labelRecarga;
     private javax.swing.JLabel labelRecargando;
     private javax.swing.JLabel labelTiempo;
@@ -1795,6 +1823,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private javax.swing.JLabel labelTituloAciertos;
     private javax.swing.JLabel labelTituloCargador;
     private javax.swing.JLabel labelTituloErrores;
+    private javax.swing.JLabel labelTituloPuntos;
     private javax.swing.JLabel labelTituloTiempo;
     private javax.swing.JLabel labelUsuario;
     private javax.swing.JLabel labelUsuarioNovo;

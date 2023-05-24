@@ -12,25 +12,10 @@ import javax.swing.JButton;
  * @author brais
  */
 public class Cadrado {
-    /**
-     * Coordenada x do Cadrado
-     */
     public int x;
-    /**
-     * Coordenada y do Cadrado
-     */
     public int y;
-    /**
-     * Botón ligado ao Cadrado
-     */
     public JButton botonCadrado;
-    /**
-     * Tamaño por defecto do cadrado
-     */
     public int ladoCadrado=35;
-    /**
-     * Xogo
-     */
     protected Xogo xogo1;
 
     /**
@@ -121,5 +106,22 @@ public class Cadrado {
      */
     public String getCoordenadas() {
         return (x + ", " + y);
+    }
+    
+    /**
+     * Comproba que o Cadrado esté dentro dos límites
+     * @param x Coordenada x do cadrado
+     * @param y Coordenada y do cadrado
+     * @return true se está correcto,pola contra false
+     */
+    public boolean comprobarPosicion(int x,int y){
+        boolean correcto=true;
+        if (x>=(xogo1.getMAXX()-ladoCadrado*2) || y>=(xogo1.getMAXY()-ladoCadrado*2)){
+            correcto=false;
+        }
+        else if (x==0 || y==0){
+            correcto=false;
+        }
+        return correcto;
     }
 }

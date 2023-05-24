@@ -37,7 +37,7 @@ public class Conexion {
     
     /**
      * Abre a conexión coa Base de Datos
-     * @return 
+     * @return Connection
      */
     public Connection abrirConexion(){
         String url="jdbc:mysql://localhost/punto_de_mira";
@@ -134,14 +134,15 @@ public class Conexion {
      * @param usuario Usuario que está na partida
      */
     public void guardarPuntuacion(String usuario){
-        String insertString= "insert into partidas (Id_partida,Nombre_jugador,Aciertos,Fallos,Duracion,Fecha,Dificultad) values (null,?,?,?,?,current_date(),?)";
+        String insertString= "insert into partidas (Id_partida,Nombre_jugador,Puntos,Aciertos,Fallos,Duracion,Fecha,Dificultad) values (null,?,?,?,?,?,current_date(),?)";
         try{
             PreparedStatement insertPartida=con.prepareStatement(insertString);
             insertPartida.setString(1, usuario);
-            insertPartida.setInt(2, ventanaPrincipal.getXogo1().getPuntos());
-            insertPartida.setInt(3, ventanaPrincipal.getXogo1().getFallos());
-            insertPartida.setInt(4, ventanaPrincipal.getXogo1().getDuracionTotal());
-            insertPartida.setString(5, ventanaPrincipal.getXogo1().getDificultad());
+            insertPartida.setInt(2, ventanaPrincipal.getXogo1().getPuntosTotais());
+            insertPartida.setInt(3, ventanaPrincipal.getXogo1().getAcertosTotais());
+            insertPartida.setInt(4, ventanaPrincipal.getXogo1().getFallos());
+            insertPartida.setInt(5, ventanaPrincipal.getXogo1().getDuracionTotal());
+            insertPartida.setString(6, ventanaPrincipal.getXogo1().getDificultad());
             insertPartida.execute();
             JOptionPane.showMessageDialog(ventanaPrincipal, "Puntuación Guardada");
         }
@@ -156,18 +157,19 @@ public class Conexion {
      * @throws SQLException Excepción da Base de Datos
      */
     public ArrayList<Partida> listar() throws SQLException{
-        String query="select * from partidas order by aciertos desc";
+        String query="select * from partidas order by puntos desc";
         PreparedStatement stmt= con.prepareStatement(query);
         ResultSet result = stmt.executeQuery(query);
         partida.removeAll(partida);
         while (result.next()){
             String nombre=result.getString(2);
-            int aciertos=result.getInt(3);
-            int errores=result.getInt(4);
-            int duracion=result.getInt(5);
-            Date fecha=result.getDate(6);
-            String dificultad=result.getString(7);
-            partida.add(new Partida(nombre, aciertos, errores, duracion, fecha, dificultad));
+            int puntos=result.getInt(3);
+            int aciertos=result.getInt(4);
+            int errores=result.getInt(5);
+            int duracion=result.getInt(6);
+            Date fecha=result.getDate(7);
+            String dificultad=result.getString(8);
+            partida.add(new Partida(nombre,puntos, aciertos, errores, duracion, fecha, dificultad));
         }
         return partida;
     }

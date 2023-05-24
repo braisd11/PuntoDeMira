@@ -19,6 +19,7 @@ create table if not exists partidas
 (
 	Id_partida int unsigned auto_increment not null,
 	Nombre_jugador varchar(50) not null,
+    Puntos int not null,
     Aciertos int unsigned not null,
     Fallos int unsigned not null,
     Duracion int not null,
