@@ -476,6 +476,7 @@ public class Xogo {
         acertosTotais=0;
         fallos=0;
         duracionTotal=0;
+        puntosTotais=0;
         erro=5;
         acerto=1;
     }
