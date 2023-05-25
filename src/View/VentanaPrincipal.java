@@ -179,6 +179,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         botonCerrar = new javax.swing.JButton();
         fondoPantallaPrincipal = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
+        labelTitulo = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
         botonJugar = new javax.swing.JButton();
         botonDificultad = new javax.swing.JButton();
@@ -186,7 +187,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         botonInstrucciones = new javax.swing.JButton();
         botonReiniciarEstadisticas = new javax.swing.JButton();
         fondoPantalla = new javax.swing.JLabel();
-        labelTitulo = new javax.swing.JLabel();
         juego = new javax.swing.JPanel();
         panelJuego = new javax.swing.JPanel();
         fondoJuego = new javax.swing.JLabel();
@@ -668,6 +668,12 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         panelPrincipal.setVisible(false);
         panelPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
 
+        labelTitulo.setBackground(new java.awt.Color(0, 0, 0));
+        labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("CLICKEA");
+
         panelBotones.setBackground(new java.awt.Color(255, 204, 204));
         panelBotones.setOpaque(false);
         panelBotones.setPreferredSize(new java.awt.Dimension(450, 450));
@@ -772,12 +778,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         }
         fondoPantalla.setPreferredSize(new java.awt.Dimension(1000, 700));
 
-        labelTitulo.setBackground(new java.awt.Color(0, 0, 0));
-        labelTitulo.setFont(new java.awt.Font("Source Serif Pro Black", 0, 48)); // NOI18N
-        labelTitulo.setForeground(new java.awt.Color(200, 100, 50));
-        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTitulo.setText("PUNTO DE MIRA");
-
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -788,7 +788,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                 .addGap(267, 267, 267))
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGap(312, 312, 312)
-                .addComponent(labelTitulo)
+                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelPrincipalLayout.createSequentialGroup()
