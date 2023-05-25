@@ -32,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
-import sound.Sound;
 
 /**
  *
@@ -44,7 +43,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     private Timers timer;
     private ActionListener clickObxetivo;
     private MouseListener mouse;
-    private Sound sound;
     private ArrayList<JButton>arrayBotones=new ArrayList<>();
     private Iterator<JButton> iterBotones;
 
@@ -131,7 +129,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         con=new Conexion(this); 
         xogo1=new Xogo(this);
         timer=new Timers(this);
-        sound=new Sound(this);
         juego.setFocusable(true);
     }
     
